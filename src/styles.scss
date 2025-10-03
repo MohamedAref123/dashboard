@@ -1,0 +1,143 @@
+/* ============================
+   Angular Material Theming
+   ============================ */
+@use '@angular/material' as mat;
+
+/* ============================
+   Bootstrap & Theme Imports
+   ============================ */
+// main framework
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/variables-dark';
+
+@import 'scss/settings/color-variables';
+@import 'scss/settings/theme-variables';
+@import 'scss/settings/bootstrap-variables.scss';
+
+@import 'scss/bootstrap/bootstrap.scss';
+
+@import 'node_modules/bootstrap/scss/utilities';
+@import 'node_modules/bootstrap/scss/utilities/api';
+
+@import 'scss/themes/generic.scss';
+@import 'scss/themes/general.scss';
+
+// Layouts
+@import 'scss/themes/layouts/layouts';
+
+// Components
+@import 'scss/themes/components/components';
+
+// pages
+@import 'scss/themes/pages/page.scss';
+
+@import 'scss/themes/customizer';
+@import 'scss/style-preset.scss';
+
+// fonts
+@import url('scss/fonts/berry/berry-icons.css'); /** custom font icons - berry **/
+@import 'scss/fonts/tabler-icons.min.css';
+@import 'scss/fonts/phosphor/duotone/style.css';
+
+/* ============================
+   Angular Material Theme Config
+   ============================ */
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette
+      ),
+      typography: Roboto,
+      density: 0
+    )
+  );
+}
+
+/* ============================
+   Global Styles
+   ============================ */
+body {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* === Custom Snackbar Toaster Styles === */
+
+/* Error Toaster */
+.toast-error.mat-mdc-snack-bar-container {
+  .mdc-snackbar__surface {
+    background: #f44336;
+
+    .mat-mdc-button {
+      color: white !important;
+    }
+  }
+
+  .mat-mdc-snack-bar-label.mdc-snackbar__label {
+    color: white;
+    font-weight: 500;
+    white-space: pre-wrap;
+  }
+}
+
+/* Success Toaster */
+.toast-success.mat-mdc-snack-bar-container {
+  .mdc-snackbar__surface {
+    background: #4caf50;
+
+    .mat-mdc-button {
+      color: white !important;
+    }
+  }
+
+  .mat-mdc-snack-bar-label.mdc-snackbar__label {
+    color: white;
+    font-weight: 500;
+    white-space: pre-wrap;
+  }
+}
+
+/* Info Toaster */
+.toast-info.mat-mdc-snack-bar-container {
+  .mdc-snackbar__surface {
+    background: #2196f3;
+
+    .mat-mdc-button {
+      color: white !important;
+    }
+  }
+
+  .mat-mdc-snack-bar-label.mdc-snackbar__label {
+    color: white;
+    font-weight: 500;
+    white-space: pre-wrap;
+  }
+}
+
+/* === Snackbar Global Position Override === */
+.mat-mdc-snack-bar-container {
+  position: fixed !important;
+  top: 80px !important;
+  right: 1rem !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  z-index: 10000; // make sure it's above dialogs
+}
+
+h2 {
+  font-family: cursive;
+}

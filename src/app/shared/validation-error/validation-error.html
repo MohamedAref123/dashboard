@@ -1,0 +1,6 @@
+<!-- رسائل الخطأ بنمط Bootstrap -->
+<div *ngIf="control && control.invalid && (control.touched || control.dirty)">
+  <div *ngFor="let msg of errorMessages()" class="invalid-feedback d-block">
+    {{ msg }}
+  </div>
+</div>

@@ -1,0 +1,135 @@
+<div class="d-flex justify-content-between align-items-center ">
+  <div>
+    <div class="d-flex">
+      <i class="ti ti-stethoscope" style="font-size:30px; margin-right: 10px;"></i>
+      <h2 style="color: #673ab7;">Doctor Profile</h2>
+    </div>
+    <p style="color: gray;">Manage your professional Information</p>
+  </div>
+  <div>
+    <button class="btn btn-success" type="submit" (click)="onSubmit()">💾 Save</button>
+  </div>
+</div>
+
+<form [formGroup]="profileForm" class=" pt-4 pb-4">
+
+  <div class="container">
+    <div class="sidebar">
+      <p>Profile Picture</p>
+      <div class="profile-pic">DS</div>
+    </div>
+
+    <div class="card p-3">
+      <h3>Basic Information</h3>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Doctor Name (AR)</label>
+          <input type="text" formControlName="doctorNameAR" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Doctor Name (EN)</label>
+          <input type="text" formControlName="doctorNameEN" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Email</label>
+          <input type="email" formControlName="email" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Phone</label>
+          <input type="text" formControlName="phoneNumber" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">License Number</label>
+          <input type="text" formControlName="licenseNumber" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Years of Experience</label>
+          <input type="number" formControlName="yearsOfExperience" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Specialist</label>
+          <input type="text" formControlName="doctorSpecialist" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Gender</label>
+          <input type="text" formControlName="gender" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Price</label>
+          <input type="number" formControlName="price" class="form-control">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="accordion mt-4 " id="accordionExample" formArrayName="addresses">
+    <div class="accordion-item" *ngFor="let addr of addresses.controls; let i = index" [formGroupName]="i">
+      <h2 class="accordion-header" id="heading{{i}}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#collapse'+i" aria-expanded="false" [attr.aria-controls]="'collapse'+i">
+          {{addr.value.addressName || ('Address ' + (i+1))}}
+        </button>
+      </h2>
+      <div [id]="'collapse'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading'+i"
+        data-bs-parent="#accordionExample">
+        <div class="accordion-body row g-3">
+
+          <div class="col-md-6">
+            <label class="form-label">Address Name</label>
+            <input type="text" class="form-control" formControlName="addressName">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Country</label>
+            <input type="text" class="form-control" formControlName="country">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">City</label>
+            <input type="text" class="form-control" formControlName="city">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Region</label>
+            <input type="text" class="form-control" formControlName="region">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Street</label>
+            <input type="text" class="form-control" formControlName="street">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Building No</label>
+            <input type="text" class="form-control" formControlName="buildingNumber">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Postal Code</label>
+            <input type="text" class="form-control" formControlName="postalCode">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Phone</label>
+            <input type="text" class="form-control" formControlName="phoneNumber">
+          </div>
+
+          <div class="col-12 mt-3 " formArrayName="availabilities">
+            <h5>Availabilities</h5>
+            <div *ngFor="let av of addr.get('availabilities')['controls']; let j = index" [formGroupName]="j">
+              <div class="col-md-4">
+                <label class="form-label">Day</label>
+                <select class="form-select" formControlName="dayOfWeek">
+                  <option *ngFor="let d of days" [value]="d.value">{{d.text}}</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Start Time</label>
+                <input type="time" class="form-control" formControlName="startTime">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">End Time</label>
+                <input type="time" class="form-control" formControlName="endTime">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

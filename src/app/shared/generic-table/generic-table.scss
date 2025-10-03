@@ -1,0 +1,17 @@
+table {
+  width: 100%;
+  height: 100%;
+
+}
+.bordered-table {
+  border: 2px solid #dee2e6; /* حدود حول الجدول بالكامل */
+  border-radius: 6px;        /* زوايا ناعمة */
+  overflow: hidden;          /* يمنع الجدول من كسر الحدود */
+}
+
+.bordered-table table {
+  width: 100%;
+  border-collapse: collapse; /* يضمن الجدول ما يكسرش البوردر */
+
+}
+

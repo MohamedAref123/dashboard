@@ -1,0 +1,22 @@
+.toast-container {
+  position: fixed;
+  top: 50%;   /* يبدأ تحت الهيدر */
+  right: 20px;
+  z-index: 5000;
+}
+
+.toast-message {
+  background-color: #28a745; /* أخضر للنجاح */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  min-width: 200px;
+}
+.toast-message.error {
+  background-color: #dc3545; /* أحمر للخطأ */
+}
+.toast-message.warning {
+  background-color: #ffc107; /* أصفر للتحذير */
+  color: #000;
+}
