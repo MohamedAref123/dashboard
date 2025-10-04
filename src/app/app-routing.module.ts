@@ -28,10 +28,7 @@ const routes: Routes = [
         path: 'profile',
         loadComponent: () => import('./pages/profile/profile').then((c) => c.Profile)
       },
-      {
-        path: 'addresses',
-        loadComponent: () => import('./pages/addrsses/addrsses').then((c) => c.Addrsses)
-      },
+
 
     ]
   },

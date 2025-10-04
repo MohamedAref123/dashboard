@@ -29,7 +29,7 @@ export class Profile implements OnInit {
       yearsOfExperience: [''],
       doctorSpecialist: [''],
       gender: [''],
-      price: [''],
+      price: [0],
       descriptionAR: [''],
       descriptionEN: [''],
       education: [''],
