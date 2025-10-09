@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     try {
       const decoded: any = jwtDecode(token);
       // assuming your claim is 'doctorId' or maybe 'sub', 'id', etc.
-      return decoded.loggedId || null;
+      return decoded.LoggedId || null;
     } catch (e) {
       console.error('Error decoding JWT:', e);
       return null;
