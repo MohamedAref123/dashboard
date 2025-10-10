@@ -5,6 +5,7 @@ import { Loader } from './shared/loader/loader';
 import { AppointmentSignalRService } from 'src/services/Hubs/AppointmentListenerService';
 import { ToastService } from 'src/services/ToastService';
 import { jwtDecode } from 'jwt-decode';
+import { DateHelper } from './shared/Helpers/DatesHelper';
 // project import
 
 @Component({
@@ -17,6 +18,8 @@ export class AppComponent implements OnInit {
   title = 'Doctor Hero Management';
   private signalR = inject(AppointmentSignalRService);
   private toaster = inject(ToastService);
+  private dateHelper = inject(DateHelper);
+
   ngOnInit() {
     const doctorId = this.getDoctorId(); // or get from AuthService / token
     if (doctorId === null) return;
@@ -24,7 +27,15 @@ export class AppComponent implements OnInit {
 
     // Global listener
     this.signalR.onAppointmentReceived((msg) => {
-      this.toaster.show(msg);
+      let date = new Date(msg.appointmentDate);
+      let time = msg.fromTime;
+
+      const convertidDate = this.dateHelper.combineDateAndTime(date, time);
+      this.toaster.showNavigation(
+        `New appointment from ${msg.patientName} \n at ${convertidDate} in ${msg.addressName}`,
+        `/appointments?appointmentId=${msg.appointmentId}`,
+        'success'
+      );
     });
   }
   getToken(): string | null {
