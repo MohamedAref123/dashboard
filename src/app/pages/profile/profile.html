@@ -88,48 +88,58 @@
           {{addr.value.addressName || ('Address ' + (i+1))}}
         </button>
       </h2>
+
+
       <div [id]="'collapse'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading'+i"
         data-bs-parent="#accordionExample">
         <div class="accordion-body row g-3">
-
+          <button type="button" style="justify-content: end;display: flex;" class="btn btn-sm"
+            (click)="onUpdateAddress(addr.value)">
+            <mat-icon role="img" aria-hidden="true" style="color: #673ab7; cursor: pointer">edit</mat-icon>
+          </button>
           <div class="col-md-6">
             <label class="form-label">Address Name</label>
-            <input type="text" class="form-control" formControlName="addressName">
+            <input type="text" class="form-control" formControlName="addressName" [readonly]="true">
           </div>
 
           <div class="col-md-6">
             <label class="form-label">Country</label>
-            <input type="text" class="form-control" formControlName="country">
+            <input type="text" class="form-control" formControlName="country" [readonly]="true">
           </div>
           <div class="col-md-6">
             <label class="form-label">City</label>
-            <input type="text" class="form-control" formControlName="city">
+            <input type="text" class="form-control" formControlName="city" [readonly]="true">
           </div>
           <div class="col-md-6">
             <label class="form-label">Region</label>
-            <input type="text" class="form-control" formControlName="region">
+            <input type="text" class="form-control" formControlName="region" [readonly]="true">
           </div>
           <div class="col-md-6">
             <label class="form-label">Street</label>
-            <input type="text" class="form-control" formControlName="street">
+            <input type="text" class="form-control" formControlName="street" [readonly]="true">
           </div>
           <div class="col-md-6">
             <label class="form-label">Building No</label>
-            <input type="text" class="form-control" formControlName="buildingNumber">
+            <input type="text" class="form-control" formControlName="buildingNumber" [readonly]="true">
           </div>
           <div class="col-md-6">
             <label class="form-label">Postal Code</label>
-            <input type="text" class="form-control" formControlName="postalCode">
+            <input type="text" class="form-control" formControlName="postalCode" [readonly]="true">
           </div>
           <div class="col-md-6">
             <label class="form-label">Phone</label>
-            <input type="text" class="form-control" formControlName="phoneNumber">
+            <input type="text" class="form-control" formControlName="phoneNumber" [readonly]="true">
           </div>
+
+          <label class="form-check-label mt-2">
+            <input type="checkbox" formControlName="isDeleted" class="form-check-input" [readonly]="true" />
+            Is Deleted
+          </label>
 
           <div class="col-12 mt-3 " formArrayName="availabilities">
             <h5>Availabilities</h5>
             <div *ngFor="let av of addr.get('availabilities')['controls']; let j = index" [formGroupName]="j"
-              style="display: flex;gap: 10px;">
+              style="display: flex;" class="row g-3">
               <div class="col-md-4">
                 <label class="form-label">Day</label>
                 <select class="form-select" formControlName="dayOfWeek">
@@ -138,14 +148,21 @@
               </div>
               <div class="col-md-4">
                 <label class="form-label">Start Time</label>
-                <input type="time" class="form-control" formControlName="startTime">
+                <input type="time" class="form-control" formControlName="startTime" [readonly]="true">
               </div>
               <div class="col-md-4">
                 <label class="form-label">End Time</label>
-                <input type="time" class="form-control" formControlName="endTime">
+                <input type="time" class="form-control" formControlName="endTime" [readonly]="true">
               </div>
+
+              <label class="form-check-label mt-2">
+                <input type="checkbox" formControlName="isDeleted" class="form-check-input" />
+                Is Deleted
+              </label>
+
             </div>
           </div>
+
 
         </div>
       </div>

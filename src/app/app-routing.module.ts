@@ -28,7 +28,10 @@ const routes: Routes = [
         path: 'profile',
         loadComponent: () => import('./pages/profile/profile').then((c) => c.Profile)
       },
-
+      {
+        path: 'edit-address',
+        loadComponent: () => import('./pages/edit-address-component/edit-address-component').then((c) => c.EditAddressComponent)
+      },
 
     ]
   },

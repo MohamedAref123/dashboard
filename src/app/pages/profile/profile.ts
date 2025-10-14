@@ -1,26 +1,29 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
+import { CommonModule, NgFor } from '@angular/common';
+import { addresses, userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { DoctorService } from 'src/services/doctor.service';
 import { ShardEnums, DaysOfWeek } from 'src/app/Models/shared/SharedClasses';
-
+import { MatIcon } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EditAddressComponent } from '../edit-address-component/edit-address-component';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgFor, MatIcon, MatDialogModule],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })
 export class Profile implements OnInit {
 
-
+  private dialog = inject(MatDialog);
   days = ShardEnums.getEnumOptions(DaysOfWeek);
   profileForm: FormGroup;
   doctorService = inject(DoctorService);
   fb = inject(FormBuilder);
   constructor() {
     this.profileForm = this.fb.group({
+      doctorId: [''],
       doctorNameAR: [''],
       doctorNameEN: [''],
       email: [''],
@@ -59,6 +62,7 @@ export class Profile implements OnInit {
       buildingNumber: [''],
       phoneNumber: [''],
       longitude: [''],
+      addressId: [''],
       latitude: [''],
       isDeleted: [false],
       availabilities: this.fb.array([])
@@ -104,7 +108,8 @@ export class Profile implements OnInit {
         phoneNumber: addr.phoneNumber,
         longitude: addr.longitude,
         latitude: addr.latitude,
-        isDeleted: addr.isDeleted
+        isDeleted: addr.isDeleted,
+        addressId: addr.addressId
       });
 
       const availArray = addrGroup.get('availabilities') as FormArray;
@@ -122,6 +127,20 @@ export class Profile implements OnInit {
       this.addresses.push(addrGroup);
     });
   }
+
+
+  onUpdateAddress(addr: addresses) {
+    console.log('Update Address:', addr);
+    const dialogRef = this.dialog.open(EditAddressComponent, {
+      width: '800px',
+      data: addr  // ✅ Pass the whole address object
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
+  }
+
 
   onSubmit() {
     console.log('Form Value:', this.profileForm.value);
