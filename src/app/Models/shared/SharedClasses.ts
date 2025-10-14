@@ -8,28 +8,33 @@ export enum DaysOfWeek {
   Saturday = 6
 }
 
-export enum Genders{
+export enum Genders {
   male,
   female
 }
 
-export class ShardEnums
-{
+export enum AppointmentStatus {
+  Pending = 0,
+  Confirmed = 1,
+  Cancelled = 2,
+  Completed = 3
+}
+export class ShardEnums {
   public static getEnumOptions<T extends object>(e: T): { text: string; value: number }[] {
-  return Object.keys(e)
-    .filter(k => isNaN(Number(k))) // keep only enum names
-    .map(k => ({
-      text: k,
-      value: (e as unknown)[k] as number
-    }));
-}
+    return Object.keys(e)
+      .filter((k) => isNaN(Number(k))) // keep only enum names
+      .map((k) => ({
+        text: k,
+        value: (e as unknown)[k] as number
+      }));
+  }
 
- public static getEnumstring<T extends object>(e: T): { text: string; value: string }[] {
-  return Object.keys(e)
-     .filter(k => isNaN(Number(k)))
-    .map(k => ({
-      text: k,
-      value: k
-    }));
-}
+  public static getEnumstring<T extends object>(e: T): { text: string; value: string }[] {
+    return Object.keys(e)
+      .filter((k) => isNaN(Number(k)))
+      .map((k) => ({
+        text: k,
+        value: k
+      }));
+  }
 }

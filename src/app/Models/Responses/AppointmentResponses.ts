@@ -1,3 +1,5 @@
+import { AppointmentStatus } from '../shared/SharedClasses';
+
 export class AppointmentDetailsResponse {
   doctorId: string;
   patientId: string;
@@ -8,4 +10,5 @@ export class AppointmentDetailsResponse {
   notes: string;
   dayOfWeek: string;
   addressName: string;
+  status: AppointmentStatus;
 }
