@@ -1,0 +1,99 @@
+<div class="card w-100 mx-auto h-100" style="margin-bottom: unset">
+  <div class="card-body d-flex flex-column h-100" *ngIf="form">
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate class="d-flex flex-column h-100">
+      <!-- Header -->
+      <h2 class="mb-4 text-center" style="color: #673ab7">Update Doctor Address</h2>
+
+      <!-- Scrollable Content -->
+      <div class="flex-grow-1 overflow-auto px-1">
+        <div *ngIf="isLoading" class="text-center my-3">
+          <div class="spinner-border text-secondary" role="status"></div>
+        </div>
+
+        <div *ngIf="!isLoading">
+          <div class="border p-3 mb-3 rounded">
+            <!-- Address Fields -->
+            <div class="row g-2">
+              <div class="col-md-6">
+                <input class="form-control" placeholder="Address Name" formControlName="addressName" />
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" placeholder="City" formControlName="city" />
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" placeholder="Region" formControlName="region" />
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" placeholder="Postal Code" formControlName="postalCode" />
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" placeholder="Street" formControlName="street" />
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" placeholder="Building Number" formControlName="buildingNumber" />
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" placeholder="Phone" formControlName="phoneNumber" />
+              </div>
+              <div class="col-md-6">
+                <input type="number" class="form-control" placeholder="Longitude" formControlName="longitude" />
+              </div>
+              <div class="col-md-6">
+                <input type="number" class="form-control" placeholder="Latitude" formControlName="latitude" />
+              </div>
+              <div class="col-md-6">
+                <div class="form-check mt-4">
+                  <input class="form-check-input" id="addresIsDeleted" type="checkbox" formControlName="isDeleted" />
+                  <label class="form-check-label" for="addresIsDeleted">Is Deleted</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Availabilities -->
+            <div class="d-flex align-items-center mt-3">
+              <h6 class="me-3">Availabilities</h6>
+              <button type="button" class="btn btn-secondary btn-light mb-2" (click)="addAvailability()">+</button>
+            </div>
+
+            <div formArrayName="availabilities">
+              <div *ngFor="let avail of getAvailabilities().controls; let j = index" [formGroupName]="j"
+                class="row g-2 align-items-center mb-2">
+                <div class="col-12 col-md-4">
+                  <mat-label>Day</mat-label>
+                  <mat-select formControlName="dayOfWeek" class="form-control">
+                    <mat-option *ngFor="let day of days" [value]="day.value">{{ day.text }}</mat-option>
+                  </mat-select>
+                </div>
+
+                <div class="col-12 col-md-4">
+                  <label class="form-label">Start Time</label>
+                  <input type="time" class="form-control" formControlName="startTime" />
+                </div>
+
+                <div class="col-12 col-md-4">
+                  <label class="form-label">End Time</label>
+                  <input type="time" class="form-control" formControlName="endTime" />
+                </div>
+                <br>
+                <div class="col-12 col-md-4">
+                  <div class="form-check mt-4">
+                    <input class="form-check-input" id="{{j}}" type="checkbox" formControlName="isDeleted" />
+                    <label class="form-check-label" for="{{j}}">Is Deleted</label>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="mt-3 d-flex gap-3 justify-content-end">
+        <button type="button" class="btn btn-light" (click)="dialogRef.close()">Cancel</button>
+        <button type="submit" class="btn btn-secondary">Update</button>
+      </div>
+    </form>
+  </div>
+</div>

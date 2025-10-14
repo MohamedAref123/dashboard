@@ -2,9 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { ApiService } from './Api.service';
 import { Observable } from 'rxjs';
 import { userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
+
 // import { DoctorCreateRequest } from 'src/app/Models/Doctor/DoctorCreateRequest';
 // import { Observable } from 'rxjs';
-// import { AddressResponse, DoctorDetailsResponse, DoctorSearchResponse, } from 'src/app/Models/Responses/DoctorResponses';
+import { AddressResponse, DoctorDetailsResponse } from 'src/app/Models/Responses/DoctorResponses';
 // import { DoctorUpdateRequest } from 'src/app/Models/Doctor/DoctorUpdateRequest';
 // import { UpdateAddressRequest } from 'src/app/Models/Doctor/AddressUpdateRequest';
 
@@ -22,21 +23,21 @@ export class DoctorService {
   //   return this.apiService.post<DoctorSearchResponse>(`Doctors/Search`, payload);
   // }
 
-  // getDoctorById(id: string, lang: string = 'en'): Observable<DoctorDetailsResponse> {
-  //   return this.apiService.get<DoctorDetailsResponse>(`Doctors/Get/${id}/${lang}`);
-  // }
+  getDoctorById(id: string, lang: string = 'en'): Observable<DoctorDetailsResponse> {
+    return this.apiService.get<DoctorDetailsResponse>(`Doctors/Get/${id}/${lang}`);
+  }
 
   // updateDoctor(payload: DoctorUpdateRequest) {
   //   return this.apiService.post<void>(`Doctors/Update`, payload);
   // }
 
-  // getAddressById(addressId: string): Observable<AddressResponse> {
-  //   // لو الـ API بتاعك query parameter:
-  //   return this.apiService.get<AddressResponse>(`DoctorAdresses/Get?addressId=${addressId}`);
+  getAddressById(addressId: string): Observable<AddressResponse> {
+    // لو الـ API بتاعك query parameter:
+    return this.apiService.get<AddressResponse>(`DoctorAdresses/Get?addressId=${addressId}`);
 
-  //   // أو لو backend بيقبل path param:
-  //   // return this.apiService.get<Address>(`DoctorAdresses/Get/${addressId}`);
-  // }
+    //   // أو لو backend بيقبل path param:
+    //   // return this.apiService.get<Address>(`DoctorAdresses/Get/${addressId}`);
+  }
 
   // getAddressesByDoctorId(doctorId: string) {
   //   return this.apiService.get<UpdateAddressRequest[]>(`DoctorAdresses/GetAll/${doctorId}`);
