@@ -8,9 +8,6 @@ import { userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 // import { DoctorUpdateRequest } from 'src/app/Models/Doctor/DoctorUpdateRequest';
 // import { UpdateAddressRequest } from 'src/app/Models/Doctor/AddressUpdateRequest';
 
-
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -25,12 +22,9 @@ export class DoctorService {
   //   return this.apiService.post<DoctorSearchResponse>(`Doctors/Search`, payload);
   // }
 
-
-
   // getDoctorById(id: string, lang: string = 'en'): Observable<DoctorDetailsResponse> {
   //   return this.apiService.get<DoctorDetailsResponse>(`Doctors/Get/${id}/${lang}`);
   // }
-
 
   // updateDoctor(payload: DoctorUpdateRequest) {
   //   return this.apiService.post<void>(`Doctors/Update`, payload);
@@ -52,15 +46,12 @@ export class DoctorService {
   //   return this.apiService.get<UpdateAddressRequest>(`DoctorAdresses/Get/${addressId}`);
   // }
 
-
   // // ✅ Update address
   // updateAddress(address: UpdateAddressRequest) {
   //   return this.apiService.post(`DoctorAdresses/Update`, address);
   // }
 
-
-  getuser(en: "en" | "ar"): Observable<userResponse> {
+  getuser(en: 'EN' | 'AR'): Observable<userResponse> {
     return this.apiService.get<userResponse>(`Doctors/GetCurrentDoctor/${en}`);
   }
-
 }

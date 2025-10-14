@@ -4,7 +4,6 @@ import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthGuard } from './auth.guard';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -13,12 +12,12 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: '/login',
-        pathMatch: 'full',
-
+        pathMatch: 'full'
       },
       {
         path: 'main',
-        canActivate: [AuthGuard], loadComponent: () => import('./demo/dashboard/default/default.component').then(m => m.DefaultComponent)
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./demo/dashboard/default/default.component').then((m) => m.DefaultComponent)
       },
       {
         path: 'main',
@@ -28,8 +27,11 @@ const routes: Routes = [
         path: 'profile',
         loadComponent: () => import('./pages/profile/profile').then((c) => c.Profile)
       },
-
-
+      {
+        path: 'appointments/view/:id',
+        loadComponent: () =>
+          import('./pages/Appointment/appointment-view-component/appointment-view-component').then((c) => c.AppointmentViewComponent)
+      }
     ]
   },
   {
@@ -52,4 +54,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

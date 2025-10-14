@@ -1,0 +1,40 @@
+<div class="appointment-card card total-income-card warning overflow-hidden" *ngIf="model">
+  <div class="appointment-header">
+    <h2>Appointment Details</h2>
+    <span class="day-chip">{{ model.dayOfWeek }}</span>
+  </div>
+
+  <div class="appointment-body">
+    <div class="appointment-item">
+      <span class="label">Patient:</span>
+      <span class="value">{{ model.patientName }}</span>
+    </div>
+
+    <div class="appointment-item">
+      <span class="label">Date:</span>
+      <span class="value">{{ model.appointmentDate | date: 'dd-MM-yyyy' }}</span>
+    </div>
+
+    <div class="appointment-item">
+      <span class="label">Time:</span>
+      <span class="value">{{ model.fromTime | slice:0:5 }} - {{ model.toTime | slice:0:5 }}</span>
+    </div>
+
+    <div class="appointment-item">
+      <span class="label">Address:</span>
+      <span class="value">{{ model.addressName }}</span>
+    </div>
+
+    <div class="appointment-item notes" *ngIf="model.notes">
+      <span class="label">Notes:</span>
+      <p class="note-text">{{ model.notes }}</p>
+    </div>
+  </div>
+
+  <div class="appointment-footer">
+    <button class="btn-back" (click)="back()">
+      <span class="material-icons">arrow_back</span>
+      Back
+    </button>
+  </div>
+</div>

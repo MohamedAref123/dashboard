@@ -13,8 +13,6 @@ import { ShardEnums, DaysOfWeek } from 'src/app/Models/shared/SharedClasses';
   styleUrl: './profile.scss'
 })
 export class Profile implements OnInit {
-
-
   days = ShardEnums.getEnumOptions(DaysOfWeek);
   profileForm: FormGroup;
   doctorService = inject(DoctorService);
@@ -38,7 +36,7 @@ export class Profile implements OnInit {
   }
 
   ngOnInit(): void {
-    this.doctorService.getuser("en").subscribe((res: userResponse) => {
+    this.doctorService.getuser('EN').subscribe((res: userResponse) => {
       console.log('API Response:', res);
       this.patchForm(res);
     });
@@ -91,7 +89,7 @@ export class Profile implements OnInit {
     });
 
     this.addresses.clear();
-    user.addresses.forEach(addr => {
+    user.addresses.forEach((addr) => {
       const addrGroup = this.createAddressGroup();
       addrGroup.patchValue({
         addressName: addr.addressName,
@@ -108,7 +106,7 @@ export class Profile implements OnInit {
       });
 
       const availArray = addrGroup.get('availabilities') as FormArray;
-      addr.availabilities.forEach(av => {
+      addr.availabilities.forEach((av) => {
         const avGroup = this.createAvailabilityGroup();
         avGroup.patchValue({
           dayOfWeek: av.dayOfWeek,

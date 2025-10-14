@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
       const convertidDate = this.dateHelper.combineDateAndTime(date, time);
       this.toaster.showNavigation(
         `New appointment from ${msg.patientName} \n at ${convertidDate} in ${msg.addressName}`,
-        `/appointments?appointmentId=${msg.appointmentId}`,
+        `/appointments/view/${msg.appointmentId}`,
         'success'
       );
     });
