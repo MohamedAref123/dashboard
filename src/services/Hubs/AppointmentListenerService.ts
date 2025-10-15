@@ -28,7 +28,7 @@ export class AppointmentSignalRService {
       .catch((err) => console.error('SignalR connection error:', err));
   }
 
-  onAppointmentReceived(callback: (message: any) => void) {
+  onAppointmentReceived(callback: (message: string) => void) {
     if (!this.hubConnection) {
       console.warn('Hub connection not started yet');
       return;

@@ -6,7 +6,9 @@ import { AppointmentSignalRService } from 'src/services/Hubs/AppointmentListener
 import { ToastService } from 'src/services/ToastService';
 import { jwtDecode } from 'jwt-decode';
 // project import
-
+interface JwtPayload {
+  LoggedId?: string;
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -30,12 +32,13 @@ export class AppComponent implements OnInit {
   getToken(): string | null {
     return localStorage.getItem('access_token');
   }
+
   getDoctorId(): string | null {
     const token = this.getToken();
     if (!token) return null;
 
     try {
-      const decoded: any = jwtDecode(token);
+      const decoded = jwtDecode<JwtPayload>(token);
       // assuming your claim is 'doctorId' or maybe 'sub', 'id', etc.
       return decoded.LoggedId || null;
     } catch (e) {

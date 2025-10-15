@@ -4,13 +4,13 @@ import { CommonModule, NgFor } from '@angular/common';
 import { addresses, userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { DoctorService } from 'src/services/doctor.service';
 import { ShardEnums, DaysOfWeek } from 'src/app/Models/shared/SharedClasses';
-import { MatIcon } from '@angular/material/icon';
+
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditAddressComponent } from '../edit-address-component/edit-address-component';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgFor, MatIcon, MatDialogModule],
+  imports: [CommonModule, ReactiveFormsModule, NgFor, MatDialogModule],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })
