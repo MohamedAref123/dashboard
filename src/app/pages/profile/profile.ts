@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, NgFor } from '@angular/common';
-import { addresses, userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
+import { DoctorAddress, userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { DoctorService } from 'src/services/doctor.service';
 import { ShardEnums, DaysOfWeek } from 'src/app/Models/shared/SharedClasses';
 import { MatIcon } from '@angular/material/icon';
@@ -20,65 +20,52 @@ export class Profile implements OnInit {
   profileForm: FormGroup;
   doctorService = inject(DoctorService);
   fb = inject(FormBuilder);
-  constructor() {
-    this.profileForm = this.fb.group({
-      doctorId: [''],
-      doctorNameAR: [''],
-      doctorNameEN: [''],
-      email: [''],
-      phoneNumber: [''],
-      licenseNumber: [''],
-      yearsOfExperience: [''],
-      doctorSpecialist: [''],
-      gender: [''],
-      price: [0],
-      descriptionAR: [''],
-      descriptionEN: [''],
-      education: [''],
-      addresses: this.fb.array([])
-    });
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
-      console.log('API Response:', res);
       this.patchForm(res);
     });
   }
 
-  get addresses(): FormArray {
+  get getAddresses(): FormArray {
     return this.profileForm.get('addresses') as FormArray;
   }
 
-  private createAddressGroup(): FormGroup {
-    return this.fb.group({
-      addressName: [''],
-      country: [''],
-      city: [''],
-      region: [''],
-      postalCode: [''],
-      street: [''],
-      buildingNumber: [''],
-      phoneNumber: [''],
-      longitude: [''],
-      addressId: [''],
-      latitude: [''],
-      isDeleted: [false],
-      availabilities: this.fb.array([])
-    });
-  }
-
-  private createAvailabilityGroup(): FormGroup {
-    return this.fb.group({
-      dayOfWeek: [''],
-      startTime: [''],
-      endTime: [''],
-      isDeleted: [false]
-    });
+  private createAddressesArray(addresses: DoctorAddress[]): FormArray {
+    return this.fb.array(
+      addresses.map((address) =>
+        this.fb.group({
+          addressName: [address.addressName],
+          country: [address.country],
+          city: [address.city],
+          region: [address.region],
+          postalCode: [address.postalCode],
+          street: [address.street],
+          buildingNumber: [address.buildingNumber],
+          phoneNumber: [address.phoneNumber],
+          longitude: [address.longitude],
+          addressId: [address.addressId],
+          latitude: [address.latitude],
+          isDeleted: [address.isDeleted],
+          availabilities: this.fb.array(
+            (address.availabilities || []).map((av) =>
+              this.fb.group({
+                dayOfWeek: [av.dayOfWeek],
+                startTime: [av.startTime],
+                endTime: [av.endTime],
+                isDeleted: [av.isDeleted]
+              })
+            )
+          )
+        })
+      )
+    );
   }
 
   private patchForm(user: userResponse) {
-    this.profileForm.patchValue({
+    debugger;
+    this.profileForm = this.fb.group({
       doctorNameAR: user.doctorNameAR,
       doctorNameEN: user.doctorNameEN,
       email: user.email,
@@ -90,45 +77,12 @@ export class Profile implements OnInit {
       price: user.price,
       descriptionAR: user.descriptionAR,
       descriptionEN: user.descriptionEN,
-      education: user.education
-    });
-
-    this.addresses.clear();
-    user.addresses.forEach((addr) => {
-      const addrGroup = this.createAddressGroup();
-      addrGroup.patchValue({
-        addressName: addr.addressName,
-        country: addr.country,
-        city: addr.city,
-        region: addr.region,
-        postalCode: addr.postalCode,
-        street: addr.street,
-        buildingNumber: addr.buildingNumber,
-        phoneNumber: addr.phoneNumber,
-        longitude: addr.longitude,
-        latitude: addr.latitude,
-        isDeleted: addr.isDeleted,
-        addressId: addr.addressId
-      });
-
-      const availArray = addrGroup.get('availabilities') as FormArray;
-      addr.availabilities.forEach((av) => {
-        const avGroup = this.createAvailabilityGroup();
-        avGroup.patchValue({
-          dayOfWeek: av.dayOfWeek,
-          startTime: av.startTime,
-          endTime: av.endTime,
-          isDeleted: av.isDeleted
-        });
-        availArray.push(avGroup);
-      });
-
-      this.addresses.push(addrGroup);
+      education: user.education,
+      addresses: this.createAddressesArray(user.addresses)
     });
   }
 
-  onUpdateAddress(addr: addresses) {
-    console.log('Update Address:', addr);
+  onUpdateAddress(addr: DoctorAddress) {
     const dialogRef = this.dialog.open(EditAddressComponent, {
       width: '800px',
       data: addr // ✅ Pass the whole address object
