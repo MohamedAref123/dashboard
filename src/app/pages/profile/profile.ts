@@ -88,9 +88,7 @@ export class Profile implements OnInit {
       data: addr // ✅ Pass the whole address object
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   onSubmit() {
