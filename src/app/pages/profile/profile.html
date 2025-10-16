@@ -12,14 +12,10 @@
   </button>
 </div>
 
-
-
-
 <form [formGroup]="profileForm" class="pt-4 pb-4">
-  <div class=" earning-card warning overflow-hidden rounded">
+  <div class="earning-card warning overflow-hidden rounded">
     <span class="round secondary-round small"></span>
     <span class="round secondary-round big"></span>
-
 
     <div class="container">
       <div class="sidebar">
@@ -89,15 +85,32 @@
     <div class="accordion mt-4" id="accordionExample" formArrayName="addresses">
       <div class="accordion-item" *ngFor="let addr of addresses.controls; let i = index" [formGroupName]="i">
         <h2 class="accordion-header" id="heading{{i}}">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse'+i"
-            aria-expanded="true" [attr.aria-controls]="'collapse'+i"
-            style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            [attr.data-bs-target]="'#collapse'+i"
+            aria-expanded="true"
+            [attr.aria-controls]="'collapse'+i"
+            style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7"
+          >
             {{addr.value.addressName || ('Address ' + (i+1))}}
           </button>
         </h2>
-        <div [id]="'collapse'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading'+i"
-          data-bs-parent="#accordionExample">
+
+        <div
+          [id]="'collapse'+i"
+          class="accordion-collapse collapse"
+          [attr.aria-labelledby]="'heading'+i"
+          data-bs-parent="#accordionExample"
+        >
           <div class="accordion-body row g-3">
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-sm" (click)="onUpdateAddress(addr.value)">
+                <mat-icon role="img" aria-hidden="true" style="color: #673ab7; cursor: pointer">edit</mat-icon>
+              </button>
+            </div>
+
             <div class="col-md-6">
               <label class="form-label">Address Name</label>
               <input type="text" class="form-control" formControlName="addressName" />
@@ -134,8 +147,11 @@
 
             <div class="col-12 mt-3" formArrayName="availabilities">
               <h5>Availabilities</h5>
-              <div *ngFor="let av of addr.get('availabilities')['controls']; let j = index" [formGroupName]="j"
-                style="display: flex; gap: 10px">
+              <div
+                *ngFor="let av of addr.get('availabilities')['controls']; let j = index"
+                [formGroupName]="j"
+                style="display: flex; gap: 10px"
+              >
                 <div class="col-md-4">
                   <label class="form-label">Day</label>
                   <select class="form-select" formControlName="dayOfWeek">
@@ -152,6 +168,11 @@
                 </div>
               </div>
             </div>
+
+            <label class="form-check-label mt-2">
+              <input type="checkbox" formControlName="isDeleted" class="form-check-input" />
+              Is Deleted
+            </label>
           </div>
         </div>
       </div>
