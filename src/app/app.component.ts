@@ -7,7 +7,9 @@ import { ToastService } from 'src/services/ToastService';
 import { jwtDecode } from 'jwt-decode';
 import { DateHelper } from './shared/Helpers/DatesHelper';
 // project import
-
+interface JwtPayload {
+  LoggedId?: string; // أو doctorId حسب السيرفر
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -27,8 +29,8 @@ export class AppComponent implements OnInit {
 
     // Global listener
     this.signalR.onAppointmentReceived((msg) => {
-      let date = new Date(msg.appointmentDate);
-      let time = msg.fromTime;
+      const date = new Date(msg.appointmentDate);
+      const time = msg.fromTime;
 
       const convertidDate = this.dateHelper.combineDateAndTime(date, time);
       this.toaster.showNavigation(
@@ -46,7 +48,7 @@ export class AppComponent implements OnInit {
     if (!token) return null;
 
     try {
-      const decoded: any = jwtDecode(token);
+      const decoded = jwtDecode<JwtPayload>(token);
       // assuming your claim is 'doctorId' or maybe 'sub', 'id', etc.
       return decoded.LoggedId || null;
     } catch (e) {

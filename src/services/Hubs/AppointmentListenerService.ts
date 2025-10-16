@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { environment } from 'src/environments/environment';
+export interface AppointmentMessage {
+  appointmentId: string;
+  patientName: string;
+  appointmentDate: string;
+  fromTime: string;
+  addressName: string;
+}
 
 @Injectable({
   providedIn: 'root' // 👈 ensures it's a single instance for the whole app
@@ -28,7 +35,7 @@ export class AppointmentSignalRService {
       .catch((err) => console.error('SignalR connection error:', err));
   }
 
-  onAppointmentReceived(callback: (message: any) => void) {
+  onAppointmentReceived(callback: (message: AppointmentMessage) => void) {
     if (!this.hubConnection) {
       console.warn('Hub connection not started yet');
       return;
