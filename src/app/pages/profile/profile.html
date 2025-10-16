@@ -86,9 +86,16 @@
           {{addr.value.addressName || ('Address ' + (i+1))}}
         </button>
       </h2>
+
       <div [id]="'collapse'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading'+i"
         data-bs-parent="#accordionExample">
         <div class="accordion-body row g-3">
+
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-sm" (click)="onUpdateAddress(addr.value)">
+              <mat-icon role="img" aria-hidden="true" style="color: #673ab7; cursor: pointer">edit</mat-icon>
+            </button>
+          </div>
 
           <div class="col-md-6">
             <label class="form-label">Address Name</label>
@@ -147,13 +154,13 @@
                 <label class="form-label">End Time</label>
                 <input type="time" class="form-control" formControlName="endTime">
               </div>
-
-              <label class="form-check-label mt-2">
-                <input type="checkbox" formControlName="isDeleted" class="form-check-input" />
-                Is Deleted
-              </label>
-
             </div>
+
+
+            <label class="form-check-label mt-2">
+              <input type="checkbox" formControlName="isDeleted" class="form-check-input" />
+              Is Deleted
+            </label>
           </div>
 
         </div>

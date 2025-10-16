@@ -7,10 +7,11 @@ import { ShardEnums, DaysOfWeek } from 'src/app/Models/shared/SharedClasses';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditAddressComponent } from '../edit-address-component/edit-address-component';
+import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgFor, MatDialogModule],
+  imports: [CommonModule, ReactiveFormsModule, NgFor, MatDialogModule, MatIcon],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })
