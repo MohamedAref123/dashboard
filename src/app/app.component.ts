@@ -29,15 +29,7 @@ export class AppComponent implements OnInit {
 
     // Global listener
     this.signalR.onAppointmentReceived((msg) => {
-      const date = new Date(msg.appointmentDate);
-      const time = msg.fromTime;
-
-      const convertidDate = this.dateHelper.combineDateAndTime(date, time);
-      this.toaster.showNavigation(
-        `New appointment from ${msg.patientName} \n at ${convertidDate} in ${msg.addressName}`,
-        `/appointments/view/${msg.appointmentId}`,
-        'success'
-      );
+      this.toaster.showNavigation(`${msg.message}`, `/appointments/view/${msg.appointmentId}`, msg.type);
     });
   }
   getToken(): string | null {

@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
+import { AppointmentMessage } from 'src/app/Models/AppointmentMessages/AppointmentMessages';
 import { environment } from 'src/environments/environment';
-export interface AppointmentMessage {
-  appointmentId: string;
-  patientName: string;
-  appointmentDate: string;
-  fromTime: string;
-  addressName: string;
-}
 
 @Injectable({
   providedIn: 'root' // 👈 ensures it's a single instance for the whole app
@@ -20,7 +14,7 @@ export class AppointmentSignalRService {
     if (this.isConnected) return; // 👈 prevents reconnecting on every page change
 
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${this.baseUrl}/hubs/appointments?doctorId=${doctorId}`, {
+      .withUrl(`${this.baseUrl}/hubs/appointments?loggedId=${doctorId}`, {
         withCredentials: true // 👈 this is what triggers AllowCredentials
       })
       .withAutomaticReconnect() // 👈 auto reconnect if connection drops

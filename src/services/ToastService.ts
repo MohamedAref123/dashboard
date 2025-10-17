@@ -29,7 +29,7 @@ export class ToastService {
   /**
    * 👇 NEW METHOD: Show clickable toast that navigates to a route
    */
-  showNavigation(message: string, route: string, type: 'success' | 'error' | 'info' = 'info', duration = 5000) {
+  showNavigation(message: string, route: string, type: string, duration = 5000) {
     const snackRef = this.snackBar.open(message, 'View', {
       duration,
       panelClass: [`toast-${type}`, 'toast-clickable']
