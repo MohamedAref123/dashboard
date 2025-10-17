@@ -1,0 +1,30 @@
+<div class="container card p-3 mt-4">
+  <h2 style="color: #673ab7;margin-bottom: 15px;">Search Appointments by Date</h2>
+
+  <form [formGroup]="searchForm" (ngSubmit)="searchAppointments()" style="margin-bottom: 20px;">
+    <div class="row">
+
+      <div class="col-md-5">
+        <label class="form-label" style="color: gray;">From Date</label>
+        <input type="date" class="form-control" formControlName="fromDate" />
+      </div>
+
+      <div class="col-md-5">
+        <label class="form-label" style="color: gray;">To Date</label>
+        <input type="date" class="form-control" formControlName="toDate" />
+      </div>
+
+      <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-secondary  w-100">Search</button>
+      </div>
+    </div>
+  </form>
+
+  <app-generic-table [_headers]="headers" [_items]="appointments" [_actions]="tableActions"
+    (actionClicked)="handleAction($event)" class="mt-4" *ngIf="appointments.length>0">
+  </app-generic-table>
+
+  <div class="mt-4" *ngIf="appointments.length === 0">
+    <p>No appointments found.</p>
+  </div>
+</div>

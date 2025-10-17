@@ -30,7 +30,8 @@ export interface DoctorDetailsResponse {
 }
 
 export interface AddressResponse {
-  addressName:string
+
+  addressName: string
   addressId: string;
   doctorId: string;
   country: string;

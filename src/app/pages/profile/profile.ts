@@ -7,6 +7,10 @@ import { ShardEnums, DaysOfWeek } from 'src/app/Models/shared/SharedClasses';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditAddressComponent } from '../edit-address-component/edit-address-component';
+import { ToastService } from 'src/services/ToastService';
+import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -20,7 +24,9 @@ export class Profile implements OnInit {
   profileForm: FormGroup;
   doctorService = inject(DoctorService);
   fb = inject(FormBuilder);
-  constructor() {}
+  toast = inject(ToastService);
+  router = inject(Router)
+  constructor() { }
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
@@ -47,10 +53,12 @@ export class Profile implements OnInit {
           longitude: [address.longitude],
           addressId: [address.addressId],
           latitude: [address.latitude],
-          isDeleted: [address.isDeleted],
+          //isDeleted: [address.isDeleted],
           availabilities: this.fb.array(
             (address.availabilities || []).map((av) =>
               this.fb.group({
+                addressId: [av.addressId],
+                doctorAvailabilityId: [av.doctorAvailabilityId],
                 dayOfWeek: [av.dayOfWeek],
                 startTime: [av.startTime],
                 endTime: [av.endTime],
@@ -64,8 +72,11 @@ export class Profile implements OnInit {
   }
 
   private patchForm(user: userResponse) {
-    debugger;
+
     this.profileForm = this.fb.group({
+      doctorId: user.doctorId,
+
+      doctorSpecialistId: user.doctorSpecialistId,
       doctorNameAR: user.doctorNameAR,
       doctorNameEN: user.doctorNameEN,
       email: user.email,
@@ -85,13 +96,30 @@ export class Profile implements OnInit {
   onUpdateAddress(addr: DoctorAddress) {
     const dialogRef = this.dialog.open(EditAddressComponent, {
       width: '800px',
-      data: addr // ✅ Pass the whole address object
+      data: {
+        ...addr,
+        doctorId: this.profileForm.get('doctorId')?.value   // ✅ إضافة doctorId هنا
+      }
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { console.log('The dialog was closed', result); });
   }
 
   onSubmit() {
+
     console.log('Form Value:', this.profileForm.value);
+    this.doctorService.updateDoctor(this.profileForm.value).subscribe({
+      next: () => {
+        this.toast.success('Profile updated successfully!');
+      },
+      error: (err) => {
+        console.log('Error updating doctor:', err);
+        this.toast.error('❌ Failed to update doctor');
+      }
+    });
+  }
+
+  goToAppointments() {
+    this.router.navigate(['/appointments' + '/' + this.profileForm.get('doctorId')?.value]);
   }
 }

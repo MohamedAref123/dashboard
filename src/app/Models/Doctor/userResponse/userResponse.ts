@@ -1,4 +1,5 @@
 export interface userResponse {
+
   doctorId: string;
   doctorSpecialistId: string;
   doctorSpecialist: string;
@@ -22,6 +23,7 @@ export interface userResponse {
 }
 
 export interface DoctorAddress {
+
   country: string;
   city: string;
   region: string;

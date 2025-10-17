@@ -2,21 +2,20 @@
   <table mat-table [dataSource]="dataSource">
 
     <!-- Dynamic Columns -->
-    <ng-container *ngFor="let column of _headers" [matColumnDef]="column.key">
+    <ng-container *ngFor=" let column of _headers" [matColumnDef]="column.key">
       <th mat-header-cell *matHeaderCellDef style="text-align: center; font-size: larger;
-      font-family: cursive;
-      background-color: rgb(228, 224, 234);">
+            font-family: cursive;background-color: rgb(228, 224, 234) ;">
         {{ column.label }}
       </th>
-      <td mat-cell *matCellDef="let element" style="text-align: center;">
 
+      <td mat-cell *matCellDef="let element" style="text-align: center;font-size: larger ">
         <!-- لو القيمة Boolean -->
         <ng-container *ngIf="element[column.key] === true">
-          <mat-icon style="color: green;">check_circle</mat-icon>
+          <mat-icon style="color: green;">done</mat-icon>
         </ng-container>
 
         <ng-container *ngIf="element[column.key] === false">
-          <mat-icon style="color: red;">cancel</mat-icon>
+          <mat-icon style="color: red;">close</mat-icon>
         </ng-container>
 
         <!-- لو مش Boolean -->
@@ -30,25 +29,48 @@
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions" *ngIf="_actions.length > 0">
-      <th mat-header-cell *matHeaderCellDef style="text-align: start;width: 25%;
-      font-family: cursive;
-      background-color: rgb(228, 224, 234);"> Actions </th>
+      <th mat-header-cell *matHeaderCellDef
+        style="text-align: start;font-family: cursive;background-color: rgb(228, 224, 234);font-size: larger">
+        Actions
+      </th>
 
-      <td mat-cell *matCellDef="let row" style="text-align: start;">
-        <ng-container *ngFor="let action of _actions">
+      <td mat-cell *matCellDef="let row">
+        <!-- زرار الثلاث نقط -->
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
 
-          <!-- نخفي زرار delete لو الشرط متحقق -->
-          <button mat-button [color]="action.color || 'primary'" (click)="onActionClick(row, action.action)"
-            *ngIf="!(action.action === 'delete' && row.isDeleted === true)">
-            <mat-icon *ngIf="action.icon" [ngStyle]="{ color: action.action === 'delete' ? 'red' : '' }">
-              {{ action.icon }}
-            </mat-icon>
-          </button>
+        <!-- القائمة -->
+        <mat-menu #menu="matMenu">
+          <ng-container *ngFor="let action of _actions">
 
-        </ng-container>
+            <button mat-menu-item (click)="onActionClick(row, action.action)">
+              <span style="justify-content: center; display: flex;">
+
+                <!-- حالة التفعيل والتعطيل -->
+                <ng-container *ngIf="action.action === 'isActive'">
+                  {{ row.isActive ? 'Deactivate' : 'Activate' }}
+                </ng-container>
+
+                <!-- حالة الحذف والاسترجاع -->
+                <ng-container *ngIf="action.action === 'delete'">
+                  {{ row.isDeleted ? 'Restore' : 'Delete' }}
+                </ng-container>
+
+                <!-- باقي الأزرار -->
+                <ng-container *ngIf="action.action !== 'isActive' && action.action !== 'delete'">
+                  {{ action.label }}
+                </ng-container>
+
+              </span>
+            </button>
+
+          </ng-container>
+        </mat-menu>
+
+
       </td>
     </ng-container>
-
 
     <!-- Table rows -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

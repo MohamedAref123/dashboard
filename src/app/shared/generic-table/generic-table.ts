@@ -3,7 +3,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -14,7 +14,7 @@ export interface TableHeader {
 @Component({
   selector: 'app-generic-table',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, CommonModule, MatIconModule, MatButtonModule,],
+  imports: [MatTableModule, MatPaginatorModule, CommonModule, MatIconModule, MatButtonModule, MatMenuModule],
   templateUrl: './generic-table.html',
   styleUrl: './generic-table.scss'
 })

@@ -35,6 +35,11 @@ const routes: Routes = [
         path: 'appointments/view/:id',
         loadComponent: () =>
           import('./pages/Appointment/appointment-view-component/appointment-view-component').then((c) => c.AppointmentViewComponent)
+      },
+      {
+        path: 'appointments/:userId',
+        loadComponent: () =>
+          import('./pages/Appointment/appontment-component/appontment-component').then((c) => c.AppontmentComponent)
       }
     ]
   },
@@ -58,4 +63,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
