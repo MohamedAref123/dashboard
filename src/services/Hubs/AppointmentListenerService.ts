@@ -14,7 +14,7 @@ export class AppointmentSignalRService {
     if (this.isConnected) return; // 👈 prevents reconnecting on every page change
 
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${this.baseUrl}/hubs/appointments?loggedId=${doctorId}`, {
+      .withUrl(`${this.baseUrl}/hubs/messages?loggedId=${doctorId}`, {
         withCredentials: true // 👈 this is what triggers AllowCredentials
       })
       .withAutomaticReconnect() // 👈 auto reconnect if connection drops

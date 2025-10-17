@@ -5,7 +5,6 @@ import { Loader } from './shared/loader/loader';
 import { AppointmentSignalRService } from 'src/services/Hubs/AppointmentListenerService';
 import { ToastService } from 'src/services/ToastService';
 import { jwtDecode } from 'jwt-decode';
-import { DateHelper } from './shared/Helpers/DatesHelper';
 // project import
 interface JwtPayload {
   LoggedId?: string; // أو doctorId حسب السيرفر
@@ -20,7 +19,6 @@ export class AppComponent implements OnInit {
   title = 'Doctor Hero Management';
   private signalR = inject(AppointmentSignalRService);
   private toaster = inject(ToastService);
-  private dateHelper = inject(DateHelper);
 
   ngOnInit() {
     const doctorId = this.getDoctorId(); // or get from AuthService / token
