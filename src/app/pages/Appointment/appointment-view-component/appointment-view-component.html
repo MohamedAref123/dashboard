@@ -1,4 +1,4 @@
-<div class="appointment-card earning-card warning overflow-hidden " *ngIf="model">
+<div class="appointment-card earning-card warning overflow-hidden" *ngIf="model">
   <span class="round secondary-round small"></span>
   <span class="round secondary-round big"></span>
 
@@ -12,6 +12,11 @@
       <div class="appointment-item">
         <span class="label">Patient:</span>
         <span class="value">{{ model.patientName }}</span>
+      </div>
+
+      <div class="appointment-item">
+        <span class="label">Phone Number:</span>
+        <span class="value">{{ model.patientPhoneNumber }}</span>
       </div>
 
       <div class="appointment-item">
@@ -30,19 +35,17 @@
         <span class="value">{{ model.addressName }}</span>
       </div>
 
+
+
       <div class="appointment-item notes" *ngIf="model.notes">
         <span class="label">Notes:</span>
         <p class="note-text">{{ model.notes }}</p>
 
       </div>
 
-      <div class="mb-3 d-flex align-items-center  ">
-        <label for="statusDropdown" class="label" style="color: gray;margin-right: 10px;">Status:</label>
-        <select id="statusDropdown" class="form-select" [(ngModel)]=" selectedStatus">
-          <option *ngFor="let status of statusOptions" [value]="status">
-            {{ status }}
-          </option>
-        </select>
+      <div class=" appointment-item">
+        <label class="label">Status:</label>
+        <p class="note-text">{{ selectedStatus }}</p>
       </div>
 
 
@@ -54,6 +57,29 @@
     <button class="btn-back" (click)="back()">
       <span class="material-icons">arrow_back</span>
       Back
+    </button>
+  </div>
+
+
+
+  <div class="mb-3 d-flex align-items-center" *ngIf="getAllowedActions().length > 0">
+
+
+    <button *ngFor="let action of getAllowedActions()" class="btn me-2 d-flex align-items-center justify-content-center"
+      [ngStyle]="{
+            'background-color': action === 'Completed' ? '#28a745' :
+                                action === 'Confirmed' ? '#673ab7' :
+                                action === 'Cancelled' ? '#dc3545' : '#6c757d',
+            'color': 'white',
+            'border-radius': '5px',
+            'padding': '6px 12px',
+            'font-weight': '500'
+          }" (click)="changeStatus(action)">
+
+      <span style="margin-right: 5px; font-size: 16px;">
+        {{ action === 'Cancelled' ? '✕' : '✓' }}
+      </span>
+      {{ action }}
     </button>
   </div>
 

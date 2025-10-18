@@ -5,11 +5,13 @@ export class AppointmentDetailsResponse {
   patientId: string;
   patientName: string;
   appointmentDate: Date;
+  appointmentId: string;
   fromTime: string;
   toTime: string;
   notes: string;
   dayOfWeek: string;
   addressName: string;
+  patientPhoneNumber: string;
   status: AppointmentStatus;
 }
 
@@ -25,7 +27,7 @@ export interface AppointmentSummary {
   appointmentId: string;
   patientName: string;
   time: string;
-  appointmentDate: Date;
+  appointmentDate: string;
   dayOfWeek: string;
   addressName: string;
   appointmentType: number;

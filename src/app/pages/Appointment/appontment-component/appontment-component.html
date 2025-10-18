@@ -1,27 +1,39 @@
-<div class="container card p-3 mt-4">
-  <h2 style="color: #673ab7;margin-bottom: 15px;">Search Appointments by Date</h2>
-
+<div class="container card p-3 mt-4 ">
+  <div class="d-flex">
+    <h2 style="color: #673ab7;margin-bottom: 15px; margin-right: 10px;">Search Appointments by Date</h2>
+    <i class="ti ti-alarm icon-animate" style="font-size: 25px; color: #673ab7;"></i>
+  </div>
   <form [formGroup]="searchForm" (ngSubmit)="searchAppointments()" style="margin-bottom: 20px;">
     <div class="row">
 
-      <div class="col-md-5">
+      <div class="col-md-4">
         <label class="form-label" style="color: gray;">From Date</label>
         <input type="date" class="form-control" formControlName="fromDate" />
       </div>
 
-      <div class="col-md-5">
+      <div class="col-md-4">
         <label class="form-label" style="color: gray;">To Date</label>
         <input type="date" class="form-control" formControlName="toDate" />
       </div>
 
-      <div class="col-md-2 d-flex align-items-end">
-        <button type="submit" class="btn btn-secondary  w-100">Search</button>
+      <div class="col-md-4">
+        <label class="form-label" style="color: gray;">Status</label>
+        <select class="form-control" formControlName="status">
+          <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+        </select>
+      </div>
+
+
+      <div class="col-md-2 d-flex align-items-end mt-3">
+        <button type="submit" class="btn btn-secondary btn-search  w-100">Search</button>
       </div>
     </div>
   </form>
 
   <app-generic-table [_headers]="headers" [_items]="appointments" [_actions]="tableActions"
-    (actionClicked)="handleAction($event)" class="mt-4" *ngIf="appointments.length>0">
+    (actionClicked)="handleAction($event)" (pageChange)="onPageChange($event)" [pageSize]="pagenation.pageSize"
+    [totalRecords]="pagenation.totalRecords" [pageIndex]="pagenation.pageIndex" class="mt-4"
+    *ngIf="appointments.length>0">
   </app-generic-table>
 
   <div class="mt-4" *ngIf="appointments.length === 0">

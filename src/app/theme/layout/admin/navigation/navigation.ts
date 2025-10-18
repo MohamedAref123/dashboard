@@ -40,7 +40,15 @@ export const NavigationItems: NavigationItem[] = [
         icon: 'ti ti-user',
         breadcrumbs: false
       },
-
+      {
+        id: 'appointment',
+        title: 'appointment',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/appointments/:id',
+        icon: 'ti ti-user',
+        breadcrumbs: false
+      },
     ]
   },
 

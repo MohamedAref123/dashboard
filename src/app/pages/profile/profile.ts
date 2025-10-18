@@ -119,7 +119,4 @@ export class Profile implements OnInit {
     });
   }
 
-  goToAppointments() {
-    this.router.navigate(['/appointments' + '/' + this.profileForm.get('doctorId')?.value]);
-  }
 }

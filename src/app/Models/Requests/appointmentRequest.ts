@@ -1,7 +1,8 @@
-export interface AppointmentRequest {
+export interface AppointmentSearchRequest {
   pageSize: number;
   pageIndex: number;
   appointmentType: number;
+  totalRecords: number;
   status: number;
   userId: string;
   lang: string;

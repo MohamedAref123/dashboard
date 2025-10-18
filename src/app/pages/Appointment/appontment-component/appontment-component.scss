@@ -1,7 +1,30 @@
 .container {
-  max-width: 800px;
+  max-width: 1000px;
 }
 
 button {
   margin-top: 8px;
+}
+
+.btn-search {
+  background: linear-gradient(45deg, #673ab7, #512da8);
+  border: none;
+  color: white;
+  padding: 8px 22px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 15px rgba(103, 58, 183, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 }

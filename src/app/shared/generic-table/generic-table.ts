@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -18,13 +18,12 @@ export interface TableHeader {
   templateUrl: './generic-table.html',
   styleUrl: './generic-table.scss'
 })
-export class GenericTable<T> implements AfterViewInit, OnChanges {
-
+export class GenericTable<T> implements OnChanges {
   //@Input() _headers:string[]=[];
   // Example mapping
   @Input() _headers: TableHeader[] = [];
 
-  @Input() _items: T[] = [];   // This should be more specific based on your data structure
+  @Input() _items: T[] = []; // This should be more specific based on your data structure
 
   @Input() _actions: TableAction[] = [];
 
@@ -39,24 +38,18 @@ export class GenericTable<T> implements AfterViewInit, OnChanges {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnChanges(changes: SimpleChanges): void {
-
     if (changes['_items']) {
-      this.dataSource.data = this._items;   // <-- refresh datasource
+      this.dataSource.data = this._items; // <-- refresh datasource
     }
     if (changes['_headers'] || changes['_actions']) {
-      this.displayedColumns = this._headers.map(h => h.key);
+      this.displayedColumns = this._headers.map((h) => h.key);
     }
     if (changes['_actions'] && this._actions.length > 0) {
-      this.displayedColumns = [...this.displayedColumns, 'actions'];  // 👈 نضيف عمود للأزرار
+      this.displayedColumns = [...this.displayedColumns, 'actions']; // 👈 نضيف عمود للأزرار
     }
   }
 
 
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-
-  }
 
   onPageChange(event: PageEvent) {
     this.pageChange.emit(event);
@@ -69,14 +62,11 @@ export class GenericTable<T> implements AfterViewInit, OnChanges {
   }
 
   @Output() actionClicked = new EventEmitter<{ row: T; action: string }>();
-
-
 }
 
-
 export interface TableAction {
-  icon?: string;          // اسم الايقونة (اختياري)
-  label: string;          // اسم الزر
-  color?: string;         // لون الزر
-  action: string;         // key يميز الزر (delete / edit .. إلخ)
+  icon?: string; // اسم الايقونة (اختياري)
+  label: string; // اسم الزر
+  color?: string; // لون الزر
+  action: string; // key يميز الزر (delete / edit .. إلخ)
 }
