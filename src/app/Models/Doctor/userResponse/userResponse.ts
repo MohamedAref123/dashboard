@@ -1,5 +1,8 @@
+import { InsurancesResponse } from "../../Responses/insurancesResponse";
+
 export interface userResponse {
 
+  insurance: InsurancesResponse;
   doctorId: string;
   doctorSpecialistId: string;
   doctorSpecialist: string;
@@ -26,6 +29,8 @@ export interface DoctorAddress {
 
   country: string;
   city: string;
+  cityId: string;
+  regionId: string;
   region: string;
   postalCode: string;
   street: string;

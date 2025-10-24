@@ -31,6 +31,8 @@ export interface DoctorDetailsResponse {
 
 export interface AddressResponse {
 
+  cityId: string;
+  regionId: string;
   addressName: string
   addressId: string;
   doctorId: string;

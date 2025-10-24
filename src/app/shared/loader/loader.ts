@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Loaderservice } from 'src/services/loaderservice';
 
 @Component({
@@ -8,7 +8,12 @@ import { Loaderservice } from 'src/services/loaderservice';
   templateUrl: './loader.html',
   styleUrl: './loader.scss'
 })
-export class Loader {
-private loaderService = inject(Loaderservice);
+export class Loader implements AfterViewInit {
+  private loaderService = inject(Loaderservice);
   isLoading$ = this.loaderService.loading$;
+
+  cdr = inject(ChangeDetectorRef);
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+  }
 }

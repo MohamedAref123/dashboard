@@ -141,3 +141,13 @@ body {
 h2 {
   font-family: cursive;
 }
+
+/* دعم RTL */
+[dir='rtl'] {
+  text-align: right;
+  direction: rtl;
+}
+[dir='ltr'] {
+  text-align: left;
+  direction: ltr;
+}

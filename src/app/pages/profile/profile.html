@@ -60,14 +60,47 @@
               <label class="form-label">Specialist</label>
               <input type="text" formControlName="doctorSpecialist" class="form-control" />
             </div>
+
+
+
             <div class="col-md-4">
               <label class="form-label">Gender</label>
-              <input type="text" formControlName="gender" class="form-control" />
+              <select class="form-select" formControlName="gender">
+                <option *ngFor="let g of genders" [value]="g.value">{{ g.text }}</option>
+              </select>
+              <app-validation-error [form]="profileForm" controlName="gender"></app-validation-error>
             </div>
+
+
             <div class="col-md-4">
               <label class="form-label">Price</label>
               <input type="number" formControlName="price" class="form-control" />
             </div>
+
+            <div class="col-md-6">
+              <mat-label>Insurance</mat-label>
+              <mat-select formControlName="insuranceId" class="form-control mt-2"
+                (selectionChange)="onInsuranceChange($event.value)">
+                <!-- ✅ Custom trigger shows selected insurance with icon -->
+                <mat-select-trigger *ngIf="selectedInsurance">
+                  <img [src]="'data:image/png;base64,' + selectedInsurance.icon"
+                    class="img-thumbnail rounded-circle me-2" width="40" height="40" alt="Selected Insurance Icon" />
+                  {{ selectedInsurance.text }}
+                </mat-select-trigger>
+
+                <mat-option value="" disabled>select insurance</mat-option>
+
+                <mat-option *ngFor="let insurance of insurances" [value]="insurance.value">
+                  <img [src]="'data:image/png;base64,' + insurance.icon" class="img-thumbnail rounded-circle me-2"
+                    width="40" height="40" alt="Insurance Icon" />
+                  {{ insurance.text }}
+                </mat-option>
+              </mat-select>
+
+              <app-validation-error [form]="profileForm" controlName="insuranceId"></app-validation-error>
+            </div>
+
+
           </div>
         </div>
       </div>
@@ -77,10 +110,12 @@
         <div class="card w-50 p-3">
           <label class="form-label">Description (AR)</label>
           <input type="text" formControlName="descriptionAR" class="form-control" />
+          <app-validation-error [form]="profileForm" controlName="descriptionAR"></app-validation-error>
         </div>
         <div class="card w-50 p-3">
           <label class="form-label">Description (EN)</label>
           <input type="text" formControlName="descriptionEN" class="form-control" />
+          <app-validation-error [form]="profileForm" controlName="descriptionEN"></app-validation-error>
         </div>
       </div>
 

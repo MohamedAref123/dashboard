@@ -19,10 +19,22 @@
               </div>
 
               <div class="col-md-6">
-                <input class="form-control" placeholder="City" formControlName="city" />
+                <select class="form-control" formControlName="cityId"
+                  (change)="loadRegions('en', $event.target['value'])">
+                  <option value="" disabled selected>Select City</option>
+                  <option *ngFor="let c of city" [value]="c.value">
+                    {{ c.text }}
+                  </option>
+                </select>
+
               </div>
               <div class="col-md-6">
-                <input class="form-control" placeholder="Region" formControlName="region" />
+                <select class="form-control" formControlName="regionId">
+                  <option value="" disabled selected>Select Region</option>
+                  <option *ngFor="let r of regions" [value]="r.value">
+                    {{ r.text }}
+                  </option>
+                </select>
               </div>
               <div class="col-md-6">
                 <input class="form-control" placeholder="Postal Code" formControlName="postalCode" />

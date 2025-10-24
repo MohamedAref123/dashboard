@@ -45,7 +45,7 @@ export const NavigationItems: NavigationItem[] = [
         title: 'appointment',
         type: 'item',
         classes: 'nav-item',
-        url: '/appointments/:id',
+        url: '/appointments',
         icon: 'ti ti-user',
         breadcrumbs: false
       },

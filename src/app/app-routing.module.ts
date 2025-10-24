@@ -37,7 +37,7 @@ const routes: Routes = [
           import('./pages/Appointment/appointment-view-component/appointment-view-component').then((c) => c.AppointmentViewComponent)
       },
       {
-        path: 'appointments/:userId',
+        path: 'appointments',
         loadComponent: () =>
           import('./pages/Appointment/appontment-component/appontment-component').then((c) => c.AppontmentComponent)
       }

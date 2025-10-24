@@ -5,10 +5,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatLabel, MatOption, MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { UpdateAddressRequest } from 'src/app/Models/Doctor/AddressUpdateRequest';
+import { cityResponse } from 'src/app/Models/Responses/CityResponse';
 
 import { AddressResponse, AvailabilityResponse } from 'src/app/Models/Responses/DoctorResponses';
+import { RegionResponse } from 'src/app/Models/Responses/RegionResponse';
 import { ShardEnums, DaysOfWeek } from 'src/app/Models/shared/SharedClasses';
 import { timeRangeValidator } from 'src/app/shared/validation-error/validation-error';
+import { CountryService } from 'src/services/country.service';
 import { DoctorService } from 'src/services/doctor.service';
 import { ToastService } from 'src/services/ToastService';
 
@@ -31,13 +34,55 @@ export class EditAddressComponent implements OnInit {
   form: FormGroup = this.fb.group({});
   days = ShardEnums.getEnumOptions(DaysOfWeek);
   route = inject(ActivatedRoute)
+  countryService = inject(CountryService);
+  city: cityResponse[] = [];
+  regions: RegionResponse[] = [];
+
+
+
+  loadRegions(lang: string, cityId: string): void {
+    this.countryService.getRegions(lang, cityId).subscribe({
+      next: (data) => {
+        this.regions = data;
+        console.log('Regions data:', this.regions);
+      },
+      error: (err) => console.error('Failed to load regions:', err)
+    });
+  }
+
+
 
   ngOnInit(): void {
-    console.log("Dialog Data:", this.addressData); // ✅ اطبع البيانات المستلمة
-    this.form = this.createAddressGroup(this.addressData);
-    this.addressId = this.addressData.addressId;
+    this.isLoading = true;
 
+    this.countryService.getCountries("en", "EGYPT").subscribe({
+      next: (data) => {
+        this.city = data;
+
+        if (this.addressData) {
+          // ✅ أنشئ الفورم مرة واحدة
+          this.form = this.createAddressGroup(this.addressData);
+
+          // ✅ إذا كان في cityId نحمل regions
+          if (this.addressData.cityId) {
+            this.loadRegions('en', this.addressData.cityId);
+          }
+        }
+
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load countries:', err);
+        this.isLoading = false;
+      }
+    });
+
+    console.log("Dialog Data:", this.addressData);
+    this.addressId = this.addressData.addressId;
   }
+
+
+
 
   createAddressGroup(address?: AddressResponse): FormGroup {
     return this.fb.group({
@@ -45,7 +90,9 @@ export class EditAddressComponent implements OnInit {
       addressId: [address?.addressId || null],  // ✅ fixed here
       addressName: [address?.addressName, Validators.required],
       city: [address?.city, Validators.required],
-      region: [address?.region, Validators.required],
+      rigion: [address?.region, Validators.required],
+      cityId: [address?.cityId, Validators.required],
+      regionId: [address?.regionId, Validators.required],
       postalCode: [address?.postalCode, Validators.required],
       street: [address?.street, Validators.required],
       buildingNumber: [address?.buildingNumber, Validators.required],
