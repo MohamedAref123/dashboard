@@ -1,13 +1,9 @@
-<app-navigation
-  class="coded-navbar pc-sidebar"
-  [ngClass]="{
+<app-navigation class="coded-navbar pc-sidebar" [ngClass]="{
     'navbar-collapsed': navCollapsed,
     horizontal: currentLayout === 'horizontal',
     compact: currentLayout === 'compact',
     'mob-open': navCollapsedMob
-  }"
-  (NavCollapsedMob)="navMobClick()"
-/>
+  }" (NavCollapsedMob)="navMobClick()" />
 <app-nav-bar (NavCollapse)="this.navCollapsed = !this.navCollapsed" (NavCollapsedMob)="navMobClick()" />
 <div class="pc-container">
   <div class="coded-wrapper">
@@ -29,17 +25,26 @@
     <div class="row">
       <div class="col my-1">
         <p class="m-0">
-          Copyright &copy;
+          {{ 'FOOTER.COPYRIGHT' | translate }} &copy;
           <a href="https://hgtechnologygroup.net/" target="_blank">HG Technology</a>
         </p>
       </div>
       <div class="col-auto my-1">
         <ul class="list-inline footer-link mb-0">
-          <li class="list-inline-item"><a href="https://hgtechnologygroup.net/" target="_blank">Home</a></li>
-          <li class="list-inline-item"><a href="https://hgtechnologygroup.net/about-us" target="_blank">About us</a></li>
+          <li class="list-inline-item me-4">
+            <a href="https://hgtechnologygroup.net/" target="_blank">
+              {{ 'FOOTER.HOME' | translate }}
+            </a>
+          </li>
+          <li class="list-inline-item me-4">
+            <a href="https://hgtechnologygroup.net/about-us" target="_blank">
+              {{ 'FOOTER.ABOUT_US' | translate }}
+            </a>
+          </li>
         </ul>
       </div>
     </div>
   </div>
 </footer>
+
 <app-configuration />

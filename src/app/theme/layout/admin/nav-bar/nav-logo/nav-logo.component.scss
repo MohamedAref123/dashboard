@@ -1,1 +1,56 @@
 // This file is intentionally left empty to allow customers to add custom CSS if needed.
+.logo {
+  width: 80px;
+  height: 80px;
+}
+
+/* ====== Brand Logo Style ====== */
+.b-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* مسافة بين الصورة والنص */
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  //background: #fff;
+  transition: all 0.3s ease;
+}
+
+.b-brand:hover {
+  transform: translateY(-2px);
+  cursor: pointer;
+  // box-shadow: 0 4px 12px rgba(103, 58, 183, 0.15);
+}
+
+/* ====== Logo Image ====== */
+.b-brand .logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #f4f4f9;
+  transition: transform 0.3s ease;
+}
+
+.b-brand:hover .logo {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+/* ====== Logo Text ====== */
+.b-brand p {
+  font-size: 20px;
+  font-weight: 600;
+  color: #673ab7; /* نفس لون الثيم لديك */
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.b-brand:hover p {
+  color: #512da8;
+}
+
+/* ====== دعم RTL ====== */
+html[dir='rtl'] .b-brand {
+  flex-direction: row-reverse;
+  text-align: right;
+}

@@ -5,10 +5,11 @@ import { RouterModule } from '@angular/router';
 
 // Project import
 import { NavigationItem } from '../../navigation';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-nav-item',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule],
   templateUrl: './nav-item.component.html',
   styleUrl: './nav-item.component.scss'
 })

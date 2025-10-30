@@ -7,10 +7,11 @@ import { NavigationItem } from '../../navigation';
 
 import { NavCollapseComponent } from '../nav-collapse/nav-collapse.component';
 import { NavItemComponent } from '../nav-item/nav-item.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-nav-group',
-  imports: [CommonModule, NavCollapseComponent, NavItemComponent],
+  imports: [CommonModule, NavCollapseComponent, NavItemComponent, TranslateModule],
   templateUrl: './nav-group.component.html',
   styleUrl: './nav-group.component.scss'
 })

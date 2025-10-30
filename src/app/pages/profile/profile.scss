@@ -16,28 +16,33 @@ body {
   grid-template-columns: repeat(2, 1fr);
 }
 .sidebar {
-  width: 250px;
+  background-color: #f9f9fb;
+  border-radius: 12px;
   padding: 20px;
-  margin-bottom: 20px;
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+  width: 50%;
 }
-.sidebar button {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  background: #f2f2f2;
+
+.sidebar img {
+  border: 3px solid #6f42c1;
+  transition: transform 0.3s;
+}
+
+.sidebar img:hover {
+  transform: scale(1.05);
+}
+
+.sidebar .btn {
+  background-color: #6f42c1;
   border: none;
-  margin-bottom: 5px;
-  cursor: pointer;
-  text-align: left;
-  border-radius: 6px;
+  width: 100%;
 }
-.sidebar .active {
-  background: #000;
-  color: #fff;
+
+.sidebar .btn:hover {
+  background-color: #56329a;
 }
+
 .profile-pic {
   width: 120px;
   height: 120px;
@@ -84,17 +89,6 @@ body.berry-dark .nav-tabs .nav-link,
 body.berry-dark .tab-content {
   box-shadow: none !important;
   background: none !important;
-}
-
-.earning-card {
-  .round {
-    &.secondary-round {
-      background: #4527a0;
-    }
-    &.primary-round {
-      background: #1565c0;
-    }
-  }
 }
 
 .total-income-card {
@@ -162,3 +156,24 @@ body.berry-dark .tab-content {
     }
   }
 }
+
+// .earning-card {
+//   .round {
+//     &.secondary-round {
+//       background: #4527a0;
+//     }
+//     &.primary-round {
+//       background: #1565c0;
+//     }
+//   }
+// }
+
+// [dir='rtl'] .earning-card .round.secondary-round.small {
+//   right: auto;
+//   left: 10px;
+// }
+
+// [dir='rtl'] .earning-card .round.secondary-round.big {
+//   right: auto;
+//   left: 40px;
+// }

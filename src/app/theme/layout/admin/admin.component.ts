@@ -11,10 +11,13 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { BreadcrumbComponent } from '../../shared/components/breadcrumbs/breadcrumbs.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, NavigationComponent, NavBarComponent, ConfigurationComponent, RouterModule, BreadcrumbComponent],
+  imports: [CommonModule, NavigationComponent, NavBarComponent,
+    NgbDropdownModule, ConfigurationComponent, RouterModule, BreadcrumbComponent, TranslateModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
@@ -22,6 +25,7 @@ export class AdminComponent implements AfterViewInit {
   private location = inject(Location);
   private locationStrategy = inject(LocationStrategy);
   cdr = inject(ChangeDetectorRef);
+  translate = inject(TranslateService)
 
   // public props
   currentLayout!: string;
@@ -32,6 +36,12 @@ export class AdminComponent implements AfterViewInit {
   // Constructor
 
   // life cycle hook
+
+  constructor() {
+    this.translate.addLangs(['en', 'ar']);
+    this.translate.setDefaultLang('en'); // لغة افتراضية
+    this.translate.use('en'); // تغيير اللغة الحالية إلى الإنجليزية
+  }
 
   ngAfterViewInit() {
     let current_url = this.location.path();

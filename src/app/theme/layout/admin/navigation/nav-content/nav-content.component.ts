@@ -15,10 +15,11 @@ import { NavItemComponent } from './nav-item/nav-item.component';
 
 // NgScrollbarModule
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-nav-content',
-  imports: [RouterModule, NavCollapseComponent, NavGroupComponent, NavItemComponent, SharedModule],
+  imports: [RouterModule, NavCollapseComponent, NavGroupComponent, NavItemComponent, SharedModule, TranslateModule],
   templateUrl: './nav-content.component.html',
   styleUrl: './nav-content.component.scss'
 })

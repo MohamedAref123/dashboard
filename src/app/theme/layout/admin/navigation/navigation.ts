@@ -18,13 +18,13 @@ export interface NavigationItem {
 export const NavigationItems: NavigationItem[] = [
   {
     id: 'dashboard',
-    title: 'HealthCare Management',
+    title: 'MENU.GROUP',
     type: 'group',
     icon: 'icon-navigation',
     children: [
       {
         id: 'default',
-        title: 'Dashboard',
+        title: 'MENU.DASHBOARD',
         type: 'item',
         classes: 'nav-item',
         url: '/main',
@@ -33,7 +33,7 @@ export const NavigationItems: NavigationItem[] = [
       },
       {
         id: 'profile',
-        title: 'profile',
+        title: 'MENU.PROFILE',
         type: 'item',
         classes: 'nav-item',
         url: '/profile',
@@ -42,15 +42,14 @@ export const NavigationItems: NavigationItem[] = [
       },
       {
         id: 'appointment',
-        title: 'appointment',
+        title: 'MENU.APPOINTMENT',
         type: 'item',
         classes: 'nav-item',
         url: '/appointments',
-        icon: 'ti ti-user',
+        icon: 'ti ti-calendar',
         breadcrumbs: false
-      },
+      }
     ]
-  },
-
-
+  }
 ];
+

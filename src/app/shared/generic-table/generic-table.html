@@ -2,14 +2,14 @@
   <table mat-table [dataSource]="dataSource">
 
     <!-- Dynamic Columns -->
-    <ng-container *ngFor=" let column of _headers" [matColumnDef]="column.key">
-      <th mat-header-cell *matHeaderCellDef style="text-align: center; font-size: larger;
-            font-family: cursive;background-color: rgb(228, 224, 234) ;">
-        {{ column.label }}
+    <ng-container *ngFor="let column of _headers" [matColumnDef]="column.key">
+      <th mat-header-cell *matHeaderCellDef
+        style="text-align: center; font-size: larger; font-family: cursive; background-color: rgb(228, 224, 234);">
+        {{ column.label | translate }}
       </th>
 
-      <td mat-cell *matCellDef="let element" style="text-align: center;font-size: larger ">
-        <!-- لو القيمة Boolean -->
+      <td mat-cell *matCellDef="let element" style="text-align: center; font-size: larger;">
+        <!-- ✅ Boolean values -->
         <ng-container *ngIf="element[column.key] === true">
           <mat-icon style="color: green;">done</mat-icon>
         </ng-container>
@@ -18,68 +18,52 @@
           <mat-icon style="color: red;">close</mat-icon>
         </ng-container>
 
-        <!-- لو مش Boolean -->
+        <!-- ✅ Other values -->
         <ng-container *ngIf="element[column.key] !== true && element[column.key] !== false">
-          {{ element[column.key] }}
+          {{ getTranslatedValue(column.key, element[column.key]) }}
         </ng-container>
-
       </td>
     </ng-container>
-
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions" *ngIf="_actions.length > 0">
       <th mat-header-cell *matHeaderCellDef
-        style="text-align: start;font-family: cursive;background-color: rgb(228, 224, 234);font-size: larger">
-        Actions
+        style="text-align: center; font-family: cursive; background-color: rgb(228, 224, 234); font-size: larger">
+        {{ 'BUTTONS.ACTIONS' | translate }}
       </th>
 
-      <td mat-cell *matCellDef="let row">
-        <!-- زرار الثلاث نقط -->
+      <td mat-cell *matCellDef="let row" style="text-align: center;">
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
 
-        <!-- القائمة -->
         <mat-menu #menu="matMenu">
           <ng-container *ngFor="let action of _actions">
-
             <button mat-menu-item (click)="onActionClick(row, action.action)">
-              <span style="justify-content: center; display: flex;">
-
-                <!-- حالة التفعيل والتعطيل -->
+              <span style="display: flex; justify-content: center;">
                 <ng-container *ngIf="action.action === 'isActive'">
-                  {{ row.isActive ? 'Deactivate' : 'Activate' }}
+                  {{ row.isActive ? ('BUTTONS.DEACTIVATE' | translate) : ('BUTTONS.ACTIVATE' | translate) }}
                 </ng-container>
 
-                <!-- حالة الحذف والاسترجاع -->
                 <ng-container *ngIf="action.action === 'delete'">
-                  {{ row.isDeleted ? 'Restore' : 'Delete' }}
+                  {{ row.isDeleted ? ('BUTTONS.RESTORE' | translate) : ('BUTTONS.DELETE' | translate) }}
                 </ng-container>
 
-                <!-- باقي الأزرار -->
                 <ng-container *ngIf="action.action !== 'isActive' && action.action !== 'delete'">
-                  {{ action.label }}
+                  {{ action.label | translate }}
                 </ng-container>
-
               </span>
             </button>
-
           </ng-container>
         </mat-menu>
-
-
       </td>
     </ng-container>
 
-    <!-- Table rows -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-  <!-- Paginator -->
   <mat-paginator [length]="totalRecords" [pageSize]="pageSize" [pageIndex]="pageIndex"
-    [pageSizeOptions]="[5, 10, 20, 50]" (page)="onPageChange($event)" showFirstLastButtons
-    aria-label="Select page of elements">
+    [pageSizeOptions]="[5, 10, 20, 50]" (page)="onPageChange($event)" showFirstLastButtons>
   </mat-paginator>
 </div>

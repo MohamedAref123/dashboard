@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 export interface TableHeader {
   key: string;
@@ -14,7 +15,7 @@ export interface TableHeader {
 @Component({
   selector: 'app-generic-table',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, CommonModule, MatIconModule, MatButtonModule, MatMenuModule],
+  imports: [MatTableModule, MatPaginatorModule, CommonModule, MatIconModule, TranslateModule, MatButtonModule, MatMenuModule],
   templateUrl: './generic-table.html',
   styleUrl: './generic-table.scss'
 })
@@ -36,6 +37,34 @@ export class GenericTable<T> implements OnChanges {
   dataSource = new MatTableDataSource<T>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  private translate = inject(TranslateService)
+  getTranslatedValue(key: string, value: string) {
+    if (key.toLowerCase().includes('status'))
+      return this.translate.instant('STATUS.' + value.toUpperCase());
+    if (key.toLowerCase().includes('day'))
+      return this.translate.instant('DAYS.' + value.toUpperCase());
+    return this.translate.instant(value);
+  }
+
+
+
+  constructor() {
+    this.translate.addLangs(['en', 'ar']);
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+    const lang = localStorage.getItem('lang') || 'en';
+    this.changeLang(lang);
+  }
+  changeLang(lang: string) {
+    this.translate.use(lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    localStorage.setItem('lang', lang);
+  }
+  switchLang(lang: string) {
+    this.translate.use(lang);
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['_items']) {

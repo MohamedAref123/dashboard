@@ -9,10 +9,11 @@ import { AppointmentStatus } from 'src/app/Models/shared/SharedClasses';
 import { DateHelper } from 'src/app/shared/Helpers/DatesHelper';
 import { PageEvent } from '@angular/material/paginator';
 import { AppointmentSearchRequest } from 'src/app/Models/Requests/appointmentRequest';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-appontment-component',
-  imports: [ReactiveFormsModule, FormsModule, NgIf, GenericTable, NgForOf],
+  imports: [ReactiveFormsModule, FormsModule, NgIf, GenericTable, NgForOf, TranslateModule],
   templateUrl: './appontment-component.html',
   styleUrl: './appontment-component.scss'
 })
@@ -29,17 +30,19 @@ export class AppontmentComponent implements OnInit {
   private dateHelper = inject(DateHelper);
   searchModel!: AppointmentSearchRequest;
 
+
   headers = [
-    { key: 'patientName', label: 'Patient' },
-    { key: 'formattedDate', label: 'Date' },
-    { key: 'time', label: 'Time' },
-    { key: 'dayOfWeek', label: 'Day' },
-    { key: 'addressName', label: 'Address' },
-    { key: 'statusText', label: 'Status' }
+    { key: 'patientName', label: 'APPOINTMENT.PATIENT' },
+    { key: 'formattedDate', label: 'APPOINTMENT.DATE' },
+    { key: 'time', label: 'APPOINTMENT.TIME' },
+    { key: 'dayOfWeek', label: 'APPOINTMENT.DAY' },
+    { key: 'addressName', label: 'APPOINTMENT.ADDRESS' },
+    { key: 'statusText', label: 'APPOINTMENT.STATUS' }
   ];
 
+
   tableActions: TableAction[] = [
-    { icon: 'visibility', label: 'View', color: 'primary', action: 'view' }
+    { icon: 'visibility', label: 'BUTTONS.VIEW', color: 'primary', action: 'view' }
   ];
 
   pagenation = {
@@ -47,8 +50,11 @@ export class AppontmentComponent implements OnInit {
     pageIndex: 0,
     totalRecords: 0
   };
+  constructor() {
 
-  constructor() { }
+  }
+
+
 
   ngOnInit(): void {
     const today = new Date();
@@ -69,10 +75,14 @@ export class AppontmentComponent implements OnInit {
     });
 
     // Populate status dropdown
-    this.statusOptions = Object.keys(AppointmentStatus).filter(key => isNaN(Number(key)));
+    this.statusOptions = Object.keys(AppointmentStatus).filter(k => isNaN(Number(k)));
+    console.log(this.statusOptions); // يجب أن تظهر ["Pending", "Confirmed", "Cancelled", "Completed"]
+
 
     this.searchAppointments();
   }
+
+
 
   searchAppointments(): void {
     this.searchModel = this.searchForm.value as AppointmentSearchRequest;

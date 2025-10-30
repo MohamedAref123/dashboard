@@ -8,12 +8,16 @@ import { userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { AddressResponse, DoctorDetailsResponse } from 'src/app/Models/Responses/DoctorResponses';
 import { DoctorUpdateRequest } from 'src/app/Models/Doctor/DoctorUpdateRequest';
 import { UpdateAddressRequest } from 'src/app/Models/Doctor/AddressUpdateRequest';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DoctorService {
   private apiService = inject(ApiService);
+  private http = inject(HttpClient)
+  private readonly uploadUrl = 'http://attachments.hgtechnologygroup.net/api/v1/ProfileMedia/Upload';
 
   // public createDoctor(request: DoctorCreateRequest): Observable<void> {
   //   return this.apiService.post<void>('Doctors/Create', request);
@@ -28,7 +32,7 @@ export class DoctorService {
   }
 
   updateDoctor(payload: DoctorUpdateRequest) {
-    return this.apiService.post<void>(`Doctors/Update`, payload);
+    return this.apiService.post<void>(`Doctors/UpdateCurrent`, payload);
   }
 
   getAddressById(addressId: string): Observable<AddressResponse> {
@@ -55,4 +59,35 @@ export class DoctorService {
   getuser(en: 'EN' | 'AR'): Observable<userResponse> {
     return this.apiService.get<userResponse>(`Doctors/GetCurrentDoctor/${en}`);
   }
+
+
+
+  uploadDoctorImage(
+    profileId: string,
+    file: File,
+    lang: string = 'en'
+  ): Observable<imageResponse> {
+    const formData = new FormData();
+    formData.append('ProfileId', profileId); // ✅ مثل ما في الـ cURL
+    formData.append('Lang', lang);
+    formData.append('Image', file);
+
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      throw new Error('Missing authorization token.');
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.post<imageResponse>(
+      this.uploadUrl,
+      formData,
+      { headers }
+    );
+  }
+
+
+
 }

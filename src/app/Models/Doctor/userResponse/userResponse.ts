@@ -11,17 +11,16 @@ export interface userResponse {
   normalizedName: string;
   descriptionAR: string;
   descriptionEN: string;
-  image: string;
+  profileImagePath: string;
+  image: string,
   licenseNumber: string;
   education: string;
   yearsOfExperience: number;
   email: string;
   gender: string;
   price: number;
-
   phoneNumber: string;
   isActive: boolean;
-
   addresses: DoctorAddress[];
 }
 

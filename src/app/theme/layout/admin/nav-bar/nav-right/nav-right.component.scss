@@ -1,3 +1,9 @@
 .me-0 {
   margin: 0 0 0 16px !important;
 }
+/* Fix dropdown position in RTL */
+.dropdown-item.active-lang {
+  //background-color: #e0e0e0; /* رمادي فاتح */
+  color: gray; /* لون النص */
+  font-weight: 600;
+}

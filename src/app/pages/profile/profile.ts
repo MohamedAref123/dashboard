@@ -13,13 +13,18 @@ import { arabicOnlyValidator, englishOnlyValidator, ValidationError } from 'src/
 import { MatLabel, MatOption, MatSelectModule } from "@angular/material/select";
 import { InsurancesResponse } from 'src/app/Models/Responses/insurancesResponse';
 import { InsuransesService } from 'src/services/insuranses.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { DoctorSpecialistService } from 'src/services/DoctorSpecialistService';
+import { DoctorSpecialistResponse } from 'src/app/Models/Responses/DoctorSpecialistResponses';
+import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
 
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatSelectModule, NgFor, MatIcon, MatDialogModule, ValidationError, MatLabel, MatOption],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule,
+    MatSelectModule, NgFor, MatIcon, MatDialogModule, ValidationError, MatLabel, MatOption],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })
@@ -32,22 +37,48 @@ export class Profile implements OnInit {
   fb = inject(FormBuilder);
   toast = inject(ToastService);
   router = inject(Router)
+  private translate = inject(TranslateService)
 
   insurances: InsurancesResponse[] = [];
 
   insuranceService = inject(InsuransesService);
   selectedInsurance: InsurancesResponse = null;
 
+  doctorSpecialistService = inject(DoctorSpecialistService);
+  specialists: DoctorSpecialistResponse[] = [];
 
+  selectedFile: File | null = null;
+  previewUrl: string | ArrayBuffer | null = null;
+  profileImageUrl: string | null = null;
+  doctorId: string = ''; // ✅ لحفظ الـ id
+
+
+  constructor() {
+
+  }
 
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
       this.patchForm(res);
       console.log('Loaded user profile:', res);
+      this.doctorId = res.doctorId;
+      this.profileImageUrl = this.getImageUrl(res.image) || localStorage.getItem('profile_image');
+      this.previewUrl = this.profileImageUrl;
     });
 
     this.loadInsurances();
+    this.loadSpecialists();
+  }
+
+  loadSpecialists(): void {
+    this.doctorSpecialistService.GetAll().subscribe({
+      next: (data) => {
+        this.specialists = data;
+
+      },
+      error: (err) => console.error('Failed to load specialists:', err)
+    });
   }
 
   loadInsurances(): void {
@@ -64,8 +95,6 @@ export class Profile implements OnInit {
       error: (err) => console.error('Failed to load insurances:', err)
     });
   }
-
-
   onInsuranceChange(selectedValue: string): void {
     const selected = this.insurances.find(i => i.value === selectedValue);
     if (selected) {
@@ -74,8 +103,61 @@ export class Profile implements OnInit {
   }
 
 
+  onFileSelected(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      this.selectedFile = fileInput.files[0];
+
+      // معاينة الصورة قبل الرفع
+      const reader = new FileReader();
+      reader.onload = () => (this.previewUrl = reader.result as string);
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  getImageUrl(path: string): string {
+    if (!path) return '';
+    // لو السيرفر بيرجع فقط اسم الملف أو المسار النسبي، أضف الدومين الأساسي
+    if (path.startsWith('http')) {
+      return path; // الصورة فيها رابط كامل
+    }
+    return `http://attachments.hgtechnologygroup.net/${path}`;
+  }
 
 
+  onUploadImage(): void {
+    if (!this.selectedFile || !this.doctorId) {
+      this.toast.error('Please select an image first.');
+      return;
+    }
+
+    this.doctorService.uploadDoctorImage(this.doctorId, this.selectedFile, 'en')
+      .subscribe({
+        next: (res: imageResponse) => {
+          this.toast.success('✅ Image uploaded successfully!');
+
+          // 🔥 أضف query لتجديد الرابط وتفادي الكاش
+          const newUrl = `${res.profilePath}?t=${new Date().getTime()}`;
+
+          this.profileImageUrl = newUrl;
+          this.previewUrl = newUrl;
+        },
+        error: (err) => {
+          console.error('🔴 Upload error details:', err);
+          if (err.status === 401) {
+            this.toast.error('Unauthorized (invalid or missing token)');
+          } else if (err.status === 404) {
+            this.toast.error('Upload URL not found (404)');
+          } else if (err.status === 405) {
+            this.toast.error('Method not allowed (check POST method)');
+          } else if (err.status === 0) {
+            this.toast.error('Network error — maybe CORS or server down');
+          } else {
+            this.toast.error(`❌ Upload failed: ${err.message || 'Unknown error'}`);
+          }
+        }
+      });
+  }
 
 
   get getAddresses(): FormArray {
@@ -127,7 +209,7 @@ export class Profile implements OnInit {
       phoneNumber: user.phoneNumber,
       licenseNumber: user.licenseNumber,
       yearsOfExperience: user.yearsOfExperience,
-      doctorSpecialist: user.doctorSpecialist,
+
       gender: user.gender,
       price: user.price,
       descriptionAR: [user.descriptionAR, arabicOnlyValidator],
@@ -135,6 +217,9 @@ export class Profile implements OnInit {
       education: user.education,
       addresses: this.createAddressesArray(user.addresses)
     });
+
+    this.profileImageUrl = user.profileImagePath || null;
+    this.previewUrl = this.profileImageUrl; // لعرضها مباشرة
   }
 
   onUpdateAddress(addr: DoctorAddress) {
@@ -150,17 +235,19 @@ export class Profile implements OnInit {
   }
 
   onSubmit() {
-
     console.log('Form Value:', this.profileForm.value);
     this.doctorService.updateDoctor(this.profileForm.value).subscribe({
       next: () => {
-        this.toast.success('Profile updated successfully!');
+        this.translate.get('PROFILE.SUCCESS_UPDATE').subscribe((res: string) => {
+          this.toast.success(res); // الرسالة العربية من ملف الترجمة
+        });
       },
       error: (err) => {
-        console.log('Error updating doctor:', err);
-        this.toast.error('❌ Failed to update doctor');
+        console.log(err)
+        this.translate.get('PROFILE.FAILED_UPDATE').subscribe((res: string) => {
+          this.toast.error(res); // رسالة الخطأ من ملف الترجمة
+        });
       }
     });
   }
-
 }

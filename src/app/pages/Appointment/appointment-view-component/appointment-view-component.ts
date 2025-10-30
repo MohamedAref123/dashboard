@@ -7,11 +7,12 @@ import { NgIf, CommonModule, Location } from '@angular/common';
 import { AppointmentStatus } from 'src/app/Models/shared/SharedClasses';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-appointment-view-component',
   standalone: true, // ✅ add this if it’s meant to be standalone
-  imports: [CommonModule, NgIf, FormsModule],
+  imports: [CommonModule, NgIf, FormsModule, TranslateModule],
   templateUrl: './appointment-view-component.html',
   styleUrl: './appointment-view-component.scss'
 })
@@ -28,6 +29,8 @@ export class AppointmentViewComponent implements OnInit {
   //statusOptions: AppointmentStatus
   statusOptions: string[] = Object.keys(AppointmentStatus).filter(key => isNaN(Number(key)));
   selectedStatus: string;
+
+  private translate = inject(TranslateService)
 
   ngOnInit(): void {
     const appointmentId = this.route.snapshot.paramMap.get('id');
@@ -78,6 +81,18 @@ export class AppointmentViewComponent implements OnInit {
           });
       }
     });
+  }
+
+  // في component.ts
+  actionLabels = {
+    CONFIRMED: { ar: 'تأكيد', en: 'Confirm' },
+    CANCELLED: { ar: 'إلغاء', en: 'Cancel' },
+    COMPLETED: { ar: 'مكتمل', en: 'Completed' } // إذا أردت الاحتفاظ بها
+  };
+
+  getLabel(action: string): string {
+    const lang = this.translate.currentLang; // اللغة الحالية من ngx-translate
+    return this.actionLabels[action.toUpperCase()][lang] || action;
   }
 
 

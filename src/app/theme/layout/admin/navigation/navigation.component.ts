@@ -5,10 +5,11 @@ import { RouterModule } from '@angular/router';
 // project import
 
 import { NavContentComponent } from './nav-content/nav-content.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navigation',
-  imports: [NavContentComponent, RouterModule],
+  imports: [NavContentComponent, RouterModule, TranslateModule],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss'
 })

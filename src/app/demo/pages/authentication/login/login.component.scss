@@ -13,7 +13,7 @@
   background: white;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
 }
@@ -41,7 +41,7 @@ input {
 
 input:focus {
   border-color: #4f46e5;
-  box-shadow: 0 0 0 2px rgba(79,70,229,0.2);
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
 }
 
 /* Button */
@@ -80,4 +80,38 @@ button:hover:not(:disabled) {
 
 .register-link a:hover {
   text-decoration: underline;
+}
+
+//logo
+
+.logo {
+  // /padding: 5px 10px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  // background-color: #f8f9fa; /* خلفية ناعمة */
+}
+
+.logo:hover {
+  // background-color: #e9ecef; /* تأثير بسيط عند المرور */
+  transform: translateY(-2px);
+}
+
+.logo-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover .logo-img {
+  transform: rotate(-5deg) scale(1.05);
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #673ab7; /* بنفسجي جميل */
+  letter-spacing: 0.5px;
+  font-family: cursive;
+  transition: color 0.3s ease;
 }

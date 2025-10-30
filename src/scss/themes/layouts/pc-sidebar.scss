@@ -104,3 +104,95 @@
 }
 
 // Sidebar css end
+/* ============================
+   RTL Support for Sidebar
+   ============================ */
+
+/* في الوضع العادي (أجهزة مكتبية) */
+[dir='rtl'] .pc-sidebar {
+  right: 0 !important;
+  left: auto !important;
+}
+
+/* في الوضع collapse */
+[dir='rtl'] .pc-sidebar.navbar-collapsed ~ .pc-container {
+  margin-right: 80px !important;
+  margin-left: 0 !important;
+}
+
+/* في الوضع العادي */
+[dir='rtl'] .pc-container {
+  margin-right: $sidebar-width;
+  margin-left: 0;
+}
+
+/* في الموبايل */
+@media (max-width: 1024px) {
+  [dir='rtl'] .pc-sidebar {
+    right: -#{$sidebar-width};
+    left: auto;
+  }
+
+  [dir='rtl'] .pc-sidebar.mob-open {
+    right: 0 !important;
+    left: auto !important;
+  }
+}
+
+/* ✅ عندما تكون اللغة العربية (Right To Left) */
+html[dir='rtl'] .coded-inner-navbar,
+html[dir='rtl'] .coded-inner-navbar .nav-item,
+html[dir='rtl'] .coded-inner-navbar .nav-group {
+  text-align: right;
+  direction: rtl;
+}
+
+/* اجعل الأيقونات تظهر على اليمين بدل اليسار */
+html[dir='rtl'] .coded-inner-navbar .coded-micon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+/* ✅ في الوضع العادي (Left To Right) */
+html[dir='ltr'] .coded-inner-navbar,
+html[dir='ltr'] .coded-inner-navbar .nav-item,
+html[dir='ltr'] .coded-inner-navbar .nav-group {
+  text-align: left;
+  direction: ltr;
+}
+
+/* الأيقونات تبقى على اليسار بالإنجليزي */
+html[dir='ltr'] .coded-inner-navbar .coded-micon {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+/* ✅ إزالة الفراغ الداخلي في الاتجاه العربي (RTL) */
+html[dir='rtl'] .pc-sidebar,
+html[dir='rtl'] .coded-inner-navbar,
+html[dir='rtl'] .coded-inner-navbar ul,
+html[dir='rtl'] .coded-inner-navbar li {
+  padding-right: 0 !important;
+  margin-right: 0 !important;
+
+  font-weight: 600; /* جعل النص أكثر وضوحًا */
+  color: #2f2f2f; /* لون أنيق */
+
+  padding-left: 0 !important;
+  text-align: right;
+}
+
+/* لو مازال هناك مسافة صغيرة داخل العنصر نفسه */
+html[dir='rtl'] .coded-inner-navbar .nav-item > a,
+html[dir='rtl'] .coded-inner-navbar .nav-group > a {
+  padding-right: 10px !important; /* يمكنك تعديل الرقم حسب ما يناسب */
+  padding-left: 0 !important;
+}
+
+/* تأكد أن الـ sidebar نفسه ملتصق تمامًا بالحافة اليمنى */
+html[dir='rtl'] .pc-sidebar {
+  right: 0 !important;
+  left: auto !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}

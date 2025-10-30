@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginService } from 'src/services/login.service';
 @Component({
   selector: 'app-login',
-  imports: [RouterModule,FormsModule],
+  imports: [RouterModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -17,10 +17,11 @@ export class LoginComponent {
 
   onSubmit() {
 
-    this.loginService.login(this.email,this.password).subscribe({
-      next:(res)=>{
+    this.loginService.login(this.email, this.password).subscribe({
+      next: (res) => {
         this.router.navigate(['/main']);
         console.log("token is", res);
+
       },
       error: (err) => {
         console.error('Login failed', err);

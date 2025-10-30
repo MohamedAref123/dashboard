@@ -1,27 +1,61 @@
-<div class="ms-auto">
-  <ul class="list-unstyled">
+<!--asfasd-->
+<div class="ms-auto ">
+
+
+  <!---->
+  <ul class="list-unstyled ">
+
+    <li>
+      <div class="dropdown pc-h-item" ngbDropdown>
+        <a class="pc-head-link head-link-secondary dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown"
+          href="javascript:" ngbDropdownToggle>
+          <span class="material-icons ">language</span>
+        </a>
+
+        <div>
+          <div class="dropdown-menu  dropdown-menu-start pc-h-dropdown" ngbDropdownMenu>
+            <ul class="list-unstyled m-0 p-2 ">
+              <li>
+                <button class="dropdown-item" [ngClass]="{ 'active-lang': currentLang === 'en' }"
+                  (click)="switchLang('en')">
+                  English
+                </button>
+              </li>
+              <li>
+                <button class="dropdown-item" [ngClass]="{ 'active-lang': currentLang === 'ar' }"
+                  (click)="switchLang('ar')">
+                  العربية
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <!--style="background-color: rgb(224.4, 207.2, 252.4);color: #673ab7;border: none;"
+     -->
+
+
+
     <li>
       <div class="dropdown pc-h-item">
-        <a
-          class="pc-head-link head-link-primary arrow-none me-0"
-          href="https://github.com/codedthemes/berry-free-angular-admin-template/"
-          target="_blank"
-        >
+        <a class="pc-head-link head-link-primary arrow-none me-0"
+          href="https://github.com/codedthemes/berry-free-angular-admin-template/" target="_blank">
           <i class="ti ti-brand-github"></i>
         </a>
       </div>
     </li>
+
+
+
     <li>
       <div class="dropdown pc-h-item" ngbDropdown>
-        <a
-          class="pc-head-link head-link-secondary dropdown-toggle arrow-none me-0"
-          data-bs-toggle="dropdown"
-          href="javascript:"
-          ngbDropdownToggle
-        >
+        <a class="pc-head-link head-link-secondary dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown"
+          href="javascript:" ngbDropdownToggle>
           <i class="ti ti-bell"></i>
         </a>
-        <div class="dropdown-menu dropdown-notification dropdown-menu-end pc-h-dropdown" ngbDropdownMenu>
+        <div class="dropdown-menu dropdown-notification dropdown-menu-start pc-h-dropdown" ngbDropdownMenu>
           <div class="dropdown-header">
             <a href="javascript:!" class="link-primary float-end text-decoration-underline">Mark as all read</a>
             <h5>
@@ -125,20 +159,18 @@
         </div>
       </div>
     </li>
+
+
     <li>
       <div class="dropdown pc-h-item header-user-profile" ngbDropdown>
-        <a
-          class="pc-head-link head-link-primary dropdown-toggle arrow-none me-0"
-          data-bs-toggle="dropdown"
-          href="javascript:"
-          ngbDropdownToggle
-        >
+        <a class="pc-head-link head-link-primary dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown"
+          href="javascript:" ngbDropdownToggle>
           <img src="assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar" />
           <span>
             <i class="ti ti-settings"></i>
           </span>
         </a>
-        <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown" ngbDropdownMenu>
+        <div class="dropdown-menu dropdown-user-profile dropdown-menu-start pc-h-dropdown" ngbDropdownMenu>
           <div class="dropdown-header">
             <h4>
               Good Morning,
@@ -160,7 +192,8 @@
                   <br />
                   subscriptions.
                 </p>
-                <a href="https://codedthemes.com/item/berry-angular-admin-dashboard-template/" target="_blank" class="btn btn-warning">
+                <a href="https://codedthemes.com/item/berry-angular-admin-dashboard-template/" target="_blank"
+                  class="btn btn-warning">
                   Go Premium
                 </a>
               </div>

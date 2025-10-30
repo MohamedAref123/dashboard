@@ -5,6 +5,7 @@ import { Loader } from './shared/loader/loader';
 import { AppointmentSignalRService } from 'src/services/Hubs/AppointmentListenerService';
 import { ToastService } from 'src/services/ToastService';
 import { jwtDecode } from 'jwt-decode';
+import { TranslateService } from '@ngx-translate/core';
 // project import
 interface JwtPayload {
   LoggedId?: string; // أو doctorId حسب السيرفر
@@ -20,6 +21,18 @@ export class AppComponent implements OnInit {
   private signalR = inject(AppointmentSignalRService);
   private toaster = inject(ToastService);
 
+  private translate = inject(TranslateService)
+  constructor() {
+    this.translate.addLangs(['en', 'ar']);
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+  }
+
+
+  switchLang(lang: string) {
+    this.translate.use(lang);
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  }
   ngOnInit() {
     const doctorId = this.getDoctorId(); // or get from AuthService / token
     if (doctorId === null) return;
