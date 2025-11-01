@@ -5,6 +5,7 @@
     "LANG_EN": "الإنجليزية"
   },
   "MENU": {
+    "REVIEWS": "التعليقات",
     "DASHBOARD": "لوحة التحكم",
     "PROFILE": "الملف الشخصي",
     "APPOINTMENT": "المواعيد",
@@ -47,6 +48,8 @@
     "DAY": "اليوم",
     "START_TIME": "وقت البداية",
     "END_TIME": "وقت النهاية",
+    "SLOT_TIME": "وقت الكشف (بالدقائق)",
+    "SLOT_TIME_PLACEHOLDER": "مثلاً 30",
     "IS_DELETED": "تم الحذف",
     "SAVE": "حفظ",
     "CANCEL": "إلغاء",
@@ -75,6 +78,18 @@
     "NEW_APPOINTMENT": "موعد جديد",
     "DOCTOR": "الطبيب",
     "NOTES": "ملاحظات"
+  },
+
+  "REVIEWS": {
+    "TITLE": "التقييمات",
+    "PATIENT_NAME": "اسم المريض",
+    "RATING": "التقييم",
+    "COMMENT": "التعليق",
+    "DETAILS": "تفاصيل المراجعة",
+    "VIEW": "عرض",
+    "EDIT": "تعديل",
+    "DELETE": "حذف",
+    "NO_REVIEWS": "لا توجد تقييمات"
   },
   "BUTTONS": {
     "ACTIONS": "الإجراءات",
@@ -130,12 +145,7 @@
     "CONFIRM_RESTORE": "هل تريد استرجاع هذا العنصر؟",
     "NO_RESULTS": "لم يتم العثور على نتائج"
   },
-  "VALIDATION": {
-    "EMAIL_INVALID": "صيغة البريد الإلكتروني غير صحيحة",
-    "PHONE_INVALID": "رقم الهاتف غير صحيح",
-    "MIN_LENGTH": "يجب أن يحتوي على {min} أحرف على الأقل",
-    "MAX_LENGTH": "يجب ألا يتجاوز {max} حرفًا"
-  },
+
   "ALERTS": {
     "SUCCESS_ADD": "تمت الإضافة بنجاح",
     "SUCCESS_UPDATE": "تم التحديث بنجاح",
@@ -147,5 +157,39 @@
     "COPYRIGHT": "حقوق النشر",
     "HOME": "الرئيسية",
     "ABOUT_US": "من نحن"
+  },
+  "ADDRESS": {
+    "UPDATE_TITLE": "تحديث عنوان الطبيب",
+    "NAME": "اسم العنوان",
+    "SELECT_CITY": "اختر المدينة",
+    "SELECT_REGION": "اختر المنطقة",
+    "POSTAL_CODE": "الرمز البريدي",
+    "STREET": "الشارع",
+    "BUILDING_NUMBER": "رقم المبنى",
+    "PHONE": "رقم الهاتف",
+    "GOOGLE_LOCATION": "الموقع على خرائط Google",
+    "IS_DELETED": "محذوف؟"
+  },
+  "AVAILABILITY": {
+    "TITLE": "مواعيد العمل",
+    "DAY": "اليوم",
+    "START": "وقت البدء",
+    "END": "وقت الانتهاء",
+    "SLOT_TIME": "وقت الكشف",
+    "SLOT_PLACEHOLDER": "مثلاً 30",
+    "IS_DELETED": "محذوف؟"
+  },
+  "COMMON": {
+    "CANCEL": "إلغاء",
+    "UPDATE": "تحديث"
+  },
+  "VALIDATION": {
+    "MIN_VALUE": "يجب ألا يقل عن {0}",
+    "PATTERN": "القيمة لا تطابق النمط المطلوب",
+    "ARABIC_ONLY": "مسموح فقط بالحروف العربية",
+    "ENGLISH_ONLY": "مسموح فقط بالحروف الإنجليزية",
+    "EMAIL_INVALID": "صيغة البريد الإلكتروني غير صحيحة",
+    "MIN_LENGTH": "يجب أن يحتوي على {min} أحرف على الأقل",
+    "MAX_LENGTH": "يجب ألا يتجاوز {max} حرفًا"
   }
 }

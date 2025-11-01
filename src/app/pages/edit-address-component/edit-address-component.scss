@@ -1,0 +1,32 @@
+/* لما تكون الصفحة بالعربية */
+[dir='rtl'] .form-check {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/* تضيف مسافة من الشمال (اليسار في الاتجاه العربي) */
+[dir='rtl'] .form-check-input {
+  margin-left: 8px; /* المسافة اللي انت عايزها */
+  margin-right: 8px;
+}
+
+/* ممكن كمان تظبط الليبل لو حبيت */
+[dir='rtl'] .form-check-label {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.earning-card {
+  z-index: 15000;
+  .round {
+    &.secondary-round {
+      background: #4527a0;
+    }
+    &.primary-round {
+      background: #1565c0;
+    }
+  }
+}

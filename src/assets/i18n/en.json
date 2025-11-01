@@ -8,6 +8,7 @@
     "DASHBOARD": "Dashboard",
     "PROFILE": "Profile",
     "APPOINTMENT": "Appointments",
+    "REVIEWS": "Reviews",
     "GROUP": "HealthCare Management",
     "SETTINGS": "Settings",
     "LOGOUT": "Logout",
@@ -47,6 +48,8 @@
     "DAY": "Day",
     "START_TIME": "Start Time",
     "END_TIME": "End Time",
+    "SLOT_TIME": "Visit duration",
+    "SLOT_TIME_PLACEHOLDER": "SlotTimePlaceholder",
     "IS_DELETED": "Is Deleted",
     "SAVE": "Save",
     "CANCEL": "Cancel",
@@ -75,6 +78,17 @@
     "NEW_APPOINTMENT": "New Appointment",
     "DOCTOR": "Doctor",
     "NOTES": "Notes"
+  },
+  "REVIEWS": {
+    "TITLE": "Reviews",
+    "PATIENT_NAME": "Patient Name",
+    "RATING": "Rating",
+    "COMMENT": "Comment",
+    "DETAILS": "Review Details",
+    "VIEW": "View",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "NO_REVIEWS": "No reviews found"
   },
   "BUTTONS": {
     "ACTIONS": "Actions",
@@ -130,12 +144,7 @@
     "CONFIRM_RESTORE": "Do you want to restore this item?",
     "NO_RESULTS": "No results found"
   },
-  "VALIDATION": {
-    "EMAIL_INVALID": "Invalid email format",
-    "PHONE_INVALID": "Invalid phone number",
-    "MIN_LENGTH": "Must be at least {min} characters",
-    "MAX_LENGTH": "Must not exceed {max} characters"
-  },
+
   "ALERTS": {
     "SUCCESS_ADD": "Added successfully",
     "SUCCESS_UPDATE": "Updated successfully",
@@ -147,5 +156,39 @@
     "COPYRIGHT": "Copyright",
     "HOME": "Home",
     "ABOUT_US": "About us"
+  },
+  "ADDRESS": {
+    "UPDATE_TITLE": "Update Doctor Address",
+    "NAME": "Address Name",
+    "SELECT_CITY": "Select City",
+    "SELECT_REGION": "Select Region",
+    "POSTAL_CODE": "Postal Code",
+    "STREET": "Street",
+    "BUILDING_NUMBER": "Building Number",
+    "PHONE": "Phone",
+    "GOOGLE_LOCATION": "Google Location",
+    "IS_DELETED": "Is Deleted"
+  },
+  "AVAILABILITY": {
+    "TITLE": "Working Hours",
+    "DAY": "Day",
+    "START": "Start Time",
+    "END": "End Time",
+    "SLOT_TIME": "Visit duration",
+    "SLOT_PLACEHOLDER": "e.g. 30",
+    "IS_DELETED": "Is Deleted"
+  },
+  "COMMON": {
+    "CANCEL": "Cancel",
+    "UPDATE": "Update"
+  },
+  "VALIDATION": {
+    "MIN_VALUE": "Value must not be less than {0}",
+    "PATTERN": "The value does not match the required pattern",
+    "ARABIC_ONLY": "Only Arabic letters are allowed",
+    "ENGLISH_ONLY": "Only English letters are allowed",
+    "EMAIL_INVALID": "Invalid email format",
+    "MIN_LENGTH": "Must contain at least {min} characters",
+    "MAX_LENGTH": "Must not exceed {max} characters"
   }
 }

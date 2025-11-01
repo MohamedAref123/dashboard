@@ -11,6 +11,9 @@ import { UpdateAddressRequest } from 'src/app/Models/Doctor/AddressUpdateRequest
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
 
+import { ReviewResponse } from 'src/app/Models/Responses/ReviewResponse';
+import { ReviewsRequest } from 'src/app/Models/Requests/ReviewsRequest';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -58,6 +61,10 @@ export class DoctorService {
 
   getuser(en: 'EN' | 'AR'): Observable<userResponse> {
     return this.apiService.get<userResponse>(`Doctors/GetCurrentDoctor/${en}`);
+  }
+
+  reviews(request: ReviewsRequest): Observable<ReviewResponse> {
+    return this.apiService.post<ReviewResponse>(`Reviews/doctor`, request);
   }
 
 

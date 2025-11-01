@@ -1,0 +1,105 @@
+/* Container dialog */
+.reviews-dialog {
+  padding: 24px;
+  min-width: 350px;
+  max-width: 500px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Title */
+.reviews-dialog h2 {
+  color: #673ab7;
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+}
+
+/* Each row */
+.reviews-dialog .review-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* Reverse row in RTL */
+.reviews-dialog.rtl .review-row {
+  flex-direction: row-reverse;
+}
+
+/* Labels */
+.reviews-dialog .review-row strong {
+  flex: 0 0 auto;
+  font-weight: 600;
+}
+
+/* Values */
+.reviews-dialog .review-row span {
+  flex: 1 1 auto;
+  text-align: end;
+}
+
+/* RTL adjustment */
+.reviews-dialog.rtl .review-row span {
+  text-align: start;
+}
+
+/* Rating stars */
+.reviews-dialog .stars mat-icon {
+  color: gold;
+  font-size: 28px;
+  margin-right: 2px;
+}
+
+.reviews-dialog.rtl .stars mat-icon {
+  margin-left: 2px;
+  margin-right: 0;
+}
+
+/* Comment text */
+.reviews-dialog .review-row span.text-muted {
+  color: #6c757d;
+  margin-left: 10px;
+}
+
+/* Close button */
+.reviews-dialog .dialog-actions {
+  margin-top: 24px;
+  text-align: end;
+}
+
+.reviews-dialog.rtl .dialog-actions {
+  text-align: start;
+}
+
+/* لما تكون الصفحة بالعربية */
+[dir='rtl'] .form-check {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/* تضيف مسافة من الشمال (اليسار في الاتجاه العربي) */
+[dir='rtl'] .form-check-input {
+  margin-left: 8px; /* المسافة اللي انت عايزها */
+  margin-right: 8px;
+}
+
+/* ممكن كمان تظبط الليبل لو حبيت */
+[dir='rtl'] .form-check-label {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.earning-card {
+  z-index: 15000;
+  .round {
+    &.secondary-round {
+      background: #4527a0;
+    }
+    &.primary-round {
+      background: #1565c0;
+    }
+  }
+}

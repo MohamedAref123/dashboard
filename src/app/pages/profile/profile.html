@@ -4,7 +4,7 @@
     <div class="d-flex flex-column">
       <div class="d-flex align-items-center header-title">
         <i class="ti ti-stethoscope icon-animate"></i>
-        <h2>{{ 'PROFILE.TITLE' | translate }}</h2>
+        <h2 class="mb-2">{{ 'PROFILE.TITLE' | translate }}</h2>
       </div>
       <p style="color: gray;">{{ 'PROFILE.DESCRIPTION' | translate }}</p>
     </div>
@@ -47,7 +47,7 @@
 
       </div>
 
-      <div class="card p-3">
+      <div class="card p-3 m-0">
         <h3>{{'PROFILE.BASIC_INFO'|translate}}</h3>
         <div class="row g-3">
           <div class="col-md-4">
@@ -202,6 +202,13 @@
               <label class="form-label">{{'PROFILE.PHONE'|translate}}</label>
               <input type="text" class="form-control" formControlName="phoneNumber" readonly />
             </div>
+
+            <div class="col-md-6">
+              <label class="form-label">{{'ADDRESS.GOOGLE_LOCATION'|translate}}</label>
+              <input class="form-control" placeholder="Google Location" formControlName="googleLocation" readonly />
+            </div>
+
+
             <!-- <div class="col-md-6 form-check mt-4">
                 <input type="checkbox" formControlName="isDeleted" id="add{{i}}" class="form-check-input" />
                 <label class="form-check-label" for="add{{i}}">Is Deleted</label>
@@ -229,11 +236,20 @@
                   <input type="time" class="form-control" formControlName="endTime" readonly />
                 </div>
 
+                <div class="col-md-3">
+                  <label class="form-label">{{'PROFILE.SLOT_TIME'|translate}}</label>
+                  <input type="number" class="form-control" formControlName="slotTime" min="1"
+                    placeholder="{{'PROFILE.SLOT_TIME_PLACEHOLDER'|translate}}" readonly />
+                </div>
+
+
                 <div class="col-md-3 form-check mt-4">
                   <input type="checkbox" formControlName="isDeleted" [id]="'av' + i + '-' + j"
                     class="form-check-input" />
                   <label class="form-check-label" [for]="'av' + i + '-' + j">{{'PROFILE.IS_DELETED'|translate}}</label>
                 </div>
+
+
               </div>
             </div>
             <!-- End Availabilities -->

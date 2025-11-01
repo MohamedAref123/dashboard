@@ -2,22 +2,23 @@ import { NgFor, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatLabel, MatOption, MatSelectModule } from '@angular/material/select';
+import { MatOption, MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UpdateAddressRequest } from 'src/app/Models/Doctor/AddressUpdateRequest';
 import { cityResponse } from 'src/app/Models/Responses/CityResponse';
 
-import { AddressResponse, AvailabilityResponse } from 'src/app/Models/Responses/DoctorResponses';
+import { AddressResponse } from 'src/app/Models/Responses/DoctorResponses';
 import { RegionResponse } from 'src/app/Models/Responses/RegionResponse';
 import { ShardEnums, DaysOfWeek } from 'src/app/Models/shared/SharedClasses';
-import { timeRangeValidator } from 'src/app/shared/validation-error/validation-error';
+import { timeRangeValidator, ValidationError } from 'src/app/shared/validation-error/validation-error';
 import { CountryService } from 'src/services/country.service';
 import { DoctorService } from 'src/services/doctor.service';
 import { ToastService } from 'src/services/ToastService';
 
 @Component({
   selector: 'app-edit-address-component',
-  imports: [MatLabel, ReactiveFormsModule, MatOption, NgFor, MatSelectModule, NgIf],
+  imports: [ReactiveFormsModule, MatOption, NgFor, MatSelectModule, NgIf, ValidationError, TranslateModule],
   templateUrl: './edit-address-component.html',
   styleUrl: './edit-address-component.scss'
 })
@@ -37,85 +38,92 @@ export class EditAddressComponent implements OnInit {
   countryService = inject(CountryService);
   city: cityResponse[] = [];
   regions: RegionResponse[] = [];
-
-
-
-  loadRegions(lang: string, cityId: string): void {
-    this.countryService.getRegions(lang, cityId).subscribe({
-      next: (data) => {
-        this.regions = data;
-        console.log('Regions data:', this.regions);
-      },
-      error: (err) => console.error('Failed to load regions:', err)
-    });
-  }
-
+  currentLang: string = 'en'; // 🔹 هنا الخاصية المفقودة
+  translate = inject(TranslateService)
 
 
   ngOnInit(): void {
     this.isLoading = true;
 
-    this.countryService.getCountries("en", "EGYPT").subscribe({
-      next: (data) => {
-        this.city = data;
-
-        if (this.addressData) {
-          // ✅ أنشئ الفورم مرة واحدة
-          this.form = this.createAddressGroup(this.addressData);
-
-          // ✅ إذا كان في cityId نحمل regions
-          if (this.addressData.cityId) {
-            this.loadRegions('en', this.addressData.cityId);
-          }
-        }
-
+    // 1️⃣ تحميل المدن أولاً
+    this.countryService.getCountries('en', 'EGYPT').subscribe({
+      next: (cities) => {
+        this.city = cities; // city.value يجب أن يكون ID الصحيح
+        this.createForm();  // إنشاء الفورم بعد توفر المدن
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Failed to load countries:', err);
+        console.error(err);
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
 
-    console.log("Dialog Data:", this.addressData);
-    this.addressId = this.addressData.addressId;
   }
 
-
-
-
-  createAddressGroup(address?: AddressResponse): FormGroup {
-    return this.fb.group({
-      doctorId: [address?.doctorId, Validators.required],
-      addressId: [address?.addressId || null],  // ✅ fixed here
-      addressName: [address?.addressName, Validators.required],
-      city: [address?.city, Validators.required],
-      rigion: [address?.region, Validators.required],
-      cityId: [address?.cityId, Validators.required],
-      regionId: [address?.regionId, Validators.required],
-      postalCode: [address?.postalCode, Validators.required],
-      street: [address?.street, Validators.required],
-      buildingNumber: [address?.buildingNumber, Validators.required],
-      phoneNumber: [address?.phoneNumber, Validators.required],
-      longitude: [address?.longitude || 0],
-      latitude: [address?.latitude || 0],
-      country: [address?.country || 'Egypt'],
-      isDeleted: [address?.isDeleted ?? false],
+  createForm() {
+    // إنشاء الفورم
+    this.form = this.fb.group({
+      doctorId: [this.addressData?.doctorId, Validators.required],
+      addressId: [this.addressData?.addressId],
+      addressName: [this.addressData?.addressName, Validators.required],
+      cityId: [null, Validators.required],
+      regionId: [null, Validators.required],
+      postalCode: [this.addressData?.postalCode, Validators.required],
+      street: [this.addressData?.street, Validators.required],
+      buildingNumber: [this.addressData?.buildingNumber, Validators.required],
+      phoneNumber: [this.addressData?.phoneNumber, Validators.required],
+      country: [this.addressData?.country || 'EGYPT'],
       availabilities: this.fb.array(
-        (address?.availabilities || []).map((avail: AvailabilityResponse) =>
-          this.fb.group(
-            {
-              isDeleted: [avail.isDeleted],
-              doctorAvailabilityId: [avail.doctorAvailabilityId],
-              addressId: [avail.addressId],
-              dayOfWeek: [avail.dayOfWeek, Validators.required],
-              startTime: [avail.startTime, Validators.required],
-              endTime: [avail.endTime, Validators.required]
-            },
-            { validators: timeRangeValidator }
-          )
-        )
+        (this.addressData?.availabilities || []).map(a => this.fb.group({
+          isDeleted: [a.isDeleted],
+          doctorAvailabilityId: [a.doctorAvailabilityId],
+          addressId: [a.addressId],
+          dayOfWeek: [a.dayOfWeek, Validators.required],
+          startTime: [a.startTime, Validators.required],
+          slotTime: [a.slotTime, Validators.required],
+          endTime: [a.endTime, Validators.required]
+        }))
       )
+    });
+
+    // تعيين المدينة القديمة تلقائيًا إذا موجودة
+    if (this.addressData?.city) {
+      const selectedCity = this.city.find(c => c.text === this.addressData.city);
+      if (selectedCity) {
+        this.form.get('cityId')?.setValue(selectedCity.value);
+
+        // تحميل المناطق الخاصة بهذه المدينة
+        this.loadRegions('en', selectedCity.value, this.addressData?.region);
+      }
+    }
+
+    // الاستماع لتغيير المدينة من قبل المستخدم
+    this.form.get('cityId')?.valueChanges.subscribe(cityId => {
+      if (cityId) {
+        this.loadRegions('en', cityId);
+        // تفريغ المنطقة القديمة
+        this.form.get('regionId')?.setValue(null);
+      }
+    });
+  }
+
+  loadRegions(lang: string, cityId: string, selectedRegionText?: string) {
+    this.countryService.getRegions(lang, cityId).subscribe({
+      next: (regions) => {
+        this.regions = regions;
+
+        // إذا تم تمرير region القديم، حدده تلقائيًا
+        if (selectedRegionText) {
+          const selRegion = this.regions.find(r => r.text === selectedRegionText);
+          if (selRegion) {
+            this.form.get('regionId')?.setValue(selRegion.value);
+          }
+        }
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error(err)
     });
   }
 
@@ -141,23 +149,25 @@ export class EditAddressComponent implements OnInit {
   }
 
   save() {
-
-
     const payload: UpdateAddressRequest = this.form.value;
-    console.log('Payload:', payload);
-    console.log("doctorid", this.doctorId)
-    console.log("doctorId from form:", this.form.get('doctorId')?.value);
 
     this.doctorService.updateAddress(payload).subscribe({
       next: () => {
         this.toast.success('Updated Address Successfully');
+
+        // 🔹 إغلاق الـ dialog أولاً
         this.dialogRef.close(true);
+
+        // 🔹 إعادة تحميل الصفحة تلقائيًا
+        location.reload();
       },
       error: (err) => {
         console.error('❌ Update failed:', err);
+        this.toast.error('Failed to update address');
       }
     });
   }
+
 
 }
 

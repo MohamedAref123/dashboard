@@ -26,6 +26,7 @@ export interface userResponse {
 
 export interface DoctorAddress {
 
+  googleLocation: string;
   country: string;
   city: string;
   cityId: string;
@@ -36,8 +37,6 @@ export interface DoctorAddress {
   buildingNumber: string;
   phoneNumber: string;
   addressName: string;
-  longitude: 0;
-  latitude: 0;
   addressId: string;
   doctorId: string;
   isDeleted: true;
@@ -50,4 +49,5 @@ export interface availabilities {
   dayOfWeek: 0;
   startTime: string;
   endTime: string;
+  slotTime: number;
 }

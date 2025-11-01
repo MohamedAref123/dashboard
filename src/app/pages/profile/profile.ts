@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, NgFor } from '@angular/common';
 import { DoctorAddress, userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { DoctorService } from 'src/services/doctor.service';
@@ -176,9 +176,9 @@ export class Profile implements OnInit {
           street: [address.street],
           buildingNumber: [address.buildingNumber],
           phoneNumber: [address.phoneNumber],
-          longitude: [address.longitude],
+
           addressId: [address.addressId],
-          latitude: [address.latitude],
+          googleLocation: [address.googleLocation],
           //isDeleted: [address.isDeleted],
           availabilities: this.fb.array(
             (address.availabilities || []).map((av) =>
@@ -188,6 +188,7 @@ export class Profile implements OnInit {
                 dayOfWeek: [av.dayOfWeek],
                 startTime: [av.startTime],
                 endTime: [av.endTime],
+                slotTime: [av.slotTime, [Validators.required, Validators.min(1)]], // ✅ مضاف حديثًا
                 isDeleted: [av.isDeleted]
               })
             )
@@ -223,11 +224,16 @@ export class Profile implements OnInit {
   }
 
   onUpdateAddress(addr: DoctorAddress) {
+    console.log('Address data:', addr);
+
     const dialogRef = this.dialog.open(EditAddressComponent, {
-      width: '800px',
+      width: '1000px',
+      maxWidth: '100vw',
       data: {
         ...addr,
-        doctorId: this.profileForm.get('doctorId')?.value   // ✅ إضافة doctorId هنا
+        doctorId: this.profileForm.get('doctorId')?.value,   // ✅ إضافة doctorId هنا
+        cityId: addr.cityId,    // ✔ فقط القيمة الصحيحة
+        regionId: addr.regionId // ✔ فقط القيمة الصحيحة
       }
     });
 

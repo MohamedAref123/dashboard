@@ -1,0 +1,31 @@
+<div class="earning-card warning overflow-hidden rounded">
+  <span class="round secondary-round small"></span>
+  <span class="round secondary-round big"></span>
+
+
+  <div class="reviews-dialog text-center" style="margin: 35px;" [ngClass]=" {'rtl': isRtl}">
+    <h2>{{ 'REVIEWS.DETAILS' | translate }}</h2>
+
+    <div class="review-row">
+      <strong>{{ 'REVIEWS.PATIENT_NAME' | translate }}</strong>
+      <span>{{ data.patientName }}</span>
+    </div>
+
+    <div class="review-row">
+      <strong>{{ 'REVIEWS.RATING' | translate }}</strong>
+      <span class="stars">
+        <ng-container *ngFor="let star of createStars(data.rating)">
+          <mat-icon>star</mat-icon>
+        </ng-container>
+      </span>
+    </div>
+
+    <div class="review-row">
+      <strong>{{ 'REVIEWS.COMMENT' | translate }}</strong>
+      <span class="text-muted">{{ data.comment }}</span>
+    </div>
+
+
+  </div>
+
+</div>

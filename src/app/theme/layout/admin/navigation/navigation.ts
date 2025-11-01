@@ -48,6 +48,15 @@ export const NavigationItems: NavigationItem[] = [
         url: '/appointments',
         icon: 'ti ti-calendar',
         breadcrumbs: false
+      },
+      {
+        id: 'Reviews',
+        title: 'MENU.REVIEWS',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/reviews',
+        icon: 'ti ti-message-circle',
+        breadcrumbs: false
       }
     ]
   }

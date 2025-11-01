@@ -38,15 +38,26 @@ export class GenericTable<T> implements OnChanges {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private translate = inject(TranslateService)
-  getTranslatedValue(key: string, value: string) {
-    if (key.toLowerCase().includes('status'))
-      return this.translate.instant('STATUS.' + value.toUpperCase());
-    if (key.toLowerCase().includes('day'))
-      return this.translate.instant('DAYS.' + value.toUpperCase());
-    return this.translate.instant(value);
+  getTranslatedValue(key: string | undefined, value: string | undefined) {
+    // إذا لم يوجد key أو value
+    if (!key || value === undefined || value === null) {
+      console.warn('GenericTable: key or value is missing', { key, value });
+      return value ?? '';
+    }
+
+    const val = value.toString();
+
+    // حالات خاصة للـ status أو day
+    if (key.toLowerCase().includes('status')) {
+      return this.translate.instant('STATUS.' + val.toUpperCase());
+    }
+    if (key.toLowerCase().includes('day')) {
+      return this.translate.instant('DAYS.' + val.toUpperCase());
+    }
+
+    // الترجمة العامة
+    return this.translate.instant(val);
   }
-
-
 
   constructor() {
     this.translate.addLangs(['en', 'ar']);
@@ -76,6 +87,16 @@ export class GenericTable<T> implements OnChanges {
     if (changes['_actions'] && this._actions.length > 0) {
       this.displayedColumns = [...this.displayedColumns, 'actions']; // 👈 نضيف عمود للأزرار
     }
+  }
+
+  createStars(rating: number): number[] {
+    if (!rating || rating < 1) return [];
+    return Array.from({ length: rating }, (_, i) => i + 1);
+  }
+
+  getColumnValueAsNumber(row: number, key: string): number {
+    const val = row[key];
+    return val != null ? +val : 0;
   }
 
 

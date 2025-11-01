@@ -1,7 +1,8 @@
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
 import { NgIf, NgFor } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 export function arabicOnlyValidator(control: AbstractControl): ValidationErrors | null {
@@ -64,12 +65,13 @@ export const timeRangeValidator: ValidatorFn = (group: AbstractControl): Validat
 
 @Component({
   selector: 'app-validation-error',
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, TranslateModule],
   templateUrl: './validation-error.html',
   styleUrl: './validation-error.scss'
 })
 export class ValidationError implements OnInit {
 
+  translate = inject(TranslateService)
   ngOnInit(): void {
     this.control = this.form.get(this.controlName);
   }
@@ -92,28 +94,34 @@ export class ValidationError implements OnInit {
     for (const key in errors) {
       switch (key) {
         case 'required':
-          msgs.push('This field is required');
+          msgs.push(this.translate.instant('MESSAGES.REQUIRED_FIELD'));
           break;
         case 'email':
-          msgs.push('You must enter a valid email address.');
+          msgs.push(this.translate.instant('VALIDATION.EMAIL_INVALID'));
+          break;
+        case 'min':
+          msgs.push(
+            this.translate.instant('VALIDATION.MIN_VALUE', { min: errors['min'].min })
+          );
           break;
         case 'minlength':
-          msgs.push(`Minimum height is${errors['minlength'].requiredLength}`);
+          msgs.push(
+            this.translate.instant('VALIDATION.MIN_LENGTH', { min: errors['minlength'].requiredLength })
+          );
           break;
         case 'maxlength':
-          msgs.push(`Maximum length is${errors['maxlength'].requiredLength}`);
-          break;
-        case 'pattern':
-          msgs.push('The value does not match the required pattern.');
+          msgs.push(
+            this.translate.instant('VALIDATION.MAX_LENGTH', { max: errors['maxlength'].requiredLength })
+          );
           break;
         case 'arabicOnly':
-          msgs.push('Only Arabic letters are allowed.');
+          msgs.push(this.translate.instant('VALIDATION.ARABIC_ONLY'));
           break;
         case 'englishOnly':
-          msgs.push('Only English letters are allowed.');
+          msgs.push(this.translate.instant('VALIDATION.ENGLISH_ONLY'));
           break;
         default:
-          msgs.push(typeof errors[key] === 'string' ? errors[key] : 'Invalid value');
+          msgs.push(this.translate.instant('MESSAGES.ERROR'));
       }
     }
 

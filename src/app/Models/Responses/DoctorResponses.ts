@@ -56,5 +56,6 @@ export interface AvailabilityResponse {
   dayOfWeek: number;
   startTime: string;
   endTime: string;
+  slotTime: number;
 }
 

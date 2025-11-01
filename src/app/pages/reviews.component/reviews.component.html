@@ -1,0 +1,29 @@
+<div class="card p-3">
+  <!-- عنوان القسم -->
+  <div class="d-flex p-3 align-items-center">
+    <i class="ti ti-star icon-animate mb-3" style="font-size: 25px; color: #673ab7;"></i>
+    <h2 class="mb-3 mx-2" style="color: #673ab7;">
+      {{ 'REVIEWS.TITLE' | translate }}
+    </h2>
+
+
+    <span *ngFor="let star of [1,2,3,4,5]">
+      <mat-icon [style.color]="star <= totalRating ? 'gold' : '#ccc'">star</mat-icon>
+    </span>
+
+    <!-- عرض الرقم بجانبها -->
+    <span class="ms-2 text-muted">({{ totalRating }}/5)</span>
+  </div>
+
+  <!-- جدول المراجعات -->
+  <app-generic-table [_headers]="headers" [_items]="reviews" [_actions]="tableActions"
+    (actionClicked)="handleAction($event)" (pageChange)="onPageChange($event)" [pageSize]="reviewsPagination.pageSize"
+    [totalRecords]="reviewsPagination.totalRecords" [pageIndex]="reviewsPagination.pageIndex" class="mt-4"
+    *ngIf="reviews?.length > 0">
+  </app-generic-table>
+
+  <!-- رسالة عند عدم وجود مراجعات -->
+  <div *ngIf="reviews?.length === 0" class="text-center text-muted mt-3">
+    {{ 'REVIEWS.NO_REVIEWS' | translate }}
+  </div>
+</div>

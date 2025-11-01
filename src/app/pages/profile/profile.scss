@@ -19,7 +19,8 @@ body {
   background-color: #f9f9fb;
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   height: fit-content;
   width: 50%;
 }
@@ -61,11 +62,18 @@ body {
 .card {
   background: white;
   padding: 20px;
-
   border-radius: 8px;
   border: 1px solid #ddd;
-  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+.card h3 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #007bff;
+  display: inline-block;
+  padding-bottom: 0.25rem;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

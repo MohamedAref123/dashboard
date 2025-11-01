@@ -40,6 +40,11 @@ const routes: Routes = [
         path: 'appointments',
         loadComponent: () =>
           import('./pages/Appointment/appontment-component/appontment-component').then((c) => c.AppontmentComponent)
+      },
+      {
+        path: 'reviews',
+        loadComponent: () =>
+          import('./pages/reviews.component/reviews.component').then((c) => c.ReviewsComponent)
       }
     ]
   },
