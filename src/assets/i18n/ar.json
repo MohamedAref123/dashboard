@@ -15,7 +15,8 @@
     "HOME": "الرئيسية",
     "REPORTS": "التقارير",
     "DOCTORS": "الأطباء",
-    "PATIENTS": "المرضى"
+    "PATIENTS": "المرضى",
+    "CURRENT_AVAILABILITIES": "المواعيد الحالية"
   },
   "PROFILE": {
     "TITLE": "الملف الطبي",
@@ -55,7 +56,10 @@
     "CANCEL": "إلغاء",
     "EDIT": "تعديل",
     "SUCCESS_UPDATE": "تم تحديث الملف بنجاح",
-    "FAILED_UPDATE": "حدث خطأ أثناء تحديث الملف"
+    "FAILED_UPDATE": "حدث خطأ أثناء تحديث الملف",
+    "SELECT_IMAGE": "الرجاء تحديد الصورة أولاً",
+    "TIME": "الوقت",
+    "DATE": "التاريخ"
   },
   "APPOINTMENT": {
     "SEARCH_TITLE": "البحث عن المواعيد حسب التاريخ",
@@ -90,6 +94,11 @@
     "EDIT": "تعديل",
     "DELETE": "حذف",
     "NO_REVIEWS": "لا توجد تقييمات"
+  },
+  "CURRENT_AVAILABILITIES": {
+    "TITLE": "المواعيد الحالية",
+    "DESCRIPTION": "يمكنك هنا عرض المواعيد المتاحة للطبيب وجدولها.",
+    "NO_DATA": "لا توجد مواعيد متاحة حالياً."
   },
   "BUTTONS": {
     "ACTIONS": "الإجراءات",

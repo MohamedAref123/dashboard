@@ -45,6 +45,10 @@ const routes: Routes = [
         path: 'reviews',
         loadComponent: () =>
           import('./pages/reviews.component/reviews.component').then((c) => c.ReviewsComponent)
+      }, {
+        path: 'current-availabilities',
+        loadComponent: () =>
+          import('./pages/current-availlabilities.component/current-availlabilities.component').then((c) => c.CurrentAvaillabilitiesComponent)
       }
     ]
   },

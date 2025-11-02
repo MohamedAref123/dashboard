@@ -1,0 +1,121 @@
+<!-- 🩺 بيانات الطبيب -->
+<div class="doctor-header d-flex justify-content-between align-items-center ">
+  <div class="d-flex flex-column">
+    <div class="d-flex align-items-center header-title">
+      <i class="ti ti-stethoscope icon-animate"></i>
+      <h2 class="mb-2">{{ 'CURRENT_AVAILABILITIES.TITLE' | translate }}</h2>
+    </div>
+    <p style="color: gray;">{{ 'CURRENT_AVAILABILITIES.DESCRIPTION' | translate }}</p>
+  </div>
+</div>
+
+
+<div class="card p-4">
+
+  <div *ngIf="doctoravailabilities">
+
+    <!-- بيانات الطبيب -->
+    <div class="card p-3 mb-4 shadow-sm border-0">
+      <h3 class=" mb-3">{{ doctoravailabilities.doctorName }}</h3>
+
+      <div class="row g-3">
+        <div class="col-md-6"><strong>{{'PROFILE.SPECIALTY'|translate}}:</strong> {{
+          doctoravailabilities.doctorSpecialist }}</div>
+        <div class="col-md-6"><strong>{{'PROFILE.LICENSE_NUMBER'|translate}}:</strong> {{
+          doctoravailabilities.licenseNumber }}</div>
+        <div class="col-md-6"><strong>{{'PROFILE.Education'|translate}}:</strong> {{ doctoravailabilities.education }}
+        </div>
+        <div class="col-md-6"><strong>{{'PROFILE.EXPERIENCE'|translate}}:</strong> {{
+          doctoravailabilities.yearsOfExperience }}</div>
+
+        <div class="col-md-6"><strong>{{'PROFILE.GENDER'|translate}}:</strong> {{ doctoravailabilities.gender }}</div>
+
+        <div class="col-md-6"><strong>{{'PROFILE.DescriptionEN'|translate}}:</strong> {{
+          doctoravailabilities.description
+          }}</div>
+
+        <div class="col-md-6 d-flex align-items-center">
+          <strong>{{'PROFILE.INSURANCE'|translate}}:</strong>
+          <div class="d-flex align-items-center ms-2">
+            <img [src]="'data:image/png;base64,' + doctoravailabilities.insurance?.icon"
+              class="img-thumbnail rounded-circle me-2" width="40" height="40" alt="Insurance Icon" />
+            {{ doctoravailabilities.insurance?.text }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 📅 المواعيد المتاحة -->
+    <div class="accordion" id="availabilitiesAccordion">
+      <div *ngFor="let a of doctoravailabilities.availableAppointments; let i = index"
+        class="accordion-item mb-3 border-0 shadow-sm">
+        <h2 class="accordion-header" id="heading{{ i }}">
+          <button class="accordion-button collapsed d-flex justify-content-between align-items-center" type="button"
+            data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" aria-expanded="false"
+            [attr.aria-controls]="'collapse' + i" style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7">
+            <div>
+              <i class="ti ti-map-pin text-primary me-2"></i>
+              {{ a.addressName }} ({{ a.city }}, {{ a.region }})
+            </div>
+          </button>
+        </h2>
+
+        <div [id]="'collapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + i"
+          data-bs-parent="#availabilitiesAccordion">
+          <div class="accordion-body">
+
+            <!-- جدول المواعيد -->
+            <div class="accordion mt-3" id="accordionAppointments">
+              <div *ngFor="let group of groupByDay(a.doctorAvailableTimes) | keyvalue; let i = index"
+                class="accordion-item">
+                <!-- عنوان اليوم + التاريخ -->
+                <h2 class="accordion-header" [id]="'heading-' + i">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#collapse-' + i" aria-expanded="false"
+                    [attr.aria-controls]="'collapse-' + i" style="background-color:rgb(224, 207, 252);">
+                    {{ group.key }}
+                    <strong class="text-muted ms-2">
+                      <i class="bi bi-calendar me-2"></i>{{ group.value[0]?.appointmentDate | date: 'mediumDate' }}
+                    </strong>
+                  </button>
+                </h2>
+
+                <!-- محتوى اليوم -->
+                <div [id]="'collapse-' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading-' + i"
+                  data-bs-parent="#accordionAppointments">
+                  <div class="accordion-body">
+                    <div class="d-flex flex-wrap gap-3 justify-content-center">
+                      <div *ngFor="let t of group.value" class="border rounded shadow-sm p-3 bg-light"
+                        style="min-width: 180px; max-width: 220px;">
+                        <div class="fw-bold text-primary d-flex justify-content-center align-items-center">
+                          <i class="bi bi-clock me-2"></i> {{ t.time }}
+                        </div>
+                        <div class="text-muted text-center">
+                          <i class="bi bi-calendar me-2"></i> {{ t.appointmentDate | date: 'mediumDate' }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<!-- 🔄 حالة التحميل -->
+<ng-template #loading>
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-2">Loading...</p>
+  </div>
+</ng-template>

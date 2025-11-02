@@ -127,13 +127,17 @@ export class Profile implements OnInit {
 
   onUploadImage(): void {
     if (!this.selectedFile || !this.doctorId) {
-      this.toast.error('Please select an image first.');
+      this.translate.get('PROFILE.SELECT_IMAGE').subscribe((res: string) => {
+        this.toast.error(res); // الرسالة العربية من ملف الترجمة
+      });
+
       return;
     }
 
     this.doctorService.uploadDoctorImage(this.doctorId, this.selectedFile, 'en')
       .subscribe({
         next: (res: imageResponse) => {
+
           this.toast.success('✅ Image uploaded successfully!');
 
           // 🔥 أضف query لتجديد الرابط وتفادي الكاش
@@ -176,7 +180,7 @@ export class Profile implements OnInit {
           street: [address.street],
           buildingNumber: [address.buildingNumber],
           phoneNumber: [address.phoneNumber],
-
+          isDeleted: [address.isDeleted],
           addressId: [address.addressId],
           googleLocation: [address.googleLocation],
           //isDeleted: [address.isDeleted],

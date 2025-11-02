@@ -57,7 +57,17 @@ export const NavigationItems: NavigationItem[] = [
         url: '/reviews',
         icon: 'ti ti-message-circle',
         breadcrumbs: false
+      },
+      {
+        id: 'CurrentAvailabilities',
+        title: 'MENU.CURRENT_AVAILABILITIES',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/current-availabilities',
+        icon: 'ti ti-calendar-time',
+        breadcrumbs: false
       }
+
     ]
   }
 ];

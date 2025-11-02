@@ -13,6 +13,7 @@ import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
 
 import { ReviewResponse } from 'src/app/Models/Responses/ReviewResponse';
 import { ReviewsRequest } from 'src/app/Models/Requests/ReviewsRequest';
+import { DoctorAvialabilitiesModel } from 'src/app/Models/Responses/Current-AvailabilitiesResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -67,7 +68,9 @@ export class DoctorService {
     return this.apiService.post<ReviewResponse>(`Reviews/doctor`, request);
   }
 
-
+  getavailabilities(doctorid: string, lang: string): Observable<DoctorAvialabilitiesModel> {
+    return this.apiService.get<DoctorAvialabilitiesModel>(`Appointments/doctor/current/availabilities/${doctorid}/${lang}`);
+  }
 
   uploadDoctorImage(
     profileId: string,

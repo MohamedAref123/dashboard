@@ -15,7 +15,8 @@
     "HOME": "Home",
     "REPORTS": "Reports",
     "DOCTORS": "Doctors",
-    "PATIENTS": "Patients"
+    "PATIENTS": "Patients",
+    "CURRENT_AVAILABILITIES": "Current Availabilities"
   },
   "PROFILE": {
     "TITLE": "Doctor Profile",
@@ -55,7 +56,10 @@
     "CANCEL": "Cancel",
     "EDIT": "Edit",
     "SUCCESS_UPDATE": "Profile updated successfully",
-    "FAILED_UPDATE": "An error occurred while updating the profile"
+    "FAILED_UPDATE": "An error occurred while updating the profile",
+    "SELECT_IMAGE": "Please select an image first.",
+    "DATE": "Date",
+    "TIME": "Time"
   },
   "APPOINTMENT": {
     "SEARCH_TITLE": "Search Appointments by Date",
@@ -89,6 +93,11 @@
     "EDIT": "Edit",
     "DELETE": "Delete",
     "NO_REVIEWS": "No reviews found"
+  },
+  "CURRENT_AVAILABILITIES": {
+    "TITLE": "Current Availabilities",
+    "DESCRIPTION": "Here you can find the doctor's available appointments and schedule.",
+    "NO_DATA": "No available appointments found."
   },
   "BUTTONS": {
     "ACTIONS": "Actions",

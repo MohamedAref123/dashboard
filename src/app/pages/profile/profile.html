@@ -16,14 +16,13 @@
 
   </div>
 
+
   <!-- Form -->
   <form [formGroup]="profileForm" class="pt-4 pb-4">
-
 
     <!-- Basic Information -->
     <div class="container">
       <div class="sidebar">
-
         <div class="text-center mb-3">
           <h5>{{ 'PROFILE.PROFILE_IMAGE' | translate }}</h5>
           <img *ngIf="profileImageUrl" [src]="getImageUrl(profileImageUrl)" alt="Profile Image"
@@ -41,9 +40,6 @@
             </div>
           </div>
         </div>
-
-
-
 
       </div>
 
