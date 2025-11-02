@@ -31,6 +31,7 @@ export interface DoctorDetailsResponse {
 
 export interface AddressResponse {
 
+  googleLocation: string;
   cityId: string;
   regionId: string;
   addressName: string

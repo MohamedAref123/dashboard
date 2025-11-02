@@ -106,3 +106,15 @@
   max-width: 600px; /* الحد الأقصى */
   width: 50%; /* عرض نصف الصفحة */
 }
+
+.earning-card {
+  z-index: 15000;
+  .round {
+    &.secondary-round {
+      background: #4527a0;
+    }
+    &.primary-round {
+      background: #1565c0;
+    }
+  }
+}

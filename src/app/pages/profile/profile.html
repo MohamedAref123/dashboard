@@ -75,7 +75,7 @@
             <input type="number" formControlName="yearsOfExperience" class="form-control" />
           </div>
           <div class="col-md-4">
-            <mat-label>Specialists</mat-label>
+            <label class="form-label">{{'PROFILE.SPECIALTY'|translate}}</label>
             <mat-select formControlName="doctorSpecialistId" class="form-control mt-2"
               placeholder="------------------Select------------------">
               <mat-option [value]="null">------------------Select------------------</mat-option>
@@ -208,42 +208,52 @@
               <input class="form-control" placeholder="Google Location" formControlName="googleLocation" readonly />
             </div>
 
+            <div class="col-md-6">
+              <div class="form-check mt-4">
+                <input class="form-check-input" id="addresIsDeleted" type="checkbox" formControlName="isDeleted" />
+                <label class="form-check-label" for="addresIsDeleted">
+                  {{ 'ADDRESS.IS_DELETED' | translate }}
+                </label>
+              </div>
+            </div>
 
             <!-- <div class="col-md-6 form-check mt-4">
                 <input type="checkbox" formControlName="isDeleted" id="add{{i}}" class="form-check-input" />
                 <label class="form-check-label" for="add{{i}}">Is Deleted</label>
               </div> -->
+
+
             <!-- Availabilities -->
             <div class="col-12 mt-3" formArrayName="availabilities">
               <h5>{{'PROFILE.AVAILABILITIES'|translate}}</h5>
 
               <div *ngFor="let av of addr.get('availabilities')['controls']; let j = index" [formGroupName]="j"
                 class="row g-2 align-items-center">
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <label class="form-label">{{'PROFILE.DAY'|translate}}</label>
                   <select class="form-select" formControlName="dayOfWeek">
                     <option *ngFor="let d of days" [value]="d.value" readonly>{{ d.text }}</option>
                   </select>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <label class="form-label">{{'PROFILE.START_TIME'|translate}}</label>
                   <input type="time" class="form-control" formControlName="startTime" readonly />
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <label class="form-label">{{'PROFILE.END_TIME'|translate}}</label>
                   <input type="time" class="form-control" formControlName="endTime" readonly />
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <label class="form-label">{{'PROFILE.SLOT_TIME'|translate}}</label>
                   <input type="number" class="form-control" formControlName="slotTime" min="1"
                     placeholder="{{'PROFILE.SLOT_TIME_PLACEHOLDER'|translate}}" readonly />
                 </div>
 
 
-                <div class="col-md-3 form-check mt-4">
+                <div class="col-md-2 form-check mt-4">
                   <input type="checkbox" formControlName="isDeleted" [id]="'av' + i + '-' + j"
                     class="form-check-input" />
                   <label class="form-check-label" [for]="'av' + i + '-' + j">{{'PROFILE.IS_DELETED'|translate}}</label>

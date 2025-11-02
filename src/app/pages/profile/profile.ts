@@ -10,7 +10,7 @@ import { EditAddressComponent } from '../edit-address-component/edit-address-com
 import { ToastService } from 'src/services/ToastService';
 import { Router } from '@angular/router';
 import { arabicOnlyValidator, englishOnlyValidator, ValidationError } from 'src/app/shared/validation-error/validation-error';
-import { MatLabel, MatOption, MatSelectModule } from "@angular/material/select";
+import { MatOption, MatSelectModule } from "@angular/material/select";
 import { InsurancesResponse } from 'src/app/Models/Responses/insurancesResponse';
 import { InsuransesService } from 'src/services/insuranses.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -24,7 +24,7 @@ import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
   selector: 'app-profile',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, TranslateModule,
-    MatSelectModule, NgFor, MatIcon, MatDialogModule, ValidationError, MatLabel, MatOption],
+    MatSelectModule, NgFor, MatIcon, MatDialogModule, ValidationError, MatOption],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })
