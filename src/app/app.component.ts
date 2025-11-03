@@ -6,10 +6,9 @@ import { AppointmentSignalRService } from 'src/services/Hubs/AppointmentListener
 import { ToastService } from 'src/services/ToastService';
 import { jwtDecode } from 'jwt-decode';
 import { TranslateService } from '@ngx-translate/core';
+import { JwtPayload } from './Models/shared/SharedClasses';
 // project import
-interface JwtPayload {
-  LoggedId?: string; // أو doctorId حسب السيرفر
-}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,13 +20,12 @@ export class AppComponent implements OnInit {
   private signalR = inject(AppointmentSignalRService);
   private toaster = inject(ToastService);
 
-  private translate = inject(TranslateService)
+  private translate = inject(TranslateService);
   constructor() {
     this.translate.addLangs(['en', 'ar']);
     this.translate.setDefaultLang('en');
     this.translate.use('en');
   }
-
 
   switchLang(lang: string) {
     this.translate.use(lang);

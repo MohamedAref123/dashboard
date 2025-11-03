@@ -2,14 +2,14 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { jwtDecode } from 'jwt-decode';
 import { userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { CreateOfflineAppointmentRequest } from 'src/app/Models/Requests/CreateOfflineAppointmentRequest';
 import { DoctorAvailableTime, DoctorAvialabilitiesModel } from 'src/app/Models/Responses/Current-AvailabilitiesResponse';
 import { GetPatientByPhoneResponse } from 'src/app/Models/Responses/GetPatientByPhoneResponse ';
-import { AppointmentStatus } from 'src/app/Models/shared/SharedClasses';
+import { AppointmentStatus, JwtPayload } from 'src/app/Models/shared/SharedClasses';
 import { DoctorService } from 'src/services/doctor.service';
 import { ToastService } from 'src/services/ToastService';
-
 
 @Component({
   selector: 'app-current-availlabilities.component',
@@ -19,63 +19,62 @@ import { ToastService } from 'src/services/ToastService';
 })
 export class CurrentAvaillabilitiesComponent implements OnInit {
   doctorService = inject(DoctorService);
-  toast = inject(ToastService)
-  location = inject(Location)
+  toast = inject(ToastService);
+  location = inject(Location);
   doctorId: string;
-  patient: FormGroup
-  fb = inject(FormBuilder)
+  patient: FormGroup;
+  fb = inject(FormBuilder);
   doctoravailabilities: DoctorAvialabilitiesModel;
   patientData: GetPatientByPhoneResponse | null = null;
-  isLoading: boolean
+  isLoading: boolean;
   statusOptions: string[] = [];
   selectedAvailabilityId?: string;
   selectedDate?: string;
   selectedTime?: string;
-
   ngOnInit(): void {
+    // ✅ إنشاء الفورم
+    this.patient = this.fb.group({
+      fullName: ['', [Validators.required, Validators.minLength(3)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,15}$')]],
+      status: ['Pending', Validators.required],
+      notes: [''],
+      doctorId: [this.doctorId],
+      doctorAvailabilityId: [''],
+      appointmentDate: [''],
+      fromTime: ['']
+    });
+
     this.isLoading = true;
 
-    this.statusOptions = Object.keys(AppointmentStatus).filter(k => isNaN(Number(k)));
+    this.statusOptions = Object.keys(AppointmentStatus).filter((k) => isNaN(Number(k)));
+
+    this.initiateAvailabilities();
+  }
+
+  initiateAvailabilities() {
+    if (!this.doctorId) {
+      const decoded = jwtDecode<JwtPayload>(this.getToken());
+
+      this.doctorId = decoded.LoggedId;
+    }
 
     // 1️⃣ الحصول على doctorId
-    this.doctorService.getuser('EN').subscribe({
-      next: (res: userResponse) => {
-        this.doctorId = res.doctorId;
-        console.log('Doctor ID:', this.doctorId);
-
-        // 2️⃣ جلب availabilities
-        this.doctorService.getavailabilities(this.doctorId, 'EN').subscribe({
-          next: (data) => {
-            this.doctoravailabilities = data;
-
-            // ✅ إنشاء الفورم
-            this.patient = this.fb.group({
-              fullName: ['', [Validators.required, Validators.minLength(3)]],
-              phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,15}$')]],
-              status: ['Pending', Validators.required],
-              notes: [''],
-              doctorId: [this.doctorId],
-              doctorAvailabilityId: [''],
-              appointmentDate: [''],
-              fromTime: ['']
-            });
-
-            this.isLoading = false;
-          },
-          error: (err) => {
-            console.error('Error loading availabilities:', err);
-            this.isLoading = false;
-          }
+    // 2️⃣ جلب availabilities
+    this.doctorService.getavailabilities(this.doctorId, 'EN').subscribe({
+      next: (data) => {
+        this.doctoravailabilities = data;
+        this.doctoravailabilities.availableAppointments.forEach((appointment) => {
+          appointment.groupedItems = this.groupByDay(appointment.doctorAvailableTimes);
         });
+
+        this.isLoading = false;
       },
       error: (err) => {
-        console.error('Error getting user:', err);
+        console.error('Error loading availabilities:', err);
         this.isLoading = false;
       }
     });
   }
-
-
   groupByDay(times: DoctorAvailableTime[]): Record<string, DoctorAvailableTime[]> {
     if (!times) return {};
     return times.reduce((groups: Record<string, DoctorAvailableTime[]>, time: DoctorAvailableTime) => {
@@ -125,10 +124,6 @@ export class CurrentAvaillabilitiesComponent implements OnInit {
     });
   }
 
-
-
-
-
   onSubmit(): void {
     if (this.patient.valid) {
       const payload: CreateOfflineAppointmentRequest = {
@@ -145,14 +140,14 @@ export class CurrentAvaillabilitiesComponent implements OnInit {
 
       this.doctorService.createOfflineAppointment(payload).subscribe({
         next: (res) => {
-          console.log('✅ Appointment created successfully:', res);
           this.toast.success('✅ Appointment created successfully:');
           this.patient.reset();
+          this.initiateAvailabilities();
           // window.location.reload();
         },
         error: (err) => {
           console.error('❌ Error creating appointment:', err);
-          this.toast.error('❌ Error creating appointment:')
+          this.toast.error('❌ Error creating appointment');
         }
       });
     } else {
@@ -160,5 +155,7 @@ export class CurrentAvaillabilitiesComponent implements OnInit {
     }
   }
 
+  getToken(): string | null {
+    return localStorage.getItem('access_token');
+  }
 }
-

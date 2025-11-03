@@ -1,4 +1,4 @@
-import { InsurancesResponse } from "./insurancesResponse";
+import { InsurancesResponse } from './insurancesResponse';
 
 export interface DoctorAvialabilitiesModel {
   doctorName: string;
@@ -25,6 +25,7 @@ export interface AvailableAppointment {
   addressName: string;
   googleLocation: string;
   doctorAvailableTimes: DoctorAvailableTime[];
+  groupedItems: Record<string, DoctorAvailableTime[]>;
 }
 
 export interface DoctorAvailableTime {

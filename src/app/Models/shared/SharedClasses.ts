@@ -38,3 +38,7 @@ export class ShardEnums {
       }));
   }
 }
+
+export interface JwtPayload {
+  LoggedId?: string; // أو doctorId حسب السيرفر
+}
