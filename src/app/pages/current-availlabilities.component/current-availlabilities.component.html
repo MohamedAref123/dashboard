@@ -14,36 +14,51 @@
 
   <div *ngIf="doctoravailabilities">
 
-    <!-- بيانات الطبيب -->
+    <!-- بيانات المريض -->
     <div class="card p-3 mb-4 shadow-sm border-0">
-      <h3 class=" mb-3">{{ doctoravailabilities.doctorName }}</h3>
+      <h3 class="mb-3">{{ 'PATIENT.TITLE' | translate }}</h3>
 
-      <div class="row g-3">
-        <div class="col-md-6"><strong>{{'PROFILE.SPECIALTY'|translate}}:</strong> {{
-          doctoravailabilities.doctorSpecialist }}</div>
-        <div class="col-md-6"><strong>{{'PROFILE.LICENSE_NUMBER'|translate}}:</strong> {{
-          doctoravailabilities.licenseNumber }}</div>
-        <div class="col-md-6"><strong>{{'PROFILE.Education'|translate}}:</strong> {{ doctoravailabilities.education }}
-        </div>
-        <div class="col-md-6"><strong>{{'PROFILE.EXPERIENCE'|translate}}:</strong> {{
-          doctoravailabilities.yearsOfExperience }}</div>
+      <form [formGroup]="patient" (ngSubmit)="onSubmit()" class="pt-4 pb-4">
+        <div class="row">
 
-        <div class="col-md-6"><strong>{{'PROFILE.GENDER'|translate}}:</strong> {{ doctoravailabilities.gender }}</div>
+          <div class="col-md-6">
+            <label class="form-label">{{ 'PATIENT.PHONE' | translate }}</label>
+            <input type="text" formControlName="phoneNumber" class="form-control" (blur)="onPhoneBlur()" />
+            <div *ngIf="patient.get('phoneNumber')?.invalid && patient.get('phoneNumber')?.touched" class="text-danger">
+              Please enter a valid phone number
+            </div>
+          </div>
 
-        <div class="col-md-6"><strong>{{'PROFILE.DescriptionEN'|translate}}:</strong> {{
-          doctoravailabilities.description
-          }}</div>
 
-        <div class="col-md-6 d-flex align-items-center">
-          <strong>{{'PROFILE.INSURANCE'|translate}}:</strong>
-          <div class="d-flex align-items-center ms-2">
-            <img [src]="'data:image/png;base64,' + doctoravailabilities.insurance?.icon"
-              class="img-thumbnail rounded-circle me-2" width="40" height="40" alt="Insurance Icon" />
-            {{ doctoravailabilities.insurance?.text }}
+          <div class="col-md-6">
+            <label class="form-label">{{ 'PATIENT.NAME' | translate }}</label>
+            <input type="text" formControlName="fullName" class="form-control" />
+            <div *ngIf="patient.get('fullName')?.invalid && patient.get('fullName')?.touched" class="text-danger">
+              {{ 'PATIENT.NAME_ERROR' | translate }}
+            </div>
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <label class="form-label">{{ 'APPOINTMENT.STATUS' | translate }}</label>
+            <select class="form-control" formControlName="status">
+              <option *ngFor="let status of statusOptions" [value]="status"> {{ ('APPOINTMENT.STATUS_' +
+                status.toUpperCase()) | translate }}</option>
+            </select>
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <label class="form-label">{{ 'APPOINTMENT.NOTES' | translate }}</label>
+            <textarea formControlName="notes" class="form-control" rows="3" placeholder="Enter any notes..."></textarea>
           </div>
         </div>
-      </div>
+
+
+
+
+        <button class="btn btn-save mt-3" type="submit">{{ 'PATIENT.SUBMIT' | translate }}</button>
+      </form>
     </div>
+
 
     <!-- 📅 المواعيد المتاحة -->
     <div class="accordion" id="availabilitiesAccordion">
@@ -85,15 +100,17 @@
                   data-bs-parent="#accordionAppointments">
                   <div class="accordion-body">
                     <div class="d-flex flex-wrap gap-3 justify-content-center">
-                      <div *ngFor="let t of group.value" class="border rounded shadow-sm p-3 bg-light"
-                        style="min-width: 180px; max-width: 220px;">
-                        <div class="fw-bold text-primary d-flex justify-content-center align-items-center">
+                      <div *ngFor="let t of group.value" class="border rounded shadow-sm p-3 bg-light time-card"
+                        style="min-width: 180px; max-width: 220px; cursor: pointer;" (click)="selectTime(t)"
+                        [class.selected]="patient.get('doctorAvailabilityId')?.value === t.doctorAvailabilityId">
+                        <div class="fw-bold text-primary text-center">
                           <i class="bi bi-clock me-2"></i> {{ t.time }}
                         </div>
                         <div class="text-muted text-center">
                           <i class="bi bi-calendar me-2"></i> {{ t.appointmentDate | date: 'mediumDate' }}
                         </div>
                       </div>
+
                     </div>
                   </div>
                 </div>

@@ -19,13 +19,14 @@
           <input type="date" class="form-control" formControlName="toDate" />
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
           <label class="form-label" style="color: gray;">{{ 'APPOINTMENT.STATUS' | translate }}</label>
           <select class="form-control" formControlName="status">
             <option *ngFor="let status of statusOptions" [value]="status"> {{ ('APPOINTMENT.STATUS_' +
               status.toUpperCase()) | translate }}</option>
           </select>
         </div>
+
 
 
         <div class="col-md-2 d-flex align-items-end mt-3">

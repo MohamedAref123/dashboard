@@ -99,6 +99,15 @@
     "DESCRIPTION": "Here you can find the doctor's available appointments and schedule.",
     "NO_DATA": "No available appointments found."
   },
+  "PATIENT": {
+    "TITLE": "Patient Data",
+    "NAME": "Patient Name",
+    "NAME_ERROR": "Name is required (min 3 characters)",
+    "PHONE": "Phone Number",
+    "PHONE_ERROR": "Please enter a valid phone number",
+    "NOTES": "Notes",
+    "SUBMIT": "Submit"
+  },
   "BUTTONS": {
     "ACTIONS": "Actions",
     "SEARCH": "Search",

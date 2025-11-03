@@ -14,6 +14,8 @@ import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
 import { ReviewResponse } from 'src/app/Models/Responses/ReviewResponse';
 import { ReviewsRequest } from 'src/app/Models/Requests/ReviewsRequest';
 import { DoctorAvialabilitiesModel } from 'src/app/Models/Responses/Current-AvailabilitiesResponse';
+import { CreateOfflineAppointmentRequest } from 'src/app/Models/Requests/CreateOfflineAppointmentRequest';
+import { GetPatientByPhoneResponse } from 'src/app/Models/Responses/GetPatientByPhoneResponse ';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +73,16 @@ export class DoctorService {
   getavailabilities(doctorid: string, lang: string): Observable<DoctorAvialabilitiesModel> {
     return this.apiService.get<DoctorAvialabilitiesModel>(`Appointments/doctor/current/availabilities/${doctorid}/${lang}`);
   }
+
+  createOfflineAppointment(payload: CreateOfflineAppointmentRequest): Observable<CreateOfflineAppointmentRequest> {
+    return this.apiService.post(`Appointments/CreateOffline`, payload);
+  }
+
+  checkPhoneNumber(phone: string): Observable<GetPatientByPhoneResponse> {
+    console.log('📤 Sending phone to API:', phone);
+    return this.apiService.get<GetPatientByPhoneResponse>(`Patient/GetByPhone/${phone}`);
+  }
+
 
   uploadDoctorImage(
     profileId: string,
