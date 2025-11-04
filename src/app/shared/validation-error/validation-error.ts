@@ -120,6 +120,10 @@ export class ValidationError implements OnInit {
         case 'englishOnly':
           msgs.push(this.translate.instant('VALIDATION.ENGLISH_ONLY'));
           break;
+        case 'pattern':
+          msgs.push(this.translate.instant('VALIDATION.PHONE_INVALID'));
+          break;
+
         default:
           msgs.push(this.translate.instant('MESSAGES.ERROR'));
       }

@@ -146,6 +146,10 @@
     "FRIDAY": "Friday",
     "SATURDAY": "Saturday"
   },
+  "TIME": {
+    "LABEL": "Time:",
+    "NO_SELECTION": "No time selected yet ⏰"
+  },
   "TABLE": {
     "NO_DATA": "No data available",
     "TOTAL_RECORDS": "Total Records",
@@ -207,6 +211,7 @@
     "ENGLISH_ONLY": "Only English letters are allowed",
     "EMAIL_INVALID": "Invalid email format",
     "MIN_LENGTH": "Must contain at least {min} characters",
-    "MAX_LENGTH": "Must not exceed {max} characters"
+    "MAX_LENGTH": "Must not exceed {max} characters",
+    "PHONE_INVALID": "Invalid phone number format"
   }
 }

@@ -105,20 +105,16 @@ h3 {
 }
 
 .accordion .accordion-collapse {
-  transition:
-    max-height 0.4s ease,
-    opacity 0.3s ease;
-  overflow: hidden;
+  transition: height 0.35s ease;
 }
 
 .accordion-collapse {
   transition: height 0.3s ease;
-  overflow: visible !important;
+  overflow: hidden;
 }
 
 .accordion-body {
-  max-height: none !important;
-  overflow: visible !important;
+  overflow: hidden;
 }
 
 .table-responsive {
@@ -153,16 +149,23 @@ h3 {
   }
 }
 
+.time-card:hover {
+  background-color: #ede7f6;
+  transform: scale(1.03);
+}
+
 .time-card {
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease;
+  color: #673ab7; // اللون العادي
+}
 
-  &:hover {
-    background-color: #ede7f6;
-    transform: scale(1.03);
-  }
+.time-card.selected {
+  background-color: #673ab7 !important;
+  color: #fff !important; /* النص والأيقونة */
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(103, 58, 183, 0.5);
 
-  &.selected {
-    border: 2px solid #673ab7;
-    background-color: #d1c4e9;
+  i {
+    color: #fff !important; /* يجعل الأيقونة بيضاء */
   }
 }

@@ -1,3 +1,4 @@
+
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { environment } from './environments/environment';
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -10,6 +11,8 @@ import { loaderInterceptor } from './app/interceptors/loader.interceptor';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CustomTranslateLoader } from './app/translate-loader';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // ✅ أضف هذا السطر
+
+
 
 if (environment.production) {
   enableProdMode();

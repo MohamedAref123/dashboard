@@ -1,4 +1,4 @@
-<!-- 🩺 بيانات الطبيب -->
+<!-- 🩺 بيانات  المريض -->
 <div class="doctor-header d-flex justify-content-between align-items-center">
   <div class="d-flex flex-column">
     <div class="d-flex align-items-center header-title">
@@ -20,17 +20,13 @@
           <div class="col-md-6">
             <label class="form-label">{{ 'PATIENT.PHONE' | translate }}</label>
             <input type="text" formControlName="phoneNumber" class="form-control" (blur)="onPhoneBlur()" />
-            <div *ngIf="patient.get('phoneNumber')?.invalid && patient.get('phoneNumber')?.touched" class="text-danger">
-              Please enter a valid phone number
-            </div>
+            <app-validation-error [form]="patient" controlName="phoneNumber"></app-validation-error>
           </div>
 
           <div class="col-md-6">
             <label class="form-label">{{ 'PATIENT.NAME' | translate }}</label>
             <input type="text" formControlName="fullName" class="form-control" />
-            <div *ngIf="patient.get('fullName')?.invalid && patient.get('fullName')?.touched" class="text-danger">
-              {{ 'PATIENT.NAME_ERROR' | translate }}
-            </div>
+            <app-validation-error [form]="patient" controlName="fullName"></app-validation-error>
           </div>
 
           <div class="col-md-6 mt-3">
@@ -48,7 +44,30 @@
           </div>
         </div>
 
+        <div class="text-center my-3">
+          <ng-container *ngIf="selectedTime; else noSelection">
+            <label class="fw-bold text-primary" style="font-size: larger;">
+              <i class="bi bi-clock me-2"></i>
+              {{ 'TIME.LABEL' | translate }}
+              <span class="text-dark">{{ selectedTime }}</span>
+              <span *ngIf="selectedDate"> ({{ selectedDate | date }})</span>
+            </label>
+          </ng-container>
+
+          <ng-template #noSelection>
+            <label class="text-muted">
+              <i class="bi bi-exclamation-circle me-2 ms-2"></i>
+              {{ 'TIME.NO_SELECTION' | translate }}
+            </label>
+          </ng-template>
+        </div>
+
+
+
         <button class="btn btn-save mt-3" type="submit">{{ 'PATIENT.SUBMIT' | translate }}</button>
+
+
+
       </form>
     </div>
 
@@ -57,15 +76,10 @@
       <div class="accordion" [id]="'availabilitiesAccordion' + appointmentIndex">
         <div class="accordion-item shadow-sm border-0">
           <h2 class="accordion-header" [id]="'heading' + appointmentIndex">
-            <button
-              class="accordion-button collapsed d-flex justify-content-between align-items-center"
-              type="button"
-              data-bs-toggle="collapse"
-              [attr.data-bs-target]="'#collapse' + appointmentIndex"
-              aria-expanded="false"
+            <button class="accordion-button collapsed d-flex justify-content-between align-items-center" type="button"
+              data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + appointmentIndex" aria-expanded="false"
               [attr.aria-controls]="'collapse' + appointmentIndex"
-              style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7"
-            >
+              style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7">
               <div>
                 <i class="ti ti-map-pin text-primary me-2"></i>
                 {{ a.addressName }} ({{ a.city }}, {{ a.region }})
@@ -73,26 +87,18 @@
             </button>
           </h2>
 
-          <div
-            [id]="'collapse' + appointmentIndex"
-            class="accordion-collapse collapse"
+          <div [id]="'collapse' + appointmentIndex" class="accordion-collapse collapse"
             [attr.aria-labelledby]="'heading' + appointmentIndex"
-            [attr.data-bs-parent]="'#availabilitiesAccordion' + appointmentIndex"
-          >
+            [attr.data-bs-parent]="'#availabilitiesAccordion' + appointmentIndex">
             <div class="accordion-body">
               <!-- Inner Accordion: Days (Independent) -->
               <div *ngFor="let group of a.groupedItems | keyvalue; let groupedIndex = index" class="accordion mt-3">
                 <div class="accordion-item">
                   <h2 class="accordion-header" [id]="'heading-' + appointmentIndex + '-' + groupedIndex">
-                    <button
-                      class="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      [attr.data-bs-target]="'#collapse-' + appointmentIndex + '-' + groupedIndex"
-                      aria-expanded="false"
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      [attr.data-bs-target]="'#collapse-' + appointmentIndex + '-' + groupedIndex" aria-expanded="false"
                       [attr.aria-controls]="'collapse-' + appointmentIndex + '-' + groupedIndex"
-                      style="background-color: rgb(224, 207, 252)"
-                    >
+                      style="background-color: rgb(224, 207, 252)">
                       {{ group.key }}
                       <strong class="text-muted ms-2">
                         <i class="bi bi-calendar me-2"></i>
@@ -101,32 +107,27 @@
                     </button>
                   </h2>
 
-                  <div
-                    [id]="'collapse-' + appointmentIndex + '-' + groupedIndex"
-                    class="accordion-collapse collapse"
-                    [attr.aria-labelledby]="'heading-' + appointmentIndex + '-' + groupedIndex"
-                  >
+                  <div [id]="'collapse-' + appointmentIndex + '-' + groupedIndex" class="accordion-collapse collapse"
+                    [attr.aria-labelledby]="'heading-' + appointmentIndex + '-' + groupedIndex">
                     <div class="accordion-body">
                       <div class="d-flex flex-wrap gap-3 justify-content-center">
-                        <div
-                          *ngFor="let t of group.value"
-                          class="border rounded shadow-sm p-3 bg-light time-card"
-                          style="min-width: 180px; max-width: 220px; cursor: pointer"
-                          (click)="selectTime(t)"
-                          [class.selected]="patient.get('doctorAvailabilityId')?.value === t.doctorAvailabilityId"
-                        >
-                          <div class="fw-bold text-primary text-center">
+                        <div *ngFor="let t of group.value" class="border rounded shadow-sm p-3 bg-light time-card"
+                          style="min-width: 180px; max-width: 220px; cursor: pointer" (click)="selectTime(t)"
+                          [class.selected]="isSelected(t)">
+                          <div class="fw-bold  text-center">
                             <i class="bi bi-clock me-2"></i>
                             {{ t.time }}
                           </div>
-                          <div class="text-muted text-center">
-                            <i class="bi bi-calendar me-2"></i>
-                            {{ t.appointmentDate | date: 'mediumDate' }}
-                          </div>
+
                         </div>
+
                       </div>
                     </div>
+
                   </div>
+
+
+
                 </div>
               </div>
               <!-- End Inner Accordion -->

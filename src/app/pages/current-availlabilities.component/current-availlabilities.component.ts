@@ -1,23 +1,24 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { jwtDecode } from 'jwt-decode';
-import { userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { CreateOfflineAppointmentRequest } from 'src/app/Models/Requests/CreateOfflineAppointmentRequest';
 import { DoctorAvailableTime, DoctorAvialabilitiesModel } from 'src/app/Models/Responses/Current-AvailabilitiesResponse';
 import { GetPatientByPhoneResponse } from 'src/app/Models/Responses/GetPatientByPhoneResponse ';
 import { AppointmentStatus, JwtPayload } from 'src/app/Models/shared/SharedClasses';
 import { DoctorService } from 'src/services/doctor.service';
 import { ToastService } from 'src/services/ToastService';
+import { ValidationError } from "src/app/shared/validation-error/validation-error";
 
 @Component({
   selector: 'app-current-availlabilities.component',
-  imports: [CommonModule, TranslateModule, ReactiveFormsModule],
+  imports: [CommonModule, TranslateModule, ReactiveFormsModule, NgbAccordionModule, ValidationError],
   templateUrl: './current-availlabilities.component.html',
   styleUrl: './current-availlabilities.component.scss'
 })
-export class CurrentAvaillabilitiesComponent implements OnInit {
+export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
   doctorService = inject(DoctorService);
   toast = inject(ToastService);
   location = inject(Location);
@@ -28,9 +29,21 @@ export class CurrentAvaillabilitiesComponent implements OnInit {
   patientData: GetPatientByPhoneResponse | null = null;
   isLoading: boolean;
   statusOptions: string[] = [];
-  selectedAvailabilityId?: string;
+  selectedAvailabilityId: string | number | null = null;
+  selectedSlotId: string | null = null;
   selectedDate?: string;
   selectedTime?: string;
+
+
+  ngAfterViewInit() {
+    // إعادة تهيئة عناصر bootstrap داخل المكون
+    import('bootstrap').then(bs => {
+      const collapseList = document.querySelectorAll('.collapse');
+      collapseList.forEach(el => new bs.Collapse(el, { toggle: false }));
+    });
+  }
+
+
   ngOnInit(): void {
     // ✅ إنشاء الفورم
     this.patient = this.fb.group({
@@ -75,6 +88,8 @@ export class CurrentAvaillabilitiesComponent implements OnInit {
       }
     });
   }
+
+
   groupByDay(times: DoctorAvailableTime[]): Record<string, DoctorAvailableTime[]> {
     if (!times) return {};
     return times.reduce((groups: Record<string, DoctorAvailableTime[]>, time: DoctorAvailableTime) => {
@@ -85,7 +100,10 @@ export class CurrentAvaillabilitiesComponent implements OnInit {
     }, {});
   }
 
+
   selectTime(t: DoctorAvailableTime): void {
+    this.selectedSlotId = `${t.doctorAvailabilityId}-${t.time}-${t.appointmentDate}`;
+
     this.selectedAvailabilityId = t.doctorAvailabilityId;
     this.selectedDate = t.appointmentDate;
     this.selectedTime = t.time;
@@ -96,8 +114,13 @@ export class CurrentAvaillabilitiesComponent implements OnInit {
       fromTime: this.selectedTime
     });
 
-    console.log('🕒 تم اختيار الموعد:', t);
+    console.log('🕒 Selected time:', t);
   }
+
+  isSelected(t: DoctorAvailableTime): boolean {
+    return this.selectedSlotId === `${t.doctorAvailabilityId}-${t.time}-${t.appointmentDate}`;
+  }
+
 
   onPhoneBlur(): void {
     const phoneValue = this.patient.get('phoneNumber')?.value?.trim();
@@ -111,12 +134,17 @@ export class CurrentAvaillabilitiesComponent implements OnInit {
     this.doctorService.checkPhoneNumber(phoneValue).subscribe({
       next: (res) => {
         console.log('✅ Patient found:', res);
-
         // لو رجعت بيانات، نعبّي الاسم تلقائيًا في الفورم
-        this.patient.patchValue({
-          fullName: res.fullName,
-          phoneNumber: res.phoneNumber
-        });
+        if (res && res.fullName) {
+          // ✅ فقط لو في بيانات فعلاً
+          this.patient.patchValue({
+            fullName: res.fullName,
+            phoneNumber: res.phoneNumber
+          });
+        } else {
+          console.warn('⚠️ No patient found with this phone number');
+          this.patient.patchValue({ fullName: '' });
+        }
       },
       error: (err) => {
         console.error('❌ Error fetching patient:', err);
@@ -143,6 +171,7 @@ export class CurrentAvaillabilitiesComponent implements OnInit {
           this.toast.success('✅ Appointment created successfully:');
           this.patient.reset();
           this.initiateAvailabilities();
+          console.log(res)
           // window.location.reload();
         },
         error: (err) => {
