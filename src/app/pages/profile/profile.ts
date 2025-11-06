@@ -10,7 +10,7 @@ import { EditAddressComponent } from '../edit-address-component/edit-address-com
 import { ToastService } from 'src/services/ToastService';
 import { Router } from '@angular/router';
 import { arabicOnlyValidator, englishOnlyValidator, ValidationError } from 'src/app/shared/validation-error/validation-error';
-import { MatOption, MatSelectModule } from "@angular/material/select";
+import { MatOption, MatSelectModule } from '@angular/material/select';
 import { InsurancesResponse } from 'src/app/Models/Responses/insurancesResponse';
 import { InsuransesService } from 'src/services/insuranses.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -18,13 +18,20 @@ import { DoctorSpecialistService } from 'src/services/DoctorSpecialistService';
 import { DoctorSpecialistResponse } from 'src/app/Models/Responses/DoctorSpecialistResponses';
 import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
 
-
-
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule,
-    MatSelectModule, NgFor, MatIcon, MatDialogModule, ValidationError, MatOption],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    MatSelectModule,
+    NgFor,
+    MatIcon,
+    MatDialogModule,
+    ValidationError,
+    MatOption
+  ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })
@@ -36,8 +43,8 @@ export class Profile implements OnInit {
   doctorService = inject(DoctorService);
   fb = inject(FormBuilder);
   toast = inject(ToastService);
-  router = inject(Router)
-  private translate = inject(TranslateService)
+  router = inject(Router);
+  private translate = inject(TranslateService);
 
   insurances: InsurancesResponse[] = [];
 
@@ -54,16 +61,14 @@ export class Profile implements OnInit {
 
   openedIndex: number | null = null;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
       this.patchForm(res);
       console.log('Loaded user profile:', res);
       this.doctorId = res.doctorId;
-      this.profileImageUrl = this.getImageUrl(res.image) || localStorage.getItem('profile_image');
+      this.profileImageUrl = this.getImageUrl(res.image);
       this.previewUrl = this.profileImageUrl;
     });
 
@@ -75,12 +80,10 @@ export class Profile implements OnInit {
     this.openedIndex = this.openedIndex === i ? null : i;
   }
 
-
   loadSpecialists(): void {
     this.doctorSpecialistService.GetAll().subscribe({
       next: (data) => {
         this.specialists = data;
-
       },
       error: (err) => console.error('Failed to load specialists:', err)
     });
@@ -94,19 +97,18 @@ export class Profile implements OnInit {
         // ✅ بعد تحميل التأمينات، نحدث التأمين الحالي من الـ form
         const currentId = this.profileForm?.get('insuranceId')?.value;
         if (currentId) {
-          this.selectedInsurance = this.insurances.find(i => i.value === currentId);
+          this.selectedInsurance = this.insurances.find((i) => i.value === currentId);
         }
       },
       error: (err) => console.error('Failed to load insurances:', err)
     });
   }
   onInsuranceChange(selectedValue: string): void {
-    const selected = this.insurances.find(i => i.value === selectedValue);
+    const selected = this.insurances.find((i) => i.value === selectedValue);
     if (selected) {
       this.selectedInsurance = selected;
     }
   }
-
 
   onFileSelected(event: Event) {
     const fileInput = event.target as HTMLInputElement;
@@ -129,7 +131,6 @@ export class Profile implements OnInit {
     return `http://attachments.hgtechnologygroup.net/${path}`;
   }
 
-
   onUploadImage(): void {
     if (!this.selectedFile || !this.doctorId) {
       this.translate.get('PROFILE.SELECT_IMAGE').subscribe((res: string) => {
@@ -139,35 +140,32 @@ export class Profile implements OnInit {
       return;
     }
 
-    this.doctorService.uploadDoctorImage(this.doctorId, this.selectedFile, 'en')
-      .subscribe({
-        next: (res: imageResponse) => {
+    this.doctorService.uploadDoctorImage(this.doctorId, this.selectedFile, 'en').subscribe({
+      next: (res: imageResponse) => {
+        this.toast.success('✅ Image uploaded successfully!');
 
-          this.toast.success('✅ Image uploaded successfully!');
+        // 🔥 أضف query لتجديد الرابط وتفادي الكاش
+        const newUrl = `${res.profilePath}?t=${new Date().getTime()}`;
 
-          // 🔥 أضف query لتجديد الرابط وتفادي الكاش
-          const newUrl = `${res.profilePath}?t=${new Date().getTime()}`;
-
-          this.profileImageUrl = newUrl;
-          this.previewUrl = newUrl;
-        },
-        error: (err) => {
-          console.error('🔴 Upload error details:', err);
-          if (err.status === 401) {
-            this.toast.error('Unauthorized (invalid or missing token)');
-          } else if (err.status === 404) {
-            this.toast.error('Upload URL not found (404)');
-          } else if (err.status === 405) {
-            this.toast.error('Method not allowed (check POST method)');
-          } else if (err.status === 0) {
-            this.toast.error('Network error — maybe CORS or server down');
-          } else {
-            this.toast.error(`❌ Upload failed: ${err.message || 'Unknown error'}`);
-          }
+        this.profileImageUrl = this.getImageUrl(newUrl);
+        this.previewUrl = newUrl;
+      },
+      error: (err) => {
+        console.error('🔴 Upload error details:', err);
+        if (err.status === 401) {
+          this.toast.error('Unauthorized (invalid or missing token)');
+        } else if (err.status === 404) {
+          this.toast.error('Upload URL not found (404)');
+        } else if (err.status === 405) {
+          this.toast.error('Method not allowed (check POST method)');
+        } else if (err.status === 0) {
+          this.toast.error('Network error — maybe CORS or server down');
+        } else {
+          this.toast.error(`❌ Upload failed: ${err.message || 'Unknown error'}`);
         }
-      });
+      }
+    });
   }
-
 
   get getAddresses(): FormArray {
     return this.profileForm.get('addresses') as FormArray;
@@ -208,7 +206,6 @@ export class Profile implements OnInit {
   }
 
   private patchForm(user: userResponse) {
-
     this.profileForm = this.fb.group({
       doctorId: user.doctorId,
       insuranceId: user.insurance?.value || '', // ✅ استخدم value فقط
@@ -240,13 +237,15 @@ export class Profile implements OnInit {
       maxWidth: '100vw',
       data: {
         ...addr,
-        doctorId: this.profileForm.get('doctorId')?.value,   // ✅ إضافة doctorId هنا
-        cityId: addr.cityId,    // ✔ فقط القيمة الصحيحة
+        doctorId: this.profileForm.get('doctorId')?.value, // ✅ إضافة doctorId هنا
+        cityId: addr.cityId, // ✔ فقط القيمة الصحيحة
         regionId: addr.regionId // ✔ فقط القيمة الصحيحة
       }
     });
 
-    dialogRef.afterClosed().subscribe((result) => { console.log('The dialog was closed', result); });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed', result);
+    });
   }
 
   onSubmit() {
@@ -258,7 +257,7 @@ export class Profile implements OnInit {
         });
       },
       error: (err) => {
-        console.log(err)
+        console.log(err);
         this.translate.get('PROFILE.FAILED_UPDATE').subscribe((res: string) => {
           this.toast.error(res); // رسالة الخطأ من ملف الترجمة
         });
