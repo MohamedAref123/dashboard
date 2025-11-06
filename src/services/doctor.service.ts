@@ -22,7 +22,7 @@ import { GetPatientByPhoneResponse } from 'src/app/Models/Responses/GetPatientBy
 })
 export class DoctorService {
   private apiService = inject(ApiService);
-  private http = inject(HttpClient)
+  private http = inject(HttpClient);
   private readonly uploadUrl = 'http://attachments.hgtechnologygroup.net/api/v1/ProfileMedia/Upload';
 
   // public createDoctor(request: DoctorCreateRequest): Observable<void> {
@@ -83,16 +83,12 @@ export class DoctorService {
     return this.apiService.get<GetPatientByPhoneResponse>(`Patient/GetByPhone/${phone}`);
   }
 
-
-  uploadDoctorImage(
-    profileId: string,
-    file: File,
-    lang: string = 'en'
-  ): Observable<imageResponse> {
+  uploadDoctorImage(profileId: string, file: File, lang: string = 'en'): Observable<imageResponse> {
     const formData = new FormData();
     formData.append('ProfileId', profileId); // ✅ مثل ما في الـ cURL
     formData.append('Lang', lang);
     formData.append('Image', file);
+    formData.append('AttachmentType', '1');
 
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -103,13 +99,6 @@ export class DoctorService {
       Authorization: `Bearer ${token}`
     });
 
-    return this.http.post<imageResponse>(
-      this.uploadUrl,
-      formData,
-      { headers }
-    );
+    return this.http.post<imageResponse>(this.uploadUrl, formData, { headers });
   }
-
-
-
 }

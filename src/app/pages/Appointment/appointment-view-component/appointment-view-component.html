@@ -1,16 +1,14 @@
-<div class="page-wrapper">
+<div class="page-wrapper" *ngIf="model">
   <div class="card w-50">
     <div class="earning-card warning overflow-hidden rounded">
       <span class="round secondary-round small"></span>
       <span class="round secondary-round big"></span>
       <div class="card-body">
-
         <div class="card-body">
-          <div class="appointment-header" style="justify-content: space-around;margin: 50px;">
+          <div class="appointment-header" style="justify-content: space-around; margin: 50px">
             <h2 style="color: #673ab7">{{ 'APPOINTMENT.DETAILS' | translate }}</h2>
             <span class="day-chip">{{ 'DAYS.' + model.dayOfWeek.toUpperCase() | translate }}</span>
           </div>
-
 
           <div class="appointment-body">
             <div class="appointment-item">
@@ -47,16 +45,14 @@
               <label class="label">{{ 'APPOINTMENT.STATUS' | translate }}:</label>
               <p class="note-text">{{ 'STATUS.' + selectedStatus.toUpperCase() | translate }}</p>
             </div>
-
           </div>
 
-
-
           <div class="mb-3 d-flex align-items-center justify-content-between" *ngIf="getAllowedActions().length > 0">
-
             <div class="d-flex mt-4">
-              <button *ngFor="let action of getAllowedActions()"
-                class="btn me-2 d-flex align-items-center justify-content-center" [ngStyle]="{
+              <button
+                *ngFor="let action of getAllowedActions()"
+                class="btn me-2 d-flex align-items-center justify-content-center"
+                [ngStyle]="{
             'background-color': action.toUpperCase() === 'COMPLETED' ? '#28a745' :
                                 action.toUpperCase() === 'CONFIRMED' ? '#673ab7' :
                                 action.toUpperCase() === 'CANCELLED' ? '#dc3545' : '#6c757d',
@@ -64,14 +60,13 @@
             'border-radius': '5px',
             'padding': '6px 12px',
             'font-weight': '500'
-          }" (click)="changeStatus(action)">
-                <span style="margin-right: 5px; font-size: 16px;">
-                  {{ action.toUpperCase() === 'CANCELLED' ? '✕' : '✓' }}
-                </span>
+          }"
+                (click)="changeStatus(action)"
+              >
+                <span style="margin-right: 5px; font-size: 16px">{{ action.toUpperCase() === 'CANCELLED' ? '✕' : '✓' }}</span>
                 {{ getLabel(action) }}
               </button>
             </div>
-
 
             <div class="appointment-footer mt-4">
               <button class="btn btn-back btn-primary" (click)="back()">
@@ -79,9 +74,9 @@
                 {{ 'BUTTONS.BACK' | translate }}
               </button>
             </div>
-
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

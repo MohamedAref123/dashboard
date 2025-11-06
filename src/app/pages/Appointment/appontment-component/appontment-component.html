@@ -1,45 +1,49 @@
-<div class="card mt-4 ">
+<div class="card mt-4">
   <div class="d-flex p-3">
-    <h2 style="color: #673ab7;margin-bottom: 15px; margin-right: 10px;">{{ 'APPOINTMENT.SEARCH_TITLE' | translate }}
-    </h2>
-    <i class="ti ti-alarm icon-animate" style="font-size: 25px; color: #673ab7;"></i>
+    <h2 style="color: #673ab7; margin-bottom: 15px; margin-right: 10px">{{ 'APPOINTMENT.SEARCH_TITLE' | translate }}</h2>
+    <i class="ti ti-alarm icon-animate" style="font-size: 25px; color: #673ab7"></i>
   </div>
 
   <div class="p-3">
-    <form [formGroup]="searchForm" (ngSubmit)="searchAppointments()" style="margin-bottom: 20px;">
+    <form [formGroup]="searchForm" (ngSubmit)="searchAppointments()" style="margin-bottom: 20px">
       <div class="row">
-
-        <div class="col-md-4">
-          <label class="form-label" style="color: gray;">{{ 'APPOINTMENT.FROM_DATE' | translate }}</label>
+        <div class="col-md-3">
+          <label class="form-label" style="color: gray">{{ 'APPOINTMENT.FROM_DATE' | translate }}</label>
           <input type="date" class="form-control" formControlName="fromDate" />
         </div>
 
-        <div class="col-md-4">
-          <label class="form-label" style="color: gray;">{{ 'APPOINTMENT.TO_DATE' | translate }}</label>
+        <div class="col-md-3">
+          <label class="form-label" style="color: gray">{{ 'APPOINTMENT.TO_DATE' | translate }}</label>
           <input type="date" class="form-control" formControlName="toDate" />
         </div>
 
-        <div class="col-md-6">
-          <label class="form-label" style="color: gray;">{{ 'APPOINTMENT.STATUS' | translate }}</label>
+        <div class="col-md-3">
+          <label class="form-label" style="color: gray">{{ 'APPOINTMENT.STATUS' | translate }}</label>
           <select class="form-control" formControlName="status">
-            <option *ngFor="let status of statusOptions" [value]="status"> {{ ('APPOINTMENT.STATUS_' +
-              status.toUpperCase()) | translate }}</option>
+            <option *ngFor="let status of statusOptions" [value]="status">
+              {{ ('APPOINTMENT.STATUS_' + status.toUpperCase()) | translate }}
+            </option>
           </select>
         </div>
 
-
-
         <div class="col-md-2 d-flex align-items-end mt-3">
-          <button type="submit" class="btn btn-secondary btn-search  w-100">{{ 'BUTTONS.SEARCH' | translate }}</button>
+          <button type="submit" class="btn btn-secondary btn-search w-100">{{ 'BUTTONS.SEARCH' | translate }}</button>
         </div>
       </div>
     </form>
 
-    <app-generic-table [_headers]="headers" [_items]="appointments" [_actions]="tableActions"
-      (actionClicked)="handleAction($event)" (pageChange)="onPageChange($event)" [pageSize]="pagenation.pageSize"
-      [totalRecords]="pagenation.totalRecords" [pageIndex]="pagenation.pageIndex" class="mt-4"
-      *ngIf="appointments.length>0">
-    </app-generic-table>
+    <app-generic-table
+      [_headers]="headers"
+      [_items]="appointments"
+      [_actions]="tableActions"
+      (actionClicked)="handleAction($event)"
+      (pageChange)="onPageChange($event)"
+      [pageSize]="pagenation.pageSize"
+      [totalRecords]="pagenation.totalRecords"
+      [pageIndex]="pagenation.pageIndex"
+      class="mt-4"
+      *ngIf="appointments.length>0"
+    ></app-generic-table>
 
     <div class="mt-4" *ngIf="appointments.length === 0">
       <p>No appointments found.</p>

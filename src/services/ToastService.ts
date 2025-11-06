@@ -39,7 +39,5 @@ export class ToastService {
     snackRef.onAction().subscribe(() => {
       this.router.navigateByUrl(route);
     });
-
-
   }
 }

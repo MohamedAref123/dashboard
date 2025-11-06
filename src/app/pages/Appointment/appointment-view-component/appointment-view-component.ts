@@ -27,10 +27,10 @@ export class AppointmentViewComponent implements OnInit {
 
   // statusOptions: string[] = Object.keys(AppointmentStatus).filter(key => isNaN(Number(key)));
   //statusOptions: AppointmentStatus
-  statusOptions: string[] = Object.keys(AppointmentStatus).filter(key => isNaN(Number(key)));
+  statusOptions: string[] = Object.keys(AppointmentStatus).filter((key) => isNaN(Number(key)));
   selectedStatus: string;
 
-  private translate = inject(TranslateService)
+  private translate = inject(TranslateService);
 
   ngOnInit(): void {
     const appointmentId = this.route.snapshot.paramMap.get('id');
@@ -41,14 +41,10 @@ export class AppointmentViewComponent implements OnInit {
     }
     this.appointmentService.getAppointment(appointmentId, 'EN').subscribe((response) => {
       this.model = response;
-      this.selectedStatus = Object.keys(AppointmentStatus)
-        .find(key => AppointmentStatus[key as keyof typeof AppointmentStatus] === this.model.status) || '';
+      this.selectedStatus =
+        Object.keys(AppointmentStatus).find((key) => AppointmentStatus[key as keyof typeof AppointmentStatus] === this.model.status) || '';
     });
-
-
   }
-
-
 
   changeStatus(statusKey: 'Cancelled' | 'Completed' | 'Confirmed') {
     if (!this.model) return;
@@ -76,33 +72,31 @@ export class AppointmentViewComponent implements OnInit {
         this.selectedStatus = statusKey;
 
         // Call API to update backend
-        this.appointmentService.updateAppointmentStatus(this.model.appointmentId, statusValue)
-          .subscribe({
-            next: () => {
-              Swal.fire({
-                title: 'Updated!',
-                text: `Status changed to ${statusKey}`,
-                icon: 'success',
-                didOpen: () => {
-                  const swalPopup = document.querySelector('.swal2-container') as HTMLElement;
-                  if (swalPopup) swalPopup.style.zIndex = '99999';
-                }
-              });
-            },
-            error: (err) => {
-              Swal.fire({
-                title: 'Error',
-                text: 'Failed to update status',
-                icon: 'error',
-                didOpen: () => {
-                  const swalPopup = document.querySelector('.swal2-container') as HTMLElement;
-                  if (swalPopup) swalPopup.style.zIndex = '99999';
-                }
-              });
-
-              console.error(err);
-            }
-          });
+        this.appointmentService.updateAppointmentStatus(this.model.appointmentId, statusValue).subscribe({
+          // next: () => {
+          //   Swal.fire({
+          //     title: 'Updated!',
+          //     text: `Status changed to ${statusKey}`,
+          //     icon: 'success',
+          //     didOpen: () => {
+          //       const swalPopup = document.querySelector('.swal2-container') as HTMLElement;
+          //       if (swalPopup) swalPopup.style.zIndex = '99999';
+          //     }
+          //   });
+          // },
+          // error: (err) => {
+          //   Swal.fire({
+          //     title: 'Error',
+          //     text: 'Failed to update status',
+          //     icon: 'error',
+          //     didOpen: () => {
+          //       const swalPopup = document.querySelector('.swal2-container') as HTMLElement;
+          //       if (swalPopup) swalPopup.style.zIndex = '99999';
+          //     }
+          //   });
+          //   console.error(err);
+          // }
+        });
       }
     });
   }
@@ -119,7 +113,6 @@ export class AppointmentViewComponent implements OnInit {
     return this.actionLabels[action.toUpperCase()][lang] || action;
   }
 
-
   getAllowedActions(): ('Confirmed' | 'Cancelled' | 'Completed')[] {
     if (!this.model) return [];
 
@@ -132,7 +125,6 @@ export class AppointmentViewComponent implements OnInit {
         return []; // Cancelled or Completed => no actions
     }
   }
-
 
   back() {
     //this.router.navigate(['/dashboard']);
