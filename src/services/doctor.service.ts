@@ -16,6 +16,7 @@ import { ReviewsRequest } from 'src/app/Models/Requests/ReviewsRequest';
 import { DoctorAvialabilitiesModel } from 'src/app/Models/Responses/Current-AvailabilitiesResponse';
 import { CreateOfflineAppointmentRequest } from 'src/app/Models/Requests/CreateOfflineAppointmentRequest';
 import { GetPatientByPhoneResponse } from 'src/app/Models/Responses/GetPatientByPhoneResponse ';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,9 @@ import { GetPatientByPhoneResponse } from 'src/app/Models/Responses/GetPatientBy
 export class DoctorService {
   private apiService = inject(ApiService);
   private http = inject(HttpClient);
-  private readonly uploadUrl = 'http://attachments.hgtechnologygroup.net/api/v1/ProfileMedia/Upload';
+  private uploadUrl = environment.uploadUrl;
+
+  // private readonly uploadUrl = 'http://attachments.hgtechnologygroup.net/api/v1/ProfileMedia/Upload';
 
   // public createDoctor(request: DoctorCreateRequest): Observable<void> {
   //   return this.apiService.post<void>('Doctors/Create', request);

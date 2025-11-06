@@ -10,7 +10,8 @@ export const environment = {
   baseurl: "http://admindoctormanagement.hgtechnologygroup.net/api",
 
   apiVersion: "v1",
-  attachmentURL: "http://admindoctormanagement.hgtechnologygroup.net/api/v1/"
+  attachmentURL: "http://admindoctormanagement.hgtechnologygroup.net/api/v1/",
+  uploadUrl: 'http://attachments.hgtechnologygroup.net/api/v1/ProfileMedia/Upload',
 };
 
 /*

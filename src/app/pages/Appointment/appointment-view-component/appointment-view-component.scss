@@ -55,6 +55,21 @@
     color: #222;
   }
 }
+.appointment-item-last {
+  display: flex;
+  justify-content: space-between;
+
+  padding-bottom: 6px;
+
+  .label {
+    font-weight: 500;
+    color: gray;
+  }
+
+  .value {
+    color: #222;
+  }
+}
 
 .notes {
   flex-direction: column;

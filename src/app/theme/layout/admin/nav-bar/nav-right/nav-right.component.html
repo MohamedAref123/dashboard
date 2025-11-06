@@ -165,7 +165,9 @@
       <div class="dropdown pc-h-item header-user-profile" ngbDropdown>
         <a class="pc-head-link head-link-primary dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown"
           href="javascript:" ngbDropdownToggle>
-          <img src="assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar" />
+
+          <img *ngIf="profileImageUrl" [src]="getImageUrl(profileImageUrl)" alt="Profile Image" class="user-avtar"
+            style="width: 40px; height: 40px;" />
           <span>
             <i class="ti ti-settings"></i>
           </span>
