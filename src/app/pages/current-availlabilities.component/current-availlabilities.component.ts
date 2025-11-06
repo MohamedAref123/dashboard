@@ -11,7 +11,7 @@ import { AppointmentStatus, JwtPayload } from 'src/app/Models/shared/SharedClass
 import { DoctorService } from 'src/services/doctor.service';
 import { ToastService } from 'src/services/ToastService';
 import { ValidationError } from "src/app/shared/validation-error/validation-error";
-
+import * as bootstrap from 'bootstrap';
 @Component({
   selector: 'app-current-availlabilities.component',
   imports: [CommonModule, TranslateModule, ReactiveFormsModule, NgbAccordionModule, ValidationError],
@@ -35,14 +35,9 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
   selectedTime?: string;
 
 
-  ngAfterViewInit() {
-    // إعادة تهيئة عناصر bootstrap داخل المكون
-    import('bootstrap').then(bs => {
-      const collapseList = document.querySelectorAll('.collapse');
-      collapseList.forEach(el => new bs.Collapse(el, { toggle: false }));
-    });
-  }
-
+  collapseInstances: bootstrap.Collapse[] = [];
+  openedOuterIndex: number | null = null;
+  openedInnerIndex: { [outerIndex: number]: number | null } = {};
 
   ngOnInit(): void {
     // ✅ إنشاء الفورم
@@ -63,6 +58,61 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
 
     this.initiateAvailabilities();
   }
+
+
+  ngAfterViewInit() {
+    this.initAccordion();
+  }
+
+  initAccordion() {
+    // تدمير أي instance قديمة
+    this.collapseInstances.forEach(c => c.hide());
+    this.collapseInstances = [];
+
+    // إنشاء collapse جديد لكل عنصر
+    const elements = document.querySelectorAll('.collapse');
+    elements.forEach(el => {
+      const collapse = new bootstrap.Collapse(el as HTMLElement, { toggle: false });
+      this.collapseInstances.push(collapse);
+    });
+  }
+
+  toggleCollapse(index: number) {
+    const el = document.getElementById('collapse-' + index);
+    if (!el) return;
+    const instance = this.collapseInstances.find(c => c._element === el);
+    if (instance) instance.toggle();
+  }
+
+
+  initOpenedIndices() {
+    // تهيئة المصفوفة/الخريطة لضمان عدم undefined
+    this.openedOuterIndex = null;
+    this.openedInnerIndex = {};
+    if (this.doctoravailabilities?.availableAppointments) {
+      this.doctoravailabilities.availableAppointments.forEach((_, i) => {
+        this.openedInnerIndex[i] = null;
+      });
+    }
+  }
+
+  toggleOuter(index: number) {
+    this.openedOuterIndex = this.openedOuterIndex === index ? null : index;
+    // optional: close inners of other outer when switching
+    // Object.keys(this.openedInnerIndex).forEach(k => { if (+k !== index) this.openedInnerIndex[+k] = null; });
+  }
+
+  toggleInner(outerIndex: number, innerIndex: number) {
+    if (this.openedInnerIndex[outerIndex] == null) {
+      this.openedInnerIndex[outerIndex] = null;
+    }
+    this.openedInnerIndex[outerIndex] =
+      this.openedInnerIndex[outerIndex] === innerIndex ? null : innerIndex;
+  }
+
+
+
+
 
   initiateAvailabilities() {
     if (!this.doctorId) {

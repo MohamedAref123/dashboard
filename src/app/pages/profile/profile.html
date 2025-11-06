@@ -150,57 +150,57 @@
     <div class="accordion mt-4" id="accordionExample" formArrayName="addresses">
       <div class="accordion-item" *ngFor="let addr of getAddresses.controls; let i = index" [formGroupName]="i">
         <h2 class="accordion-header" id="heading{{ i }}">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse"
-            [attr.data-bs-target]="'#collapse' + i" aria-expanded="true" [attr.aria-controls]="'collapse' + i"
-            style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7">
+          <button class="accordion-button" type="button" [class.collapsed]="openedIndex !== i"
+            (click)="toggleAccordion(i)" style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7">
             {{ addr.value.addressName || ('Address ' + (i + 1)) }}
           </button>
         </h2>
 
-        <div [id]="'collapse' + i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + i"
-          data-bs-parent="#accordionExample">
+        <div [id]="'collapse' + i" class="accordion-collapse"
+          [ngClass]="{ show: openedIndex === i, collapse: openedIndex !== i }" [attr.aria-labelledby]="'heading' + i">
           <div class="accordion-body row g-3">
             <div class="d-flex justify-content-start">
               <button type="button" class="btn btn-sm" (click)="onUpdateAddress(addr.value)">
                 <mat-icon role="img" aria-hidden="true" style="color: #673ab7; cursor: pointer">edit</mat-icon>
               </button>
             </div>
+
             <!-- Address Fields -->
             <div class="col-md-6">
-              <label class="form-label">{{'PROFILE.ADDRESS'|translate}}</label>
+              <label class="form-label">{{ 'PROFILE.ADDRESS' | translate }}</label>
               <input type="text" class="form-control" formControlName="addressName" readonly />
             </div>
             <div class="col-md-6">
-              <label class="form-label">{{'PROFILE.COUNTRY'|translate}}</label>
+              <label class="form-label">{{ 'PROFILE.COUNTRY' | translate }}</label>
               <input type="text" class="form-control" formControlName="country" readonly />
             </div>
             <div class="col-md-6">
-              <label class="form-label">{{'PROFILE.CITY'|translate}}</label>
+              <label class="form-label">{{ 'PROFILE.CITY' | translate }}</label>
               <input type="text" class="form-control" formControlName="city" readonly />
             </div>
             <div class="col-md-6">
-              <label class="form-label">{{'PROFILE.REGION'|translate}}</label>
+              <label class="form-label">{{ 'PROFILE.REGION' | translate }}</label>
               <input type="text" class="form-control" formControlName="region" readonly />
             </div>
             <div class="col-md-6">
-              <label class="form-label">{{'PROFILE.STREET'|translate}}</label>
+              <label class="form-label">{{ 'PROFILE.STREET' | translate }}</label>
               <input type="text" class="form-control" formControlName="street" readonly />
             </div>
             <div class="col-md-6">
-              <label class="form-label">{{'PROFILE.BUILDING_NUMBER'|translate}}</label>
+              <label class="form-label">{{ 'PROFILE.BUILDING_NUMBER' | translate }}</label>
               <input type="text" class="form-control" formControlName="buildingNumber" readonly />
             </div>
             <div class="col-md-6">
-              <label class="form-label">{{'PROFILE.POSTAL_CODE'|translate}}</label>
+              <label class="form-label">{{ 'PROFILE.POSTAL_CODE' | translate }}</label>
               <input type="text" class="form-control" formControlName="postalCode" readonly />
             </div>
             <div class="col-md-6">
-              <label class="form-label">{{'PROFILE.PHONE'|translate}}</label>
+              <label class="form-label">{{ 'PROFILE.PHONE' | translate }}</label>
               <input type="text" class="form-control" formControlName="phoneNumber" readonly />
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">{{'ADDRESS.GOOGLE_LOCATION'|translate}}</label>
+              <label class="form-label">{{ 'ADDRESS.GOOGLE_LOCATION' | translate }}</label>
               <input class="form-control" placeholder="Google Location" formControlName="googleLocation" readonly />
             </div>
 
@@ -213,49 +213,42 @@
               </div>
             </div>
 
-            <!-- <div class="col-md-6 form-check mt-4">
-                <input type="checkbox" formControlName="isDeleted" id="add{{i}}" class="form-check-input" />
-                <label class="form-check-label" for="add{{i}}">Is Deleted</label>
-              </div> -->
-
-
             <!-- Availabilities -->
             <div class="col-12 mt-3" formArrayName="availabilities">
-              <h5>{{'PROFILE.AVAILABILITIES'|translate}}</h5>
+              <h5>{{ 'PROFILE.AVAILABILITIES' | translate }}</h5>
 
               <div *ngFor="let av of addr.get('availabilities')['controls']; let j = index" [formGroupName]="j"
                 class="row g-2 align-items-center">
                 <div class="col-md-4">
-                  <label class="form-label">{{'PROFILE.DAY'|translate}}</label>
+                  <label class="form-label">{{ 'PROFILE.DAY' | translate }}</label>
                   <select class="form-select" formControlName="dayOfWeek">
                     <option *ngFor="let d of days" [value]="d.value" readonly>{{ d.text }}</option>
                   </select>
                 </div>
 
                 <div class="col-md-2">
-                  <label class="form-label">{{'PROFILE.START_TIME'|translate}}</label>
+                  <label class="form-label">{{ 'PROFILE.START_TIME' | translate }}</label>
                   <input type="time" class="form-control" formControlName="startTime" readonly />
                 </div>
 
                 <div class="col-md-2">
-                  <label class="form-label">{{'PROFILE.END_TIME'|translate}}</label>
+                  <label class="form-label">{{ 'PROFILE.END_TIME' | translate }}</label>
                   <input type="time" class="form-control" formControlName="endTime" readonly />
                 </div>
 
                 <div class="col-md-2">
-                  <label class="form-label">{{'PROFILE.SLOT_TIME'|translate}}</label>
+                  <label class="form-label">{{ 'PROFILE.SLOT_TIME' | translate }}</label>
                   <input type="number" class="form-control" formControlName="slotTime" min="1"
-                    placeholder="{{'PROFILE.SLOT_TIME_PLACEHOLDER'|translate}}" readonly />
+                    placeholder="{{ 'PROFILE.SLOT_TIME_PLACEHOLDER' | translate }}" readonly />
                 </div>
-
 
                 <div class="col-md-2 form-check mt-4">
                   <input type="checkbox" formControlName="isDeleted" [id]="'av' + i + '-' + j"
                     class="form-check-input" />
-                  <label class="form-check-label" [for]="'av' + i + '-' + j">{{'PROFILE.IS_DELETED'|translate}}</label>
+                  <label class="form-check-label" [for]="'av' + i + '-' + j">{{
+                    'PROFILE.IS_DELETED' | translate
+                    }}</label>
                 </div>
-
-
               </div>
             </div>
             <!-- End Availabilities -->
@@ -263,6 +256,7 @@
         </div>
       </div>
     </div>
+
     <!-- End Addresses Accordion -->
 
   </form>

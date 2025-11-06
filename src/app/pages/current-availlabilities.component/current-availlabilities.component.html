@@ -72,70 +72,69 @@
     </div>
 
     <!-- Outer Accordion: Addresses -->
-    <div *ngFor="let a of doctoravailabilities.availableAppointments; let appointmentIndex = index" class="mb-3">
-      <div class="accordion" [id]="'availabilitiesAccordion' + appointmentIndex">
-        <div class="accordion-item shadow-sm border-0">
-          <h2 class="accordion-header" [id]="'heading' + appointmentIndex">
-            <button class="accordion-button collapsed d-flex justify-content-between align-items-center" type="button"
-              data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + appointmentIndex" aria-expanded="false"
-              [attr.aria-controls]="'collapse' + appointmentIndex"
-              style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7">
-              <div>
-                <i class="ti ti-map-pin text-primary me-2"></i>
-                {{ a.addressName }} ({{ a.city }}, {{ a.region }})
-              </div>
-            </button>
-          </h2>
+    <!-- Outer Accordion -->
+    <div class="accordion" id="availabilitiesAccordion">
+      <div *ngFor="let a of doctoravailabilities?.availableAppointments; let appointmentIndex = index"
+        class="accordion-item mb-3 shadow-sm border-0">
+        <h2 class="accordion-header" [id]="'heading-' + appointmentIndex">
+          <button class="accordion-button" type="button" [class.collapsed]="openedOuterIndex !== appointmentIndex"
+            (click)="toggleOuter(appointmentIndex)" [attr.aria-expanded]="openedOuterIndex === appointmentIndex"
+            attr.aria-controls="{{ 'outer-collapse-' + appointmentIndex }}"
+            style="background-color: rgb(224, 215, 240); color: #673ab7">
+            <i class="ti ti-map-pin text-primary me-2"></i>
+            {{ a.addressName }} ({{ a.city }}, {{ a.region }})
+          </button>
+        </h2>
 
-          <div [id]="'collapse' + appointmentIndex" class="accordion-collapse collapse"
-            [attr.aria-labelledby]="'heading' + appointmentIndex"
-            [attr.data-bs-parent]="'#availabilitiesAccordion' + appointmentIndex">
-            <div class="accordion-body">
-              <!-- Inner Accordion: Days (Independent) -->
-              <div *ngFor="let group of a.groupedItems | keyvalue; let groupedIndex = index" class="accordion mt-3">
-                <div class="accordion-item">
-                  <h2 class="accordion-header" [id]="'heading-' + appointmentIndex + '-' + groupedIndex">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      [attr.data-bs-target]="'#collapse-' + appointmentIndex + '-' + groupedIndex" aria-expanded="false"
-                      [attr.aria-controls]="'collapse-' + appointmentIndex + '-' + groupedIndex"
-                      style="background-color: rgb(224, 207, 252)">
-                      {{ group.key }}
-                      <strong class="text-muted ms-2">
-                        <i class="bi bi-calendar me-2"></i>
-                        {{ group.value[0]?.appointmentDate | date: 'mediumDate' }}
-                      </strong>
-                    </button>
-                  </h2>
+        <!-- IMPORTANT: keep 'collapse' class always, toggle 'show' -->
+        <div [id]="'outer-collapse-' + appointmentIndex" class="accordion-collapse collapse"
+          [class.show]="openedOuterIndex === appointmentIndex" [attr.aria-labelledby]="'heading-' + appointmentIndex">
+          <div class="accordion-body">
+            <!-- Inner Accordion -->
+            <div class="accordion" [id]="'innerAccordion-' + appointmentIndex">
+              <div *ngFor="let group of a.groupedItems | keyvalue; let groupedIndex = index"
+                class="accordion-item mt-2">
+                <h2 class="accordion-header" [id]="'inner-heading-' + appointmentIndex + '-' + groupedIndex">
+                  <button class="accordion-button" type="button"
+                    [class.collapsed]="openedInnerIndex[appointmentIndex] !== groupedIndex"
+                    (click)="toggleInner(appointmentIndex, groupedIndex)"
+                    [attr.aria-expanded]="openedInnerIndex[appointmentIndex] === groupedIndex"
+                    attr.aria-controls="{{ 'inner-collapse-' + appointmentIndex + '-' + groupedIndex }}"
+                    style="background-color: rgb(224, 207, 252)">
+                    {{ group.key }}
+                    <strong class="text-muted ms-2">
+                      <i class="bi bi-calendar me-2"></i>
+                      {{ group.value[0]?.appointmentDate | date: 'mediumDate' }}
+                    </strong>
+                  </button>
+                </h2>
 
-                  <div [id]="'collapse-' + appointmentIndex + '-' + groupedIndex" class="accordion-collapse collapse"
-                    [attr.aria-labelledby]="'heading-' + appointmentIndex + '-' + groupedIndex">
-                    <div class="accordion-body">
-                      <div class="d-flex flex-wrap gap-3 justify-content-center">
-                        <div *ngFor="let t of group.value" class="border rounded shadow-sm p-3 bg-light time-card"
-                          style="min-width: 180px; max-width: 220px; cursor: pointer" (click)="selectTime(t)"
-                          [class.selected]="isSelected(t)">
-                          <div class="fw-bold  text-center">
-                            <i class="bi bi-clock me-2"></i>
-                            {{ t.time }}
-                          </div>
-
+                <div [id]="'inner-collapse-' + appointmentIndex + '-' + groupedIndex"
+                  class="accordion-collapse collapse" [class.show]="openedInnerIndex[appointmentIndex] === groupedIndex"
+                  [attr.aria-labelledby]="'inner-heading-' + appointmentIndex + '-' + groupedIndex">
+                  <div class="accordion-body">
+                    <div class="d-flex flex-wrap gap-3 justify-content-center">
+                      <div *ngFor="let t of group.value" class="border rounded shadow-sm p-3 bg-light time-card"
+                        style="min-width: 180px; max-width: 220px; cursor: pointer" (click)="selectTime(t)"
+                        [class.selected]="isSelected(t)">
+                        <div class="fw-bold text-center">
+                          <i class="bi bi-clock me-2"></i>
+                          {{ t.time }}
                         </div>
-
                       </div>
                     </div>
-
                   </div>
-
-
-
                 </div>
+                <!-- end inner collapse -->
               </div>
-              <!-- End Inner Accordion -->
             </div>
+            <!-- end inner accordion -->
           </div>
         </div>
+        <!-- end outer collapse -->
       </div>
     </div>
+
     <!-- End Outer Accordion -->
   </div>
 </div>

@@ -52,11 +52,11 @@ export class Profile implements OnInit {
   profileImageUrl: string | null = null;
   doctorId: string = ''; // ✅ لحفظ الـ id
 
+  openedIndex: number | null = null;
 
   constructor() {
 
   }
-
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
@@ -70,6 +70,11 @@ export class Profile implements OnInit {
     this.loadInsurances();
     this.loadSpecialists();
   }
+
+  toggleAccordion(i: number) {
+    this.openedIndex = this.openedIndex === i ? null : i;
+  }
+
 
   loadSpecialists(): void {
     this.doctorSpecialistService.GetAll().subscribe({

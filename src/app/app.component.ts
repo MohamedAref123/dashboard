@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
     this.translate.use(lang);
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   }
+
   ngOnInit() {
     const doctorId = this.getDoctorId(); // or get from AuthService / token
     if (doctorId === null) return;
@@ -41,9 +42,13 @@ export class AppComponent implements OnInit {
       this.toaster.showNavigation(`${msg.message}`, `/appointments/view/${msg.appointmentId}`, msg.type);
     });
   }
+
+
   getToken(): string | null {
     return localStorage.getItem('access_token');
   }
+
+
   getDoctorId(): string | null {
     const token = this.getToken();
     if (!token) return null;

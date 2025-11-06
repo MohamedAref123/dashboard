@@ -58,7 +58,14 @@ export class AppointmentViewComponent implements OnInit {
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Yes',
-      cancelButtonText: 'No'
+      cancelButtonText: 'No',
+      didOpen: () => {
+        // رفع مستوى الـ z-index علشان يظهر فوق كل العناصر
+        const swalPopup = document.querySelector('.swal2-container') as HTMLElement;
+        if (swalPopup) {
+          swalPopup.style.zIndex = '99999';
+        }
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         // Convert string key to numeric enum
@@ -72,10 +79,27 @@ export class AppointmentViewComponent implements OnInit {
         this.appointmentService.updateAppointmentStatus(this.model.appointmentId, statusValue)
           .subscribe({
             next: () => {
-              Swal.fire('Updated!', `Status changed to ${statusKey}`, 'success');
+              Swal.fire({
+                title: 'Updated!',
+                text: `Status changed to ${statusKey}`,
+                icon: 'success',
+                didOpen: () => {
+                  const swalPopup = document.querySelector('.swal2-container') as HTMLElement;
+                  if (swalPopup) swalPopup.style.zIndex = '99999';
+                }
+              });
             },
             error: (err) => {
-              Swal.fire('Error', 'Failed to update status', 'error');
+              Swal.fire({
+                title: 'Error',
+                text: 'Failed to update status',
+                icon: 'error',
+                didOpen: () => {
+                  const swalPopup = document.querySelector('.swal2-container') as HTMLElement;
+                  if (swalPopup) swalPopup.style.zIndex = '99999';
+                }
+              });
+
               console.error(err);
             }
           });
@@ -87,7 +111,7 @@ export class AppointmentViewComponent implements OnInit {
   actionLabels = {
     CONFIRMED: { ar: 'تأكيد', en: 'Confirm' },
     CANCELLED: { ar: 'إلغاء', en: 'Cancel' },
-    COMPLETED: { ar: 'مكتمل', en: 'Completed' } // إذا أردت الاحتفاظ بها
+    COMPLETED: { ar: 'مكتمل', en: 'Complete' } // إذا أردت الاحتفاظ بها
   };
 
   getLabel(action: string): string {
