@@ -8,10 +8,12 @@ export const environment = {
   appVersion: packageInfo.version,
   production: false,
   baseurl: "http://admindoctormanagement.hgtechnologygroup.net/api",
-
+  baseAttatchementUrl: "http://attachments.hgtechnologygroup.net/",
   apiVersion: "v1",
-  attachmentURL: "http://admindoctormanagement.hgtechnologygroup.net/api/v1/",
-  uploadUrl: 'http://attachments.hgtechnologygroup.net/api/v1/ProfileMedia/Upload',
+  attachmentURL: "http://attachments.hgtechnologygroup.net/api/v1/",
+
+
+
 };
 
 /*

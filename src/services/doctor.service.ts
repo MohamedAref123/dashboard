@@ -24,7 +24,7 @@ import { environment } from 'src/environments/environment';
 export class DoctorService {
   private apiService = inject(ApiService);
   private http = inject(HttpClient);
-  private uploadUrl = environment.uploadUrl;
+  private uploadUrl = `${environment.attachmentURL}ProfileMedia/Upload`;
 
   // private readonly uploadUrl = 'http://attachments.hgtechnologygroup.net/api/v1/ProfileMedia/Upload';
 

@@ -17,6 +17,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DoctorSpecialistService } from 'src/services/DoctorSpecialistService';
 import { DoctorSpecialistResponse } from 'src/app/Models/Responses/DoctorSpecialistResponses';
 import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -45,7 +46,7 @@ export class Profile implements OnInit {
   toast = inject(ToastService);
   router = inject(Router);
   private translate = inject(TranslateService);
-
+  private baseAttatchementUrl = environment.baseAttatchementUrl;
   insurances: InsurancesResponse[] = [];
 
   insuranceService = inject(InsuransesService);
@@ -61,7 +62,7 @@ export class Profile implements OnInit {
 
   openedIndex: number | null = null;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
@@ -128,7 +129,7 @@ export class Profile implements OnInit {
     if (path.startsWith('http')) {
       return path; // الصورة فيها رابط كامل
     }
-    return `http://attachments.hgtechnologygroup.net/${path}`;
+    return `${this.baseAttatchementUrl}${path}`;
   }
 
   onUploadImage(): void {
