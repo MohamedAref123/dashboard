@@ -62,7 +62,7 @@ export class Profile implements OnInit {
 
   openedIndex: number | null = null;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
@@ -129,7 +129,7 @@ export class Profile implements OnInit {
     if (path.startsWith('http')) {
       return path; // الصورة فيها رابط كامل
     }
-    return `${this.baseAttatchementUrl}${path}`;
+    return `${this.baseAttatchementUrl}${path}` + '?t=' + Date.now();
   }
 
   onUploadImage(): void {
@@ -145,6 +145,7 @@ export class Profile implements OnInit {
       next: (res: imageResponse) => {
         this.toast.success('✅ Image uploaded successfully!');
 
+        this.selectedFile = null;
         // 🔥 أضف query لتجديد الرابط وتفادي الكاش
         const newUrl = `${res.profilePath}?t=${new Date().getTime()}`;
 
