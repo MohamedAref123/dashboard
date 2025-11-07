@@ -7,6 +7,7 @@ import { Title } from '@angular/platform-browser';
 // project import
 import { NavigationItem, NavigationItems } from 'src/app/theme/layout/admin/navigation/navigation';
 import { SharedModule } from '../../shared.module';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface titleType {
   // eslint-disable-next-line
@@ -18,13 +19,14 @@ interface titleType {
 
 @Component({
   selector: 'app-breadcrumb',
-  imports: [RouterModule, SharedModule],
+  imports: [RouterModule, SharedModule, TranslateModule],
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss']
 })
 export class BreadcrumbComponent {
   private route = inject(Router);
   private titleService = inject(Title);
+  private translate = inject(TranslateService);
 
   // public props
   @Input() type: string;
@@ -46,9 +48,11 @@ export class BreadcrumbComponent {
       if (router instanceof NavigationEnd) {
         const activeLink = router.url;
         const breadcrumbList = this.filterNavigation(this.navigations, activeLink);
-        const title = breadcrumbList[breadcrumbList.length - 1]?.title || 'Welcome';
-        this.navigationList = breadcrumbList.splice(-2);
-        this.titleService.setTitle(title + ' |  Template');
+        const rawTitle = breadcrumbList[breadcrumbList.length - 1]?.title || 'Welcome';
+        this.translate.get(rawTitle).subscribe((translated: string) => {
+          this.titleService.setTitle(translated + ' | Doctor Hero');
+        });
+
       }
     });
   }

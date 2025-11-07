@@ -8,11 +8,15 @@ export interface Availability {
 }
 
 export interface UpdateAddressRequest {
+  googleLocation: string
   addressId: string;
   doctorId: string;
   addressName: string;
   country: string;
   city: string;
+  cityId: string,
+  regionId: string,
+  isDeleted: boolean,
   region: string;
   postalCode: string;
   street: string;

@@ -45,6 +45,8 @@ export class EditAddressComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
 
+    this.addressId = this.addressData?.addressId;
+
     // 1️⃣ تحميل المدن أولاً
     this.countryService.getCountries('en', 'EGYPT').subscribe({
       next: (cities) => {
@@ -71,7 +73,7 @@ export class EditAddressComponent implements OnInit {
       cityId: [null, Validators.required],
       isDeleted: [this.addressData?.isDeleted, Validators.required],
       regionId: [null, Validators.required],
-      googleLocation: [this.addressData?.googleLocation, Validators.required],
+      googleLocation: [this.addressData?.googleLocation],
       postalCode: [this.addressData?.postalCode, Validators.required],
       street: [this.addressData?.street, Validators.required],
       buildingNumber: [this.addressData?.buildingNumber, Validators.required],
@@ -81,7 +83,7 @@ export class EditAddressComponent implements OnInit {
         (this.addressData?.availabilities || []).map(a => this.fb.group({
           isDeleted: [a.isDeleted],
           doctorAvailabilityId: [a.doctorAvailabilityId],
-          addressId: [a.addressId],
+          addressId: [a.addressId, Validators.required],
           dayOfWeek: [a.dayOfWeek, Validators.required],
           startTime: [a.startTime, Validators.required],
           slotTime: [a.slotTime, Validators.required],
@@ -136,32 +138,42 @@ export class EditAddressComponent implements OnInit {
 
   addAvailability() {
     const availabilities = this.getAvailabilities();
+
     availabilities.push(
       this.fb.group(
         {
           isDeleted: [false],
-          addressId: [this.addressId],
+          addressId: [this.addressId, Validators.required],
           dayOfWeek: [0, Validators.required],
           startTime: ['09:00:00', Validators.required],
-          endTime: ['17:00:00', Validators.required]
+          endTime: ['17:00:00', Validators.required],
+          slotTime: [15, Validators.required]
         },
         { validators: timeRangeValidator }
       )
     );
   }
 
+
+
   save() {
     const payload: UpdateAddressRequest = this.form.value;
+
+    // ✅ تأكد من تحويل الوقت إلى HH:mm:00 قبل الإرسال
+    payload.availabilities = payload.availabilities.map(a => ({
+      ...a,
+      addressId: a.addressId || payload.addressId,
+      startTime: a.startTime.length <= 5 ? a.startTime + ':00' : a.startTime,
+      endTime: a.endTime.length <= 5 ? a.endTime + ':00' : a.endTime,
+
+    }));
+
+    console.log('📦 Final payload:', payload);
 
     this.doctorService.updateAddress(payload).subscribe({
       next: () => {
         this.toast.success('Updated Address Successfully');
-
-        // 🔹 إغلاق الـ dialog أولاً
         this.dialogRef.close(true);
-
-        // 🔹 إعادة تحميل الصفحة تلقائيًا
-        location.reload();
       },
       error: (err) => {
         console.error('❌ Update failed:', err);
@@ -169,6 +181,7 @@ export class EditAddressComponent implements OnInit {
       }
     });
   }
+
 
 
 }

@@ -21,12 +21,15 @@
       <div class="sidebar">
         <div class="text-center mb-3">
           <h5>{{ 'PROFILE.PROFILE_IMAGE' | translate }}</h5>
-          <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Profile Image" class="img-thumbnail rounded" width="150" height="150" />
+          <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Profile Image" class="img-thumbnail rounded"
+            width="150" height="150" />
           <div class="mt-2">
             <div class="mt-2">
               <label for="fileInput" class="form-label">{{ 'PROFILE.CHOOSE_IMAGE' | translate }}</label>
-              <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="image/*" class="form-control mb-2" />
-              <button class="btn btn-primary" (click)="onUploadImage()">{{ 'BUTTONS.UPLOAD_BUTTON' | translate }}</button>
+              <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="image/*"
+                class="form-control mb-2" />
+              <button class="btn btn-primary" (click)="onUploadImage()">{{ 'BUTTONS.UPLOAD_BUTTON' | translate
+                }}</button>
             </div>
           </div>
         </div>
@@ -61,11 +64,8 @@
           </div>
           <div class="col-md-4">
             <label class="form-label">{{'PROFILE.SPECIALTY'|translate}}</label>
-            <mat-select
-              formControlName="doctorSpecialistId"
-              class="form-control mt-2"
-              placeholder="------------------Select------------------"
-            >
+            <mat-select formControlName="doctorSpecialistId" class="form-control mt-2"
+              placeholder="------------------Select------------------">
               <mat-option [value]="null">------------------Select------------------</mat-option>
               <mat-option *ngFor="let specialist of specialists" [value]="specialist.doctorSpecialistId">
                 {{ specialist.specialistAR }}
@@ -89,29 +89,20 @@
 
           <div class="col-md-6">
             <mat-label>{{'PROFILE.INSURANCE'|translate}}</mat-label>
-            <mat-select formControlName="insuranceId" class="form-control mt-2" (selectionChange)="onInsuranceChange($event.value)">
+            <mat-select formControlName="insuranceId" class="form-control mt-2"
+              (selectionChange)="onInsuranceChange($event.value)">
               <!-- ✅ Custom trigger shows selected insurance with icon -->
               <mat-select-trigger *ngIf="selectedInsurance">
-                <img
-                  [src]="'data:image/png;base64,' + selectedInsurance.icon"
-                  class="img-thumbnail rounded-circle me-2"
-                  width="40"
-                  height="40"
-                  alt="Selected Insurance Icon"
-                />
+                <img [src]="'data:image/png;base64,' + selectedInsurance.icon" class="img-thumbnail rounded-circle me-2"
+                  width="40" height="40" alt="Selected Insurance Icon" />
                 {{ selectedInsurance.text }}
               </mat-select-trigger>
 
               <mat-option value="" disabled>select insurance</mat-option>
 
               <mat-option *ngFor="let insurance of insurances" [value]="insurance.value">
-                <img
-                  [src]="'data:image/png;base64,' + insurance.icon"
-                  class="img-thumbnail rounded-circle me-2"
-                  width="40"
-                  height="40"
-                  alt="Insurance Icon"
-                />
+                <img [src]="'data:image/png;base64,' + insurance.icon" class="img-thumbnail rounded-circle me-2"
+                  width="40" height="40" alt="Insurance Icon" />
                 {{ insurance.text }}
               </mat-option>
             </mat-select>
@@ -146,28 +137,26 @@
     <div class="accordion mt-4" id="accordionExample" formArrayName="addresses">
       <div class="accordion-item" *ngFor="let addr of getAddresses.controls; let i = index" [formGroupName]="i">
         <h2 class="accordion-header" id="heading{{ i }}">
-          <button
-            class="accordion-button"
-            type="button"
-            [class.collapsed]="openedIndex !== i"
+          <button class="accordion-button" type="button" [class.collapsed]="openedIndex !== i"
             (click)="toggleAccordion(i)"
-            style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7"
-          >
+            style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7;margin-bottom: 10px;">
             {{ addr.value.addressName || ('Address ' + (i + 1)) }}
           </button>
         </h2>
 
-        <div
-          [id]="'collapse' + i"
-          class="accordion-collapse"
-          [ngClass]="{ show: openedIndex === i, collapse: openedIndex !== i }"
-          [attr.aria-labelledby]="'heading' + i"
-        >
+        <div [id]="'collapse' + i" class="accordion-collapse"
+          [ngClass]="{ show: openedIndex === i, collapse: openedIndex !== i }" [attr.aria-labelledby]="'heading' + i">
           <div class="accordion-body row g-3">
-            <div class="d-flex justify-content-start">
-              <button type="button" class="btn btn-sm" (click)="onUpdateAddress(addr.value)">
-                <mat-icon role="img" aria-hidden="true" style="color: #673ab7; cursor: pointer">edit</mat-icon>
+            <div class="d-flex justify-content-start align-items-center gap-3">
+              <p class="mt-2"> {{ addr.value.addressName }}</p>
+              <button type=" button" class="btn btn-sm  d-flex justify-content-center align-items-center"
+                (click)="onUpdateAddress(addr.value)"
+                style="border-radius: 8px; padding: 6px 10px;background: linear-gradient(45deg, #673ab7, #512da8);">
+                <mat-icon role="img" aria-hidden="true" style="color: #fff; font-size: 20px;">
+                  edit
+                </mat-icon>
               </button>
+
             </div>
 
             <!-- Address Fields -->
@@ -220,16 +209,11 @@
             <div class="col-12 mt-3" formArrayName="availabilities">
               <h5>{{ 'PROFILE.AVAILABILITIES' | translate }}</h5>
 
-              <div
-                *ngFor="let av of addr.get('availabilities')['controls']; let j = index"
-                [formGroupName]="j"
-                class="row g-2 align-items-center"
-              >
+              <div *ngFor="let av of addr.get('availabilities')['controls']; let j = index" [formGroupName]="j"
+                class="row g-2 align-items-center">
                 <div class="col-md-4">
                   <label class="form-label">{{ 'PROFILE.DAY' | translate }}</label>
-                  <select class="form-select" formControlName="dayOfWeek">
-                    <option *ngFor="let d of days" [value]="d.value" readonly>{{ d.text }}</option>
-                  </select>
+                  <input type="text" class="form-control" [value]="getDayName(av.get('dayOfWeek')?.value)" readonly />
                 </div>
 
                 <div class="col-md-2">
@@ -244,19 +228,15 @@
 
                 <div class="col-md-2">
                   <label class="form-label">{{ 'PROFILE.SLOT_TIME' | translate }}</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    formControlName="slotTime"
-                    min="1"
-                    placeholder="{{ 'PROFILE.SLOT_TIME_PLACEHOLDER' | translate }}"
-                    readonly
-                  />
+                  <input type="number" class="form-control" formControlName="slotTime" min="1"
+                    placeholder="{{ 'PROFILE.SLOT_TIME_PLACEHOLDER' | translate }}" readonly />
                 </div>
 
                 <div class="col-md-2 form-check mt-4">
-                  <input type="checkbox" formControlName="isDeleted" [id]="'av' + i + '-' + j" class="form-check-input" />
-                  <label class="form-check-label" [for]="'av' + i + '-' + j">{{ 'PROFILE.IS_DELETED' | translate }}</label>
+                  <input type="checkbox" formControlName="isDeleted" [id]="'av' + i + '-' + j"
+                    class="form-check-input" />
+                  <label class="form-check-label" [for]="'av' + i + '-' + j">{{ 'PROFILE.IS_DELETED' | translate
+                    }}</label>
                 </div>
               </div>
             </div>

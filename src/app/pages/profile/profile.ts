@@ -62,7 +62,7 @@ export class Profile implements OnInit {
 
   openedIndex: number | null = null;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
@@ -231,12 +231,27 @@ export class Profile implements OnInit {
     this.previewUrl = this.profileImageUrl; // لعرضها مباشرة
   }
 
+  reloadAddresses() {
+    this.doctorService.getuser('EN').subscribe((res: userResponse) => {
+      const updatedAddresses = this.createAddressesArray(res.addresses);
+      this.profileForm.setControl('addresses', updatedAddresses);
+      this.toast.success('Address list updated successfully');
+    });
+  }
+
+  getDayName(dayValue: number): string {
+    const day = this.days.find(d => d.value === dayValue);
+    return day ? day.text : '';
+  }
+
+
   onUpdateAddress(addr: DoctorAddress) {
     console.log('Address data:', addr);
 
     const dialogRef = this.dialog.open(EditAddressComponent, {
       width: '1000px',
       maxWidth: '100vw',
+
       data: {
         ...addr,
         doctorId: this.profileForm.get('doctorId')?.value, // ✅ إضافة doctorId هنا
@@ -244,10 +259,13 @@ export class Profile implements OnInit {
         regionId: addr.regionId // ✔ فقط القيمة الصحيحة
       }
     });
-
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
+      if (result) {
+        // ✅ تم الحفظ بنجاح داخل EditAddressComponent
+        this.reloadAddresses(); // 🔹 سنضيف هذه الدالة الآن
+      }
     });
+
   }
 
   onSubmit() {
