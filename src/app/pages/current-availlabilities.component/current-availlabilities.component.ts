@@ -48,6 +48,8 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
       surgeries: [null],
       status: ['Pending', Validators.required],
       notes: [''],
+      bloodType: [''],
+      birthday: [null],
       doctorId: [this.doctorId],
       doctorAvailabilityId: [''],
       appointmentDate: [''],
@@ -69,7 +71,6 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
     // تدمير أي instance قديمة
     this.collapseInstances.forEach((c) => c.hide());
     this.collapseInstances = [];
-
     // إنشاء collapse جديد لكل عنصر
     const elements = document.querySelectorAll('.collapse');
     elements.forEach((el) => {
@@ -166,23 +167,29 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
 
   onPhoneBlur(): void {
     const phoneValue = this.patient.get('phoneNumber')?.value?.trim();
-
-    // لو الحقل فاضي، ما تعملش أي حاجة
     if (!phoneValue) return;
 
-    // استدعاء الخدمة للتحقق من الرقم
     this.doctorService.checkPhoneNumber(phoneValue).subscribe({
       next: (res) => {
         console.log('✅ Patient found:', res);
-        // لو رجعت بيانات، نعبّي الاسم تلقائيًا في الفورم
         if (res && res.fullName) {
-          // ✅ فقط لو في بيانات فعلاً
+
+          // تحويل birthday للصيغة yyyy-MM-dd
+          let formattedBirthday = null;
+          if (res.birthday) {
+            const d = new Date(res.birthday);
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            formattedBirthday = `${d.getFullYear()}-${month}-${day}`;
+          }
+
           this.patient.patchValue({
             fullName: res.fullName,
             phoneNumber: res.phoneNumber,
             surgeries: res.surgeries,
             medicines: res.medicines,
-            chronicDiseases: res.chronicDiseases
+            chronicDiseases: res.chronicDiseases,
+            birthday: formattedBirthday
           });
         }
       },
@@ -191,6 +198,7 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
 
   onSubmit(): void {
     if (this.patient.valid) {
@@ -209,7 +217,8 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
       this.doctorService.createOfflineAppointment(payload).subscribe({
         next: (res) => {
           this.toast.success('✅ Appointment created successfully:');
-          this.patient.reset();
+          const currentStatus = this.patient.get('status')?.value;
+          this.patient.reset({ status: currentStatus });
           this.initiateAvailabilities();
           console.log(res);
           // window.location.reload();

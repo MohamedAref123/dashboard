@@ -18,6 +18,7 @@ import { CreateOfflineAppointmentRequest } from 'src/app/Models/Requests/CreateO
 import { GetPatientByPhoneResponse } from 'src/app/Models/Responses/GetPatientByPhoneResponse ';
 import { environment } from 'src/environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -85,6 +86,8 @@ export class DoctorService {
     console.log('📤 Sending phone to API:', phone);
     return this.apiService.get<GetPatientByPhoneResponse>(`Patient/GetByPhone/${phone}`);
   }
+
+
 
   uploadDoctorImage(profileId: string, file: File, lang: string = 'en'): Observable<imageResponse> {
     const formData = new FormData();

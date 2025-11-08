@@ -50,6 +50,15 @@ export const NavigationItems: NavigationItem[] = [
         breadcrumbs: false
       },
       {
+        id: 'CurrentAvailabilities',
+        title: 'MENU.CURRENT_AVAILABILITIES',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/current-availabilities',
+        icon: 'ti ti-calendar-time',
+        breadcrumbs: false
+      },
+      {
         id: 'Reviews',
         title: 'MENU.REVIEWS',
         type: 'item',
@@ -58,15 +67,7 @@ export const NavigationItems: NavigationItem[] = [
         icon: 'ti ti-message-circle',
         breadcrumbs: false
       },
-      {
-        id: 'CurrentAvailabilities',
-        title: 'MENU.CURRENT_AVAILABILITIES',
-        type: 'item',
-        classes: 'nav-item',
-        url: '/current-availabilities',
-        icon: 'ti ti-calendar-time',
-        breadcrumbs: false
-      }
+
 
     ]
   }

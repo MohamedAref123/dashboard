@@ -80,6 +80,7 @@
     "DETAILS": "تفاصيل الموعد",
     "VIEW_APPOINTMENT": "عرض الموعد",
     "NEW_APPOINTMENT": "موعد جديد",
+    "ALL": "جميع العناوين",
     "DOCTOR": "الطبيب",
     "NOTES": "ملاحظات"
   },
@@ -106,8 +107,20 @@
     "NAME_ERROR": "الاسم مطلوب (على الأقل 3 أحرف)",
     "PHONE": "رقم الهاتف",
     "PHONE_ERROR": "يرجى إدخال رقم هاتف صحيح",
+    "Surgeries": "العمليات الجراحية",
+    "ChronicDiseases": "الأمراض المزمنة",
+    "Medicines": "الأدوية",
+
+    "CHRONIC_DISEASES_PLACEHOLDER": "أدخل أي أمراض مزمنة...",
+    "MEDICINES_PLACEHOLDER": "أدخل أي أدوية...",
+    "SURGERIES_PLACEHOLDER": "أدخل أي عمليات جراحية...",
     "SUBMIT": "إرسال",
-    "NOTES": "ملاحظات"
+    "NOTES": "ملاحظات",
+    "BLOOD_TYPE": "فصيلة الدم",
+    "BIRTHDAY": "تاريخ الميلاد",
+    "BIRTHDAY_PLACEHOLDER": "اختر تاريخ ميلادك",
+    "NOTES_PLACEHOLDER": "أدخل أي ملاحظات...",
+    "SELECT": "اختر..."
   },
   "BUTTONS": {
     "ACTIONS": "الإجراءات",

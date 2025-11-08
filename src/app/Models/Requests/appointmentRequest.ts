@@ -8,5 +8,6 @@ export interface AppointmentSearchRequest {
   lang: string;
   fromDate?: string;
   toDate?: string;
+  addressId: string
 }
 

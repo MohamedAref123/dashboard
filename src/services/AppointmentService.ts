@@ -3,6 +3,7 @@ import { ApiService } from './Api.service';
 import { Observable } from 'rxjs';
 import { AppointmentDetailsResponse, SearchAppointmentsResponse } from 'src/app/Models/Responses/AppointmentResponses';
 import { AppointmentSearchRequest } from 'src/app/Models/Requests/appointmentRequest';
+import { AddressesResponse } from 'src/app/Models/Responses/AddressesResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,9 @@ export class AppointmentService {
 
   updateAppointmentStatus(appointmentId: string, status: number): Observable<void> {
     return this.apiService.post<void>(`Appointments/ChangeAppointmentStatus/`, { appointmentId, status });
+  }
+
+  getDoctorAdresses(doctorID: string): Observable<AddressesResponse[]> {
+    return this.apiService.get<AddressesResponse[]>(`DoctorAdresses/GetAddresses/${doctorID}`)
   }
 }

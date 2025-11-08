@@ -28,22 +28,24 @@
             <input type="text" formControlName="fullName" class="form-control" />
             <app-validation-error [form]="patient" controlName="fullName"></app-validation-error>
           </div>
-          <div class="col-md-3">
-            <label class="form-label">{{ 'PATIENT.Surgeries' | translate }}</label>
-            <input type="text" formControlName="surgeries" class="form-control" />
-            <app-validation-error [form]="patient" controlName="surgeries"></app-validation-error>
+          <div class="col-md-3 ">
+            <label class="form-label">{{ 'PATIENT.BLOOD_TYPE' | translate }}</label>
+            <select class="form-control" formControlName="bloodType">
+              <option value="">{{ 'PATIENT.SELECT' | translate }}</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option></option>
+            </select>
+            <app-validation-error [form]="patient" controlName="bloodType"></app-validation-error>
           </div>
-          <div class="col-md-3">
-            <label class="form-label">{{ 'PATIENT.ChronicDiseases' | translate }}</label>
-            <input type="text" formControlName="chronicDiseases" class="form-control" />
-            <app-validation-error [form]="patient" controlName="chronicDiseases"></app-validation-error>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">{{ 'PATIENT.Medicines' | translate }}</label>
-            <input type="text" formControlName="medicines" class="form-control" />
-            <app-validation-error [form]="patient" controlName="medicines"></app-validation-error>
-          </div>
-          <div class="col-md-3 mt-3">
+
+          <div class="col-md-3 ">
             <label class="form-label">{{ 'APPOINTMENT.STATUS' | translate }}</label>
             <select class="form-control" formControlName="status">
               <option *ngFor="let status of statusOptions" [value]="status">
@@ -52,13 +54,44 @@
             </select>
           </div>
 
-          <div class="col-md-6 mt-3">
-            <label class="form-label">{{ 'APPOINTMENT.NOTES' | translate }}</label>
-            <textarea formControlName="notes" class="form-control" rows="3" placeholder="Enter any notes..."></textarea>
+
+          <div class="col-md-3">
+            <label class="form-label">{{ 'PATIENT.BIRTHDAY' | translate }}</label>
+            <input type="date" class="form-control" formControlName="birthday"
+              [placeholder]="'PATIENT.BIRTHDAY_PLACEHOLDER' | translate">
+            <app-validation-error [form]="patient" controlName="birthday"></app-validation-error>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3 mt-4">
+              <label class="form-label">{{ 'PATIENT.Surgeries' | translate }}</label>
+              <textarea type="text" formControlName="surgeries" class="form-control p-2" rows="3"
+                [placeholder]="'PATIENT.SURGERIES_PLACEHOLDER' | translate"></textarea>
+              <app-validation-error [form]="patient" controlName="surgeries"></app-validation-error>
+            </div>
+            <div class="col-md-3 mt-4">
+              <label class="form-label">{{ 'PATIENT.ChronicDiseases' | translate }}</label>
+              <textarea formControlName="chronicDiseases" class="form-control p-2" rows="3"
+                [placeholder]="'PATIENT.CHRONIC_DISEASES_PLACEHOLDER' | translate"></textarea>
+              <app-validation-error [form]="patient" controlName="chronicDiseases"></app-validation-error>
+            </div>
+            <div class="col-md-3 mt-4">
+              <label class="form-label">{{ 'PATIENT.Medicines' | translate }}</label>
+              <textarea formControlName="medicines" class="form-control p-2" rows="3"
+                [placeholder]="'PATIENT.MEDICINES_PLACEHOLDER' | translate"></textarea>
+              <app-validation-error [form]="patient" controlName="medicines"></app-validation-error>
+            </div>
+
+
+            <div class="col-md-3 mt-4">
+              <label class="form-label">{{ 'PATIENT.NOTES' | translate }}</label>
+              <textarea formControlName="notes" class="form-control p-2" rows="3"
+                [placeholder]="'PATIENT.NOTES_PLACEHOLDER' | translate"></textarea>
+            </div>
           </div>
         </div>
 
-        <div class="text-center my-3">
+        <div class="text-center my-4 ">
           <ng-container *ngIf="selectedTime; else noSelection">
             <label class="fw-bold text-primary" style="font-size: larger">
               <i class="bi bi-clock me-2"></i>
@@ -76,53 +109,41 @@
           </ng-template>
         </div>
 
-        <button class="btn btn-save mt-3" type="submit">{{ 'PATIENT.SUBMIT' | translate }}</button>
+        <button class="btn btn-save mt-3" type="submit" [disabled]="patient.invalid">{{ 'PATIENT.SUBMIT' | translate
+          }}</button>
       </form>
     </div>
 
     <!-- Outer Accordion: Addresses -->
     <!-- Outer Accordion -->
     <div class="accordion" id="availabilitiesAccordion">
-      <div
-        *ngFor="let a of doctoravailabilities?.availableAppointments; let appointmentIndex = index"
-        class="accordion-item mb-3 shadow-sm border-0"
-      >
+      <div *ngFor="let a of doctoravailabilities?.availableAppointments; let appointmentIndex = index"
+        class="accordion-item mb-3 shadow-sm border-0">
         <h2 class="accordion-header" [id]="'heading-' + appointmentIndex">
-          <button
-            class="accordion-button"
-            type="button"
-            [class.collapsed]="openedOuterIndex !== appointmentIndex"
-            (click)="toggleOuter(appointmentIndex)"
-            [attr.aria-expanded]="openedOuterIndex === appointmentIndex"
+          <button class="accordion-button" type="button" [class.collapsed]="openedOuterIndex !== appointmentIndex"
+            (click)="toggleOuter(appointmentIndex)" [attr.aria-expanded]="openedOuterIndex === appointmentIndex"
             attr.aria-controls="{{ 'outer-collapse-' + appointmentIndex }}"
-            style="background-color: rgb(224, 215, 240); color: #673ab7"
-          >
+            style="background-color: rgb(224, 215, 240); color: #673ab7">
             <i class="ti ti-map-pin text-primary me-2"></i>
             {{ a.addressName }} ({{ a.city }}, {{ a.region }})
           </button>
         </h2>
 
         <!-- IMPORTANT: keep 'collapse' class always, toggle 'show' -->
-        <div
-          [id]="'outer-collapse-' + appointmentIndex"
-          class="accordion-collapse collapse"
-          [class.show]="openedOuterIndex === appointmentIndex"
-          [attr.aria-labelledby]="'heading-' + appointmentIndex"
-        >
+        <div [id]="'outer-collapse-' + appointmentIndex" class="accordion-collapse collapse"
+          [class.show]="openedOuterIndex === appointmentIndex" [attr.aria-labelledby]="'heading-' + appointmentIndex">
           <div class="accordion-body">
             <!-- Inner Accordion -->
             <div class="accordion" [id]="'innerAccordion-' + appointmentIndex">
-              <div *ngFor="let group of a.groupedItems | keyvalue; let groupedIndex = index" class="accordion-item mt-2">
+              <div *ngFor="let group of a.groupedItems | keyvalue; let groupedIndex = index"
+                class="accordion-item mt-2">
                 <h2 class="accordion-header" [id]="'inner-heading-' + appointmentIndex + '-' + groupedIndex">
-                  <button
-                    class="accordion-button"
-                    type="button"
+                  <button class="accordion-button" type="button"
                     [class.collapsed]="openedInnerIndex[appointmentIndex] !== groupedIndex"
                     (click)="toggleInner(appointmentIndex, groupedIndex)"
                     [attr.aria-expanded]="openedInnerIndex[appointmentIndex] === groupedIndex"
                     attr.aria-controls="{{ 'inner-collapse-' + appointmentIndex + '-' + groupedIndex }}"
-                    style="background-color: rgb(224, 207, 252)"
-                  >
+                    style="background-color: rgb(224, 207, 252)">
                     {{ group.key }}
                     <strong class="text-muted ms-2">
                       <i class="bi bi-calendar me-2"></i>
@@ -131,21 +152,14 @@
                   </button>
                 </h2>
 
-                <div
-                  [id]="'inner-collapse-' + appointmentIndex + '-' + groupedIndex"
-                  class="accordion-collapse collapse"
-                  [class.show]="openedInnerIndex[appointmentIndex] === groupedIndex"
-                  [attr.aria-labelledby]="'inner-heading-' + appointmentIndex + '-' + groupedIndex"
-                >
+                <div [id]="'inner-collapse-' + appointmentIndex + '-' + groupedIndex"
+                  class="accordion-collapse collapse" [class.show]="openedInnerIndex[appointmentIndex] === groupedIndex"
+                  [attr.aria-labelledby]="'inner-heading-' + appointmentIndex + '-' + groupedIndex">
                   <div class="accordion-body">
                     <div class="d-flex flex-wrap gap-3 justify-content-center">
-                      <div
-                        *ngFor="let t of group.value"
-                        class="border rounded shadow-sm p-3 bg-light time-card"
-                        style="min-width: 180px; max-width: 220px; cursor: pointer"
-                        (click)="selectTime(t)"
-                        [class.selected]="isSelected(t)"
-                      >
+                      <div *ngFor="let t of group.value" class="border rounded shadow-sm p-3 bg-light time-card"
+                        style="min-width: 180px; max-width: 220px; cursor: pointer" (click)="selectTime(t)"
+                        [class.selected]="isSelected(t)">
                         <div class="fw-bold text-center">
                           <i class="bi bi-clock me-2"></i>
                           {{ t.time }}

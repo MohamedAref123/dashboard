@@ -16,6 +16,7 @@
     "REPORTS": "Reports",
     "DOCTORS": "Doctors",
     "PATIENTS": "Patients",
+
     "CURRENT_AVAILABILITIES": "Current Availabilities"
   },
   "PROFILE": {
@@ -80,6 +81,7 @@
     "DETAILS": "Appointment Details",
     "VIEW_APPOINTMENT": "View Appointment",
     "NEW_APPOINTMENT": "New Appointment",
+    "ALL": "All",
     "DOCTOR": "Doctor",
     "NOTES": "Notes"
   },
@@ -105,7 +107,19 @@
     "NAME_ERROR": "Name is required (min 3 characters)",
     "PHONE": "Phone Number",
     "PHONE_ERROR": "Please enter a valid phone number",
+    "Surgeries": "Surgeries",
+    "ChronicDiseases": "Chronic Diseases",
+    "Medicines": "Medicines",
+
+    "CHRONIC_DISEASES_PLACEHOLDER": "Enter any chronic diseases...",
+    "MEDICINES_PLACEHOLDER": "Enter any medicines...",
+    "SURGERIES_PLACEHOLDER": "Enter any surgeries...",
+    "NOTES_PLACEHOLDER": "Enter any notes...",
     "NOTES": "Notes",
+    "BLOOD_TYPE": "Blood Type",
+    "BIRTHDAY": "Birthday",
+    "BIRTHDAY_PLACEHOLDER": "Select your birth date",
+    "SELECT": "Select...",
     "SUBMIT": "Submit"
   },
   "BUTTONS": {

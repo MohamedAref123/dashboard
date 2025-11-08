@@ -5,11 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppointmentSummary } from 'src/app/Models/Responses/AppointmentResponses';
 import { AppointmentService } from 'src/services/AppointmentService';
 import { GenericTable, TableAction } from "src/app/shared/generic-table/generic-table";
-import { AppointmentStatus } from 'src/app/Models/shared/SharedClasses';
+import { AppointmentStatus, JwtPayload } from 'src/app/Models/shared/SharedClasses';
 import { DateHelper } from 'src/app/shared/Helpers/DatesHelper';
 import { PageEvent } from '@angular/material/paginator';
 import { AppointmentSearchRequest } from 'src/app/Models/Requests/appointmentRequest';
 import { TranslateModule } from '@ngx-translate/core';
+import { AddressesResponse } from 'src/app/Models/Responses/AddressesResponse';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-appontment-component',
@@ -29,7 +31,8 @@ export class AppontmentComponent implements OnInit {
   userId: string = '';
   private dateHelper = inject(DateHelper);
   searchModel!: AppointmentSearchRequest;
-
+  doctorId: string;
+  addresses: AddressesResponse[] = [];
 
   headers = [
     { key: 'patientName', label: 'APPOINTMENT.PATIENT' },
@@ -71,18 +74,32 @@ export class AppontmentComponent implements OnInit {
     this.searchForm = this.fb.group({
       fromDate: [formatDate(from)],
       toDate: [formatDate(to)],
-      status: ['Pending'] // empty = all statuses
+      status: ['Pending'], // empty = all statuses
+      addressId: [null]
+
     });
 
     // Populate status dropdown
     this.statusOptions = Object.keys(AppointmentStatus).filter(k => isNaN(Number(k)));
     console.log(this.statusOptions); // يجب أن تظهر ["Pending", "Confirmed", "Cancelled", "Completed"]
 
-
+    this.loadAddresses();
     this.searchAppointments();
+
+
   }
 
+  loadAddresses() {
+    if (!this.doctorId) {
+      const decoded = jwtDecode<JwtPayload>(this.getToken());
 
+      this.doctorId = decoded.LoggedId;
+    }
+    this.appointmentService.getDoctorAdresses(this.doctorId).subscribe({
+      next: (res) => this.addresses = res,
+      error: (err) => console.error('Error loading addresses', err)
+    });
+  }
 
   searchAppointments(): void {
     this.searchModel = this.searchForm.value as AppointmentSearchRequest;
@@ -119,5 +136,9 @@ export class AppontmentComponent implements OnInit {
     if (event.action === 'view') {
       this.router.navigate(['/appointments/view/', event.row.appointmentId]);
     }
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('access_token');
   }
 }
