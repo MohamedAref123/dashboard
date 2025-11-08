@@ -3,4 +3,7 @@ export interface GetPatientByPhoneResponse {
   fullName: string;
   phoneNumber: string;
   userId: string;
+  chronicDiseases: string;
+  medicines: string;
+  surgeries: string;
 }

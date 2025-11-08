@@ -10,7 +10,7 @@ import { GetPatientByPhoneResponse } from 'src/app/Models/Responses/GetPatientBy
 import { AppointmentStatus, JwtPayload } from 'src/app/Models/shared/SharedClasses';
 import { DoctorService } from 'src/services/doctor.service';
 import { ToastService } from 'src/services/ToastService';
-import { ValidationError } from "src/app/shared/validation-error/validation-error";
+import { ValidationError } from 'src/app/shared/validation-error/validation-error';
 import * as bootstrap from 'bootstrap';
 @Component({
   selector: 'app-current-availlabilities.component',
@@ -34,7 +34,6 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
   selectedDate?: string;
   selectedTime?: string;
 
-
   collapseInstances: bootstrap.Collapse[] = [];
   openedOuterIndex: number | null = null;
   openedInnerIndex: { [outerIndex: number]: number | null } = {};
@@ -44,6 +43,9 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
     this.patient = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,15}$')]],
+      chronicDiseases: [null],
+      medicines: [null],
+      surgeries: [null],
       status: ['Pending', Validators.required],
       notes: [''],
       doctorId: [this.doctorId],
@@ -59,19 +61,18 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
     this.initiateAvailabilities();
   }
 
-
   ngAfterViewInit() {
     this.initAccordion();
   }
 
   initAccordion() {
     // تدمير أي instance قديمة
-    this.collapseInstances.forEach(c => c.hide());
+    this.collapseInstances.forEach((c) => c.hide());
     this.collapseInstances = [];
 
     // إنشاء collapse جديد لكل عنصر
     const elements = document.querySelectorAll('.collapse');
-    elements.forEach(el => {
+    elements.forEach((el) => {
       const collapse = new bootstrap.Collapse(el as HTMLElement, { toggle: false });
       this.collapseInstances.push(collapse);
     });
@@ -80,10 +81,9 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
   toggleCollapse(index: number) {
     const el = document.getElementById('collapse-' + index);
     if (!el) return;
-    const instance = this.collapseInstances.find(c => c._element === el);
+    const instance = this.collapseInstances.find((c) => c._element === el);
     if (instance) instance.toggle();
   }
-
 
   initOpenedIndices() {
     // تهيئة المصفوفة/الخريطة لضمان عدم undefined
@@ -106,13 +106,8 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
     if (this.openedInnerIndex[outerIndex] == null) {
       this.openedInnerIndex[outerIndex] = null;
     }
-    this.openedInnerIndex[outerIndex] =
-      this.openedInnerIndex[outerIndex] === innerIndex ? null : innerIndex;
+    this.openedInnerIndex[outerIndex] = this.openedInnerIndex[outerIndex] === innerIndex ? null : innerIndex;
   }
-
-
-
-
 
   initiateAvailabilities() {
     if (!this.doctorId) {
@@ -139,7 +134,6 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
     });
   }
 
-
   groupByDay(times: DoctorAvailableTime[]): Record<string, DoctorAvailableTime[]> {
     if (!times) return {};
     return times.reduce((groups: Record<string, DoctorAvailableTime[]>, time: DoctorAvailableTime) => {
@@ -149,7 +143,6 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
       return groups;
     }, {});
   }
-
 
   selectTime(t: DoctorAvailableTime): void {
     this.selectedSlotId = `${t.doctorAvailabilityId}-${t.time}-${t.appointmentDate}`;
@@ -171,11 +164,8 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
     return this.selectedSlotId === `${t.doctorAvailabilityId}-${t.time}-${t.appointmentDate}`;
   }
 
-
   onPhoneBlur(): void {
     const phoneValue = this.patient.get('phoneNumber')?.value?.trim();
-
-    console.log('📞 onPhoneBlur() =>', phoneValue);
 
     // لو الحقل فاضي، ما تعملش أي حاجة
     if (!phoneValue) return;
@@ -189,11 +179,11 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
           // ✅ فقط لو في بيانات فعلاً
           this.patient.patchValue({
             fullName: res.fullName,
-            phoneNumber: res.phoneNumber
+            phoneNumber: res.phoneNumber,
+            surgeries: res.surgeries,
+            medicines: res.medicines,
+            chronicDiseases: res.chronicDiseases
           });
-        } else {
-          console.warn('⚠️ No patient found with this phone number');
-          this.patient.patchValue({ fullName: '' });
         }
       },
       error: (err) => {
@@ -221,7 +211,7 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
           this.toast.success('✅ Appointment created successfully:');
           this.patient.reset();
           this.initiateAvailabilities();
-          console.log(res)
+          console.log(res);
           // window.location.reload();
         },
         error: (err) => {
