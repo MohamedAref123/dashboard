@@ -45,10 +45,16 @@ const routes: Routes = [
         path: 'reviews',
         loadComponent: () =>
           import('./pages/reviews.component/reviews.component').then((c) => c.ReviewsComponent)
-      }, {
+      },
+      {
         path: 'current-availabilities',
         loadComponent: () =>
           import('./pages/current-availlabilities.component/current-availlabilities.component').then((c) => c.CurrentAvaillabilitiesComponent)
+      },
+      {
+        path: 'patientHistory/:patientId',
+        loadComponent: () =>
+          import('./pages/patient-history-component/patient-history-component').then((c) => c.PatientHistoryComponent)
       }
     ]
   },

@@ -1,0 +1,92 @@
+<div class="earning-card warning overflow-hidden rounded">
+  <span class="round secondary-round small"></span>
+  <span class="round secondary-round big"></span>
+
+  <div class="card">
+    <div class="container mt-4">
+      <h2 class="my-3" style="color: #673ab7">
+        <i class="bi bi-journal-medical "></i>
+        {{ 'PATIENT_HISTORY.CREATE_TITLE' | translate }}
+      </h2>
+
+
+      <div class="container my-3">
+        <div class="container my-4">
+
+          <form [formGroup]="patientHistory" (ngSubmit)="createHistory()">
+
+            <div class="row">
+
+              <div class="col-md-3 my-4">
+                <label class="form-label">{{ 'PROFILE.SPECIALTY' | translate }}</label>
+                <mat-select formControlName="doctorSpecialistId" class="form-control "
+                  placeholder="{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' | translate }}">
+                  <mat-option [value]="null">------------------{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' | translate
+                    }}------------------</mat-option>
+                  <mat-option *ngFor="let specialist of specialists" [value]="specialist.doctorSpecialistId">
+                    {{ specialist.specialistAR }}
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <!-- Notes -->
+              <div class="col-md-6  my-3">
+                <label class="form-label">{{ 'PATIENT_HISTORY.NOTES' | translate }}</label>
+                <textarea class="form-control" formControlName="notes" rows="3"
+                  placeholder="{{ 'PATIENT_HISTORY.NOTES' | translate }}"></textarea>
+              </div>
+
+              <div class="col-md-6 my-3">
+                <label class="form-label">{{ 'PATIENT_HISTORY.DIAGNOSIS' | translate }} </label>
+                <textarea rows="3" class="form-control" formControlName="diagnosis"
+                  placeholder="{{ 'PATIENT_HISTORY.DIAGNOSIS' | translate }}"></textarea>
+              </div>
+            </div>
+
+
+
+            <div class="mb-3">
+              <label class="form-label">{{ 'PATIENT_HISTORY.UPLOAD_IMAGES' | translate }}</label>
+
+              <!-- Custom file upload button -->
+              <div class="custom-file-upload position-relative">
+                <button type="button" class="btn btn-outline-primary w-100">
+                  <i class="bi bi-upload me-2"></i> Choose Images
+                </button>
+                <input type="file" multiple (change)="onFileChange($event)" />
+              </div>
+
+              <!-- Show selected file count -->
+              <small class="text-muted mt-1 d-block" *ngIf="files.length > 0">
+                {{ files.length }} {{ files.length > 1 ? 'images selected' : 'image selected' }}
+              </small>
+            </div>
+
+            <!-- Preview thumbnails -->
+            <div class="d-flex flex-wrap gap-2 mt-2" *ngIf="imagePreviews.length > 0">
+              <div *ngFor="let img of imagePreviews; let i = index" class="position-relative">
+                <img [src]="img" alt="preview" class="rounded border"
+                  style="width:100px; height:100px; object-fit:cover;">
+                <button type="button" (click)="removeFile(i)"
+                  class="btn btn-sm btn-danger position-absolute top-0 end-0"
+                  style="border-radius:50%; width:20px; height:20px; padding:0;">
+                  &times;
+                </button>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-save my-3">{{ 'PATIENT_HISTORY.SAVE_HISTORY' | translate }}</button>
+
+          </form>
+        </div>
+
+      </div>
+
+
+
+    </div>
+  </div>

@@ -110,7 +110,6 @@
     "Surgeries": "العمليات الجراحية",
     "ChronicDiseases": "الأمراض المزمنة",
     "Medicines": "الأدوية",
-
     "CHRONIC_DISEASES_PLACEHOLDER": "أدخل أي أمراض مزمنة...",
     "MEDICINES_PLACEHOLDER": "أدخل أي أدوية...",
     "SURGERIES_PLACEHOLDER": "أدخل أي عمليات جراحية...",
@@ -122,9 +121,20 @@
     "NOTES_PLACEHOLDER": "أدخل أي ملاحظات...",
     "SELECT": "اختر..."
   },
+  "PATIENT_HISTORY": {
+    "CREATE_TITLE": " سجل المريض",
+    "DIAGNOSIS": "التشخيص",
+    "NOTES": "ملاحظات",
+    "UPLOAD_IMAGES": "رفع الصور",
+    "SELECT_SPECIALIST": "اختر التخصص",
+    "SAVE_HISTORY": "حفظ السجل",
+    "SELECTED_IMAGES": "الصور المختارة",
+    "SELECT_SPECIALIST_ALERT": "الرجاء اختيار التخصص!"
+  },
   "BUTTONS": {
     "ACTIONS": "الإجراءات",
     "VIEW": "عرض",
+    "HISTORY": "تاريخ",
     "RESTORE": "استرجاع",
     "ACTIVATE": "تفعيل",
     "DEACTIVATE": "تعطيل",

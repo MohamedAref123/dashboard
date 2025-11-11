@@ -25,6 +25,7 @@ export interface SearchAppointmentsResponse {
 
 export interface AppointmentSummary {
   appointmentId: string;
+  patientId: string;
   patientName: string;
   time: string;
   appointmentDate: string;

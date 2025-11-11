@@ -45,7 +45,8 @@ export class AppontmentComponent implements OnInit {
 
 
   tableActions: TableAction[] = [
-    { icon: 'visibility', label: 'BUTTONS.VIEW', color: 'primary', action: 'view' }
+    { icon: 'visibility', label: 'BUTTONS.VIEW', color: 'primary', action: 'view' },
+    { icon: 'visibility', label: 'BUTTONS.HISTORY', color: 'primary', action: 'history' }
   ];
 
   pagenation = {
@@ -124,6 +125,8 @@ export class AppontmentComponent implements OnInit {
       },
       error: (err) => console.error('Error loading appointments', err)
     });
+
+
   }
 
   onPageChange(event: PageEvent) {
@@ -135,6 +138,9 @@ export class AppontmentComponent implements OnInit {
   handleAction(event: { row: AppointmentSummary; action: string }) {
     if (event.action === 'view') {
       this.router.navigate(['/appointments/view/', event.row.appointmentId]);
+    }
+    if (event.action === 'history') {
+      this.router.navigate(['/patientHistory/', event.row.patientId]);
     }
   }
 

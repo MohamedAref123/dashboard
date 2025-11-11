@@ -122,11 +122,22 @@
     "SELECT": "Select...",
     "SUBMIT": "Submit"
   },
+  "PATIENT_HISTORY": {
+    "CREATE_TITLE": "Patient History",
+    "DIAGNOSIS": "Diagnosis",
+    "NOTES": "Notes",
+    "UPLOAD_IMAGES": "Upload Images",
+    "SELECT_SPECIALIST": "Select Specialist",
+    "SELECTED_IMAGES": "Selected Images",
+    "SAVE_HISTORY": "Save ",
+    "SELECT_SPECIALIST_ALERT": "Please select a specialist!"
+  },
   "BUTTONS": {
     "ACTIONS": "Actions",
     "SEARCH": "Search",
     "SAVE": "Save",
     "VIEW": "view",
+    "HISTORY": "history",
     "ACTIVATE": "Activate",
     "DEACTIVATE": "Deactivate",
     "CANCEL": "Cancel",
