@@ -122,14 +122,30 @@
     "SELECT": "اختر..."
   },
   "PATIENT_HISTORY": {
+    "PATIENT_NAME": "اسم المريض",
     "CREATE_TITLE": " سجل المريض",
+    "AGE": "العمر",
     "DIAGNOSIS": "التشخيص",
     "NOTES": "ملاحظات",
+    "RECORDS": "السجلات",
+    "DETAILS": "تفاصيل المريض",
     "UPLOAD_IMAGES": "رفع الصور",
     "SELECT_SPECIALIST": "اختر التخصص",
     "SAVE_HISTORY": "حفظ السجل",
     "SELECTED_IMAGES": "الصور المختارة",
-    "SELECT_SPECIALIST_ALERT": "الرجاء اختيار التخصص!"
+    "SELECT_SPECIALIST_ALERT": "الرجاء اختيار التخصص!",
+    "TITLE": "سجل المريض",
+    "NO_HISTORY": "لا يوجد سجلات سابقة",
+    "SPECIALIST_DOCTOR": "الطبيب / الاختصاصي",
+    "DATE": "التاريخ",
+    "BLOOD_TYPE": "فصيلة الدم",
+    "CHRONIC_DISEASES": "الأمراض المزمنة",
+    "MEDICINES": "الأدوية",
+    "SURGERIES": "العمليات الجراحية",
+    "BIRTHDAY": "تاريخ الميلاد",
+    "SHOW_IMAGES": "عرض مرفقات",
+    "HIDE_IMAGES": "إخفاء مرفقات",
+    "NO_ATTACHEMENT": "لا توجد مرفقات"
   },
   "BUTTONS": {
     "ACTIONS": "الإجراءات",

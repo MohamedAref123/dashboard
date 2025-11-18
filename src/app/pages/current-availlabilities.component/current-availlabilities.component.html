@@ -40,7 +40,7 @@
               <option value="AB-">AB-</option>
               <option value="O+">O+</option>
               <option value="O-">O-</option>
-              <option></option>
+
             </select>
             <app-validation-error [form]="patient" controlName="bloodType"></app-validation-error>
           </div>
@@ -55,7 +55,7 @@
           </div>
 
 
-          <div class="col-md-3">
+          <div class="col-md-3 mt-4">
             <label class="form-label">{{ 'PATIENT.BIRTHDAY' | translate }}</label>
             <input type="date" class="form-control" formControlName="birthday"
               [placeholder]="'PATIENT.BIRTHDAY_PLACEHOLDER' | translate">

@@ -18,6 +18,8 @@ import * as bootstrap from 'bootstrap';
   templateUrl: './current-availlabilities.component.html',
   styleUrl: './current-availlabilities.component.scss'
 })
+
+
 export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
   doctorService = inject(DoctorService);
   toast = inject(ToastService);
@@ -79,12 +81,13 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  toggleCollapse(index: number) {
-    const el = document.getElementById('collapse-' + index);
-    if (!el) return;
-    const instance = this.collapseInstances.find((c) => c._element === el);
-    if (instance) instance.toggle();
-  }
+
+  // toggleCollapse(index: number) {
+  //   const el = document.getElementById('collapse-' + index);
+  //   if (!el) return;
+  //   const instance = this.collapseInstances.find((c) => c._element === el);
+  //   if (instance) instance.toggle();
+  // }
 
   initOpenedIndices() {
     // تهيئة المصفوفة/الخريطة لضمان عدم undefined

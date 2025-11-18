@@ -46,7 +46,8 @@ export class AppontmentComponent implements OnInit {
 
   tableActions: TableAction[] = [
     { icon: 'visibility', label: 'BUTTONS.VIEW', color: 'primary', action: 'view' },
-    { icon: 'visibility', label: 'BUTTONS.HISTORY', color: 'primary', action: 'history' }
+    { icon: 'visibility', label: 'BUTTONS.HISTORY', color: 'primary', action: 'history' },
+    { icon: 'visibility', label: 'view history', color: 'primary', action: 'view-histort' }
   ];
 
   pagenation = {
@@ -142,6 +143,11 @@ export class AppontmentComponent implements OnInit {
     if (event.action === 'history') {
       this.router.navigate(['/patientHistory/', event.row.patientId]);
     }
+
+    if (event.action === 'view-histort') {
+      this.router.navigate(['/view-patient-History/', event.row.patientId]);
+    }
+
   }
 
   getToken(): string | null {

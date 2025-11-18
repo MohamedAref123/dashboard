@@ -93,10 +93,7 @@ export class PatientHistoryComponent implements OnInit {
 
 
   createHistory() {
-    if (!this.files.length) {
-      alert('Please select images!');
-      return;
-    }
+
 
     this.patientservice.createPatientHistoryWithImages(
       this.patientId,

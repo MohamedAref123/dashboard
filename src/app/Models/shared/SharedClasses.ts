@@ -41,4 +41,9 @@ export class ShardEnums {
 
 export interface JwtPayload {
   LoggedId?: string; // أو doctorId حسب السيرفر
+
+  username?: string;
+  sub?: string;
+  exp?: number;
+  iat?: number;
 }

@@ -38,6 +38,7 @@ export class NavRightComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
 
       console.log('Loaded user profile:', res);

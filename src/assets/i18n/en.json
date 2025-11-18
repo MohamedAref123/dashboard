@@ -123,14 +123,30 @@
     "SUBMIT": "Submit"
   },
   "PATIENT_HISTORY": {
+    "PATIENT_NAME": "Name",
     "CREATE_TITLE": "Patient History",
     "DIAGNOSIS": "Diagnosis",
+    "AGE": "Age",
+    "RECORDS": "Records",
+    "DETAILS": "Patient Details",
     "NOTES": "Notes",
     "UPLOAD_IMAGES": "Upload Images",
     "SELECT_SPECIALIST": "Select Specialist",
     "SELECTED_IMAGES": "Selected Images",
     "SAVE_HISTORY": "Save ",
-    "SELECT_SPECIALIST_ALERT": "Please select a specialist!"
+    "SELECT_SPECIALIST_ALERT": "Please select a specialist!",
+    "TITLE": "Patient History",
+    "NO_HISTORY": "No previous records",
+    "SPECIALIST_DOCTOR": "Specialist / Doctor",
+    "DATE": "Date",
+    "BLOOD_TYPE": "Blood Type",
+    "CHRONIC_DISEASES": "Chronic Diseases",
+    "MEDICINES": "Medicines",
+    "SURGERIES": "Surgeries",
+    "BIRTHDAY": "Birthday",
+    "SHOW_IMAGES": "Show attachment",
+    "HIDE_IMAGES": "Hide attachment",
+    "NO_ATTACHEMENT": "No attachment to display"
   },
   "BUTTONS": {
     "ACTIONS": "Actions",

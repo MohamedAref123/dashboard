@@ -37,6 +37,8 @@ export class DoctorService {
   //   return this.apiService.post<DoctorSearchResponse>(`Doctors/Search`, payload);
   // }
 
+
+
   getDoctorById(id: string, lang: string = 'en'): Observable<DoctorDetailsResponse> {
     return this.apiService.get<DoctorDetailsResponse>(`Doctors/Get/${id}/${lang}`);
   }

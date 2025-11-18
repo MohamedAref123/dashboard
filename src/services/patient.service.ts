@@ -9,6 +9,7 @@ import { PatientHistoryCreateRequest } from 'src/app/Models/Requests/PatientHist
 import { environment } from 'src/environments/environment';
 import { PatientHistoryResponse } from 'src/app/Models/Responses/PatientHistoryResponse ';
 import { Observable } from 'rxjs';
+import { GetPatientHistoryResponse } from 'src/app/Models/Responses/getHistoryResponse';
 
 
 @Injectable({
@@ -24,6 +25,28 @@ export class PatientService {
   }
 
 
+
+  getPatientHistory(
+    patientId: string,
+    specialistId: string,
+    pageIndex = 0,
+    pageSize = 10,
+    lang = 'en'
+  ): Observable<GetPatientHistoryResponse> {
+    const body = { patientId, specialistId, pageSize, pageIndex, lang };
+
+    const token = localStorage.getItem('access_token') || '';
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.post<GetPatientHistoryResponse>(
+      `${environment.attachmentURL}PatientHistory/GetPatientHistory`,
+      body,
+      { headers }
+    );
+  }
 
 
 

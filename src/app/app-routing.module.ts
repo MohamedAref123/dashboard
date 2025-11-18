@@ -55,6 +55,11 @@ const routes: Routes = [
         path: 'patientHistory/:patientId',
         loadComponent: () =>
           import('./pages/patient-history-component/patient-history-component').then((c) => c.PatientHistoryComponent)
+      },
+      {
+        path: 'view-patient-History/:patientId',
+        loadComponent: () =>
+          import('./pages/view-patient-history-component/view-patient-history-component').then((c) => c.ViewPatientHistoryComponent)
       }
     ]
   },
