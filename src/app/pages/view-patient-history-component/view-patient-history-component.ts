@@ -8,13 +8,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DoctorSpecialistResponse } from 'src/app/Models/Responses/DoctorSpecialistResponses';
 import { GetPatientHistoryResponse, PatientHistoryItem } from 'src/app/Models/Responses/getHistoryResponse';
 import { environment } from 'src/environments/environment';
-
 import { DoctorSpecialistService } from 'src/services/DoctorSpecialistService';
 import { PatientService } from 'src/services/patient.service';
-import { CdkTableModule } from "@angular/cdk/table";
+import { CdkTableModule } from '@angular/cdk/table';
 
-
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
 import { ToastService } from 'src/services/ToastService';
 
 @Component({
@@ -24,20 +22,19 @@ import { ToastService } from 'src/services/ToastService';
   styleUrl: './view-patient-history-component.scss'
 })
 export class ViewPatientHistoryComponent implements OnInit {
-
+  @ViewChild('scrollAnchor', { static: false }) scrollAnchor!: ElementRef;
   route = inject(ActivatedRoute);
   doctorSpecialistService = inject(DoctorSpecialistService);
   patientservice = inject(PatientService);
-  toast = inject(ToastService)
+  toast = inject(ToastService);
   specialists: DoctorSpecialistResponse[] = [];
   patientId: string;
-  selectedSpecialistId: string = '';
-
+  selectedSpecialistId: string = null;
 
   previewImage: string = '';
   scale = 1;
   @ViewChild('zoomImg') zoomImg!: ElementRef<HTMLImageElement>;
-
+  private observer!: IntersectionObserver;
   isViewerOpen = false;
   isMinimized = false;
   currentIndex = 0;
@@ -54,16 +51,12 @@ export class ViewPatientHistoryComponent implements OnInit {
     medicines: '',
     surgeries: '',
     bloodType: '',
-    birthday: '',
-
+    birthday: ''
   };
-
 
   pageSize = 10;
   pageIndex = 0;
   loadingMore = false;
-
-
 
   ngOnInit(): void {
     this.patientId = this.route.snapshot.paramMap.get('patientId');
@@ -72,29 +65,41 @@ export class ViewPatientHistoryComponent implements OnInit {
     this.loadPatientBasicInfo();
   }
 
+  ngAfterViewInit() {
+    this.observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !this.loadingMore) {
+        this.loadPatientHistory();
+      }
+    });
+    setTimeout(() => {
+      if (this.scrollAnchor) {
+        this.observer.observe(this.scrollAnchor.nativeElement);
+      }
+    }, 500);
+  }
 
   loadPatientBasicInfo(): void {
-    this.patientservice.getPatientHistory(this.patientId, null, 0, 10)
-      .subscribe({
-        next: (res) => {
-          // هذه الحقول العامة
-          this.patientHistory.patientName = res.patientName;
-          this.patientHistory.bloodType = res.bloodType;
-          this.patientHistory.chronicDiseases = res.chronicDiseases;
-          this.patientHistory.medicines = res.medicines;
-          this.patientHistory.surgeries = res.surgeries;
-          this.patientHistory.birthday = res.birthday;
-          // إذا أردت يمكنك أيضاً عرض السجلات الأولى بدون تخصص
-          this.patientHistory.items = res.items || [];
-          this.patientHistory.totalRecords = res.totalRecords;
-        },
-        error: (err) => console.error('Failed to load patient info:', err)
-      });
+    this.patientservice.getPatientHistory(this.patientId, null, this.pageIndex, this.pageSize).subscribe({
+      next: (res) => {
+        // هذه الحقول العامة
+        this.patientHistory.patientName = res.patientName;
+        this.patientHistory.bloodType = res.bloodType;
+        this.patientHistory.chronicDiseases = res.chronicDiseases;
+        this.patientHistory.medicines = res.medicines;
+        this.patientHistory.surgeries = res.surgeries;
+        this.patientHistory.birthday = res.birthday;
+        // إذا أردت يمكنك أيضاً عرض السجلات الأولى بدون تخصص
+        this.patientHistory.items = res.items || [];
+        this.patientHistory.totalRecords = res.totalRecords;
+        this.pageIndex++;
+      },
+      error: (err) => console.error('Failed to load patient info:', err)
+    });
   }
 
   loadSpecialists(): void {
     this.doctorSpecialistService.GetAll().subscribe({
-      next: (data) => this.specialists = data,
+      next: (data) => (this.specialists = data),
       error: (err) => console.error('Failed to load specialists:', err)
     });
   }
@@ -107,34 +112,33 @@ export class ViewPatientHistoryComponent implements OnInit {
   }
 
   loadPatientHistory(): void {
-    if (!this.selectedSpecialistId || this.loadingMore) return;
+    if (this.loadingMore) return;
 
     this.loadingMore = true;
 
-    this.patientservice.getPatientHistory(this.patientId, this.selectedSpecialistId, this.pageIndex, this.pageSize, 'en')
-      .subscribe({
-        next: (res) => {
-          //console.log('Loaded patient history:', res);
+    if (this.patientHistory.totalRecords <= this.pageSize * this.pageIndex) return;
+    this.patientservice.getPatientHistory(this.patientId, this.selectedSpecialistId, this.pageIndex, this.pageSize, 'en').subscribe({
+      next: (res) => {
+        //console.log('Loaded patient history:', res);
 
-          this.patientHistory.items.push(...res.items);
-          this.patientHistory.totalRecords = res.totalRecords;
-          this.patientHistory.patientName = res.patientName;
-          this.patientHistory.bloodType = res.bloodType;
-          this.patientHistory.chronicDiseases = res.chronicDiseases;
-          this.patientHistory.medicines = res.medicines;
-          this.patientHistory.surgeries = res.surgeries;
-          this.patientHistory.birthday = res.birthday;
+        this.patientHistory.items.push(...res.items);
+        this.patientHistory.totalRecords = res.totalRecords;
+        this.patientHistory.patientName = res.patientName;
+        this.patientHistory.bloodType = res.bloodType;
+        this.patientHistory.chronicDiseases = res.chronicDiseases;
+        this.patientHistory.medicines = res.medicines;
+        this.patientHistory.surgeries = res.surgeries;
+        this.patientHistory.birthday = res.birthday;
 
-          this.pageIndex++; // الصفحة التالية
-          this.loadingMore = false;
-        },
-        error: (err) => {
-          console.error('Failed to load patient history:', err);
-          this.loadingMore = false;
-        }
-      });
+        this.pageIndex++; // الصفحة التالية
+        this.loadingMore = false;
+      },
+      error: (err) => {
+        console.error('Failed to load patient history:', err);
+        this.loadingMore = false;
+      }
+    });
   }
-
 
   normalizePaths(paths: string | string[] | null | undefined): string[] {
     if (!paths) return [];
@@ -145,9 +149,9 @@ export class ViewPatientHistoryComponent implements OnInit {
     const pathArray: string[] = Array.isArray(paths) ? paths : String(paths).split(',');
 
     return pathArray
-      .map(p => String(p || '').trim())
-      .filter(p => p.length > 0)
-      .map(p => this.fixPath(p, baseUrl));
+      .map((p) => String(p || '').trim())
+      .filter((p) => p.length > 0)
+      .map((p) => this.fixPath(p, baseUrl));
   }
 
   fixPath(path: string, baseUrl: string): string {
@@ -181,20 +185,13 @@ export class ViewPatientHistoryComponent implements OnInit {
     return age;
   }
 
-
   getImageUrl(path: string): string {
     if (!path) return '';
     if (path.startsWith('http')) return path;
     return `${environment.baseAttatchementUrl}PatientHistories${path}?t=${Date.now()}`;
   }
 
-
-
-
   imagesList: string[] = [];
-
-
-
 
   // zoom
   minScale = 1;
@@ -231,7 +228,9 @@ export class ViewPatientHistoryComponent implements OnInit {
     this.posY = event.clientY - this.startY;
   }
 
-  endDrag() { this.isDragging = false; }
+  endDrag() {
+    this.isDragging = false;
+  }
 
   // Touch for pinch zoom
   startTouch(event: TouchEvent) {
@@ -253,7 +252,7 @@ export class ViewPatientHistoryComponent implements OnInit {
     }
   }
 
-  endTouch() { }
+  endTouch() {}
 
   // reset when opening new image
   openPreview(img: string | null, item: PatientHistoryItem) {
@@ -269,10 +268,6 @@ export class ViewPatientHistoryComponent implements OnInit {
     this.posY = 0;
     this.isViewerOpen = true;
   }
-
-
-
-
 
   closeViewer() {
     this.isViewerOpen = false;
@@ -294,10 +289,7 @@ export class ViewPatientHistoryComponent implements OnInit {
     this.currentImage = this.imagesList[this.currentIndex];
   }
   prevImage() {
-    this.currentIndex =
-      (this.currentIndex - 1 + this.imagesList.length) % this.imagesList.length;
+    this.currentIndex = (this.currentIndex - 1 + this.imagesList.length) % this.imagesList.length;
     this.currentImage = this.imagesList[this.currentIndex];
   }
-
-
 }

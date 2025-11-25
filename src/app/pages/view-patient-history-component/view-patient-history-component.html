@@ -1,6 +1,5 @@
 <div class="card m-1 my-4 p-3 shadow-sm">
   <div class="container mt-4">
-
     <div class="d-flex align-items-center gap-2 mb-3">
       <i class="ti ti-clipboard-list icon-animate"></i>
       <h2 style="color: #673ab7">{{ 'PATIENT_HISTORY.TITLE' | translate }}</h2>
@@ -9,10 +8,12 @@
     <!-- اختيار الطبيب المتخصص -->
     <div class="col-md-3 my-4">
       <label class="form-label">{{ 'PROFILE.SPECIALTY' | translate }}</label>
-      <mat-select (selectionChange)=" onSpecialistSelected($event.value)" class="form-control "
-        placeholder="{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' | translate }}">
-        <mat-option [value]="null" disabled selected>-------{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' |
-          translate}}-------</mat-option>
+      <mat-select
+        (selectionChange)=" onSpecialistSelected($event.value)"
+        class="form-control"
+        placeholder="{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' | translate }}"
+      >
+        <mat-option [value]="null" disabled selected>-------{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' | translate}}-------</mat-option>
         <mat-option *ngFor="let specialist of specialists" [value]="specialist.doctorSpecialistId">
           {{ specialist.specialistAR }}
         </mat-option>
@@ -23,7 +24,7 @@
 
     <div *ngIf="patientHistory" class="patient-info-card mb-4 p-4 rounded shadow-sm">
       <h2 class="mb-3">{{ 'PATIENT_HISTORY.DETAILS' | translate }}</h2>
-      <div class="row g-3  gap-2 justify-content-around">
+      <div class="row g-3 gap-2 justify-content-around">
         <div class="col-md-3 info-item">
           <i class="bi bi-person-fill info-icon ms-2"></i>
           <span class="info-label">{{ 'PATIENT_HISTORY.PATIENT_NAME' | translate }}:</span>
@@ -59,10 +60,8 @@
           <span class="info-label">{{ 'PATIENT_HISTORY.AGE' | translate }}:</span>
           <span class="info-value">{{ patientAge !== null ? patientAge + ' yrs' : '-' }}</span>
         </div>
-
       </div>
     </div>
-
 
     <!-- عرض السجلات السابقة -->
 
@@ -71,9 +70,7 @@
 
       <div *ngFor="let item of patientHistory.items" class="card mb-3 shadow-sm border-0 rounded-3">
         <div class="card-body">
-
           <div class="row g-3 justify-content-between">
-
             <!-- Date -->
             <div class="col-md-3 info-block">
               <i class="bi bi-calendar-date icon-animate"></i>
@@ -88,7 +85,7 @@
               <i class="bi bi-person-vcard icon-animate"></i>
               <div>
                 <h6 class="text-secondary">{{ 'PATIENT_HISTORY.SPECIALIST_DOCTOR' | translate }}</h6>
-                <p class="fw-bold"> {{ item.specialistName }} - {{ item.doctorName }}</p>
+                <p class="fw-bold">{{ item.specialistName }} - {{ item.doctorName }}</p>
               </div>
             </div>
 
@@ -101,7 +98,6 @@
               </div>
             </div>
 
-
             <!-- Notes -->
             <div class="col-md-12 info-block">
               <i class="bi bi-journal-text icon-animate"></i>
@@ -110,7 +106,6 @@
                 <p>{{ item.notes }}</p>
               </div>
             </div>
-
           </div>
 
           <!-- زر فتح الصور -->
@@ -120,21 +115,15 @@
               {{ 'PATIENT_HISTORY.SHOW_IMAGES' | translate }}
             </button>
           </div>
-
-
-
-
         </div>
-
       </div>
+
+      <div #scrollAnchor style="height: 1px"></div>
     </div>
-
-
 
     <!-- Image Viewer -->
     <div class="image-viewer-backdrop" *ngIf="isViewerOpen">
       <div class="image-viewer-container">
-
         <!-- Header -->
         <div class="viewer-header">
           <button class="header-btn" (click)="minimize()">—</button>
@@ -143,30 +132,31 @@
         </div>
 
         <!-- Image Content -->
-        <div class="viewer-content" (mousedown)="startDrag($event)" (mouseup)="endDrag()" (mousemove)="onDrag($event)"
-          (wheel)="onWheel($event)">
-
+        <div
+          class="viewer-content"
+          (mousedown)="startDrag($event)"
+          (mouseup)="endDrag()"
+          (mousemove)="onDrag($event)"
+          (wheel)="onWheel($event)"
+        >
           <button class="nav-btn left" (click)="prevImage()">❮</button>
 
-          <img [src]="currentImage" class="viewer-img"
+          <img
+            [src]="currentImage"
+            class="viewer-img"
             [style.transform]="'translate(' + posX + 'px,' + posY + 'px) scale(' + scale + ')'"
-            (touchstart)="startTouch($event)" (touchmove)="onTouchMove($event)" (touchend)="endTouch()" />
+            (touchstart)="startTouch($event)"
+            (touchmove)="onTouchMove($event)"
+            (touchend)="endTouch()"
+          />
 
           <button class="nav-btn right" (click)="nextImage()">❯</button>
-
         </div>
-
       </div>
     </div>
 
     <!-- Minimized Bar -->
-    <div class="viewer-minimized" *ngIf="isMinimized" (click)="restore()">
-      🔍 Image Viewer – Click to Restore
-    </div>
-
-
-
-
+    <div class="viewer-minimized" *ngIf="isMinimized" (click)="restore()">🔍 Image Viewer – Click to Restore</div>
 
     <!-- رسالة لو ما فيش سجلات -->
     <div *ngIf="patientHistory && patientHistory.items.length === 0" class="alert alert-primary mt-3">
