@@ -48,117 +48,91 @@
     </li>
 
 
+    <!--Notification-->
 
     <li>
       <div class="dropdown pc-h-item" ngbDropdown>
-        <a class="pc-head-link head-link-secondary dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown"
-          href="javascript:" ngbDropdownToggle>
-          <i class="ti ti-bell"></i>
+        <a class="pc-head-link head-link-secondary dropdown-toggle arrow-none me-0 position-relative" href="javascript:"
+          ngbDropdownToggle>
+          <div class="position-relative d-inline-block">
+
+            <i class="ti ti-bell" style="font-size: 24px;"></i>
+
+
+            <span class="badge rounded-pill"
+              style="background-color: #673ab7; color: white; position: absolute; top: -5px; right: -5px; font-size: 0.7rem;"
+              *ngIf="unSeenRecords > 0">
+              {{ unSeenRecords }}
+            </span>
+          </div>
+
+
+
         </a>
+
+
+
         <div class="dropdown-menu dropdown-notification dropdown-menu-start pc-h-dropdown" ngbDropdownMenu>
           <div class="dropdown-header">
-            <a href="javascript:!" class="link-primary float-end text-decoration-underline">Mark as all read</a>
             <h5>
-              All Notification
-              <span class="badge bg-warning rounded-pill ms-1">01</span>
+              Notifications
+              <span class="badge  rounded-pill ms-1" style="background-color: #673ab7; color: white;"
+                *ngIf="notifications?.length">{{ notifications.length
+                }}</span>
             </h5>
           </div>
+
           <ng-scrollbar style="height: calc(100vh - 215px)" visibility="hover">
             <div class="dropdown-header px-0 text-wrap">
               <div class="list-group list-group-flush w-100">
-                <div class="list-group-item">
-                  <select class="form-select">
-                    <option value="all">All Notification</option>
-                    <option value="new">New</option>
-                    <option value="unread">Unread</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                <a class="list-group-item list-group-item-action">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img src="assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar" />
-                    </div>
-                    <div class="flex-grow-1 ms-1">
-                      <span class="float-end text-muted">2 min ago</span>
-                      <h5>John Doe</h5>
-                      <p class="text-body fs-6">It is a long established fact that a reader will be distracted</p>
-                      <div class="badge rounded-pill bg-light-danger">Unread</div>
-                      <div class="badge rounded-pill bg-light-warning">New</div>
-                    </div>
-                  </div>
-                </a>
-                <a class="list-group-item list-group-item-action">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <div class="user-avtar bg-light-success"><i class="ti ti-building-store"></i></div>
-                    </div>
-                    <div class="flex-grow-1 ms-1">
-                      <span class="float-end text-muted">3 min ago</span>
-                      <h5>Store Verification Done</h5>
-                      <p class="text-body fs-6">We have successfully received your request.</p>
-                      <div class="badge rounded-pill bg-light-danger">Unread</div>
-                    </div>
-                  </div>
-                </a>
-                <a class="list-group-item list-group-item-action">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <div class="user-avtar bg-light-primary"><i class="ti ti-mailbox"></i></div>
-                    </div>
-                    <div class="flex-grow-1 ms-1">
-                      <span class="float-end text-muted">5 min ago</span>
-                      <h5>Check Your Mail.</h5>
-                      <p class="text-body fs-6">All done! Now check your inbox as you're in for a sweet treat!</p>
-                      <button class="btn btn-sm btn-primary">
-                        Mail
-                        <i class="ti ti-brand-telegram"></i>
-                      </button>
-                    </div>
-                  </div>
-                </a>
-                <a class="list-group-item list-group-item-action">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img src="assets/images/user/avatar-1.jpg" alt="user-image" class="user-avtar" />
-                    </div>
-                    <div class="flex-grow-1 ms-1">
-                      <span class="float-end text-muted">8 min ago</span>
-                      <h5>John Doe</h5>
-                      <p class="text-body fs-6">
-                        Uploaded two file on &nbsp;
-                        <strong>21 Jan 2020</strong>
-                      </p>
-                      <div class="notification-file d-flex p-3 bg-light-secondary rounded">
-                        <i class="ti ti-arrow-bar-to-down"></i>
-                        <h5 class="m-0">demo.jpg</h5>
+
+                <!-- إشعارات ديناميكية -->
+                <ng-container *ngIf="notifications?.length; else noNotifications">
+                  <a class="list-group-item list-group-item-action" *ngFor="let notify of notifications"
+                    (click)="openNotification(notify)" [ngClass]="{'bg-light-secondary': !notify.isSeen}">
+                    <div class="d-flex">
+                      <div class="flex-shrink-0">
+                        <div class="user-avtar bg-light-primary">
+                          <i class="ti ti-bell"></i>
+                        </div>
                       </div>
+                      <div class="flex-grow-1 ms-1">
+                        <span class="float-end text-muted">{{ notify.displayTime }}</span>
+                        <h5>{{ notify.type }}</h5>
+                        <p class="text-body fs-6">{{ notify.text }}</p>
+                      </div>
+
                     </div>
+                  </a>
+
+                </ng-container>
+
+                <!-- حالة عدم وجود إشعارات -->
+                <ng-template #noNotifications>
+                  <div class="list-group-item text-center text-muted">
+                    No notifications available
                   </div>
-                </a>
-                <a class="list-group-item list-group-item-action">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img src="assets/images/user/avatar-3.jpg" alt="user-image" class="user-avtar" />
-                    </div>
-                    <div class="flex-grow-1 ms-1">
-                      <span class="float-end text-muted">10 min ago</span>
-                      <h5>Joseph William</h5>
-                      <p class="text-body fs-6">It is a long established fact that a reader will be distracted</p>
-                      <div class="badge rounded-pill bg-light-success">Confirmation of Account</div>
-                    </div>
-                  </div>
-                </a>
+                </ng-template>
+
               </div>
             </div>
           </ng-scrollbar>
+
           <div class="dropdown-divider"></div>
           <div class="text-center py-2">
-            <a href="javascript:" class="link-primary">Mark as all read</a>
+            <a href="javascript:" class="link-primary" (click)="markAllAsRead()">Mark all as read</a>
           </div>
+
         </div>
       </div>
     </li>
+
+
+
+
+
+
+    <!--end Notification  -->
 
 
     <li>
@@ -215,7 +189,7 @@
                 <i class="ti ti-settings"></i>
                 <span>Account Profile</span>
               </a>
-              <a href="javascript:" class="dropdown-item">
+              <a href="profile" class="dropdown-item">
                 <i class="ti ti-user"></i>
                 <span>Social Profile</span>
               </a>
