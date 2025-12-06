@@ -63,19 +63,19 @@
           </div>
 
           <div class="row">
-            <div class="col-md-3 mt-4">
+            <div class="col-md-4 mt-4">
               <label class="form-label">{{ 'PATIENT.Surgeries' | translate }}</label>
               <textarea type="text" formControlName="surgeries" class="form-control p-2" rows="3"
                 [placeholder]="'PATIENT.SURGERIES_PLACEHOLDER' | translate"></textarea>
               <app-validation-error [form]="patient" controlName="surgeries"></app-validation-error>
             </div>
-            <div class="col-md-3 mt-4">
+            <div class="col-md-4 mt-4">
               <label class="form-label">{{ 'PATIENT.ChronicDiseases' | translate }}</label>
               <textarea formControlName="chronicDiseases" class="form-control p-2" rows="3"
                 [placeholder]="'PATIENT.CHRONIC_DISEASES_PLACEHOLDER' | translate"></textarea>
               <app-validation-error [form]="patient" controlName="chronicDiseases"></app-validation-error>
             </div>
-            <div class="col-md-3 mt-4">
+            <div class="col-md-4 mt-4">
               <label class="form-label">{{ 'PATIENT.Medicines' | translate }}</label>
               <textarea formControlName="medicines" class="form-control p-2" rows="3"
                 [placeholder]="'PATIENT.MEDICINES_PLACEHOLDER' | translate"></textarea>
@@ -83,11 +83,7 @@
             </div>
 
 
-            <div class="col-md-3 mt-4">
-              <label class="form-label">{{ 'PATIENT.NOTES' | translate }}</label>
-              <textarea formControlName="notes" class="form-control p-2" rows="3"
-                [placeholder]="'PATIENT.NOTES_PLACEHOLDER' | translate"></textarea>
-            </div>
+
           </div>
         </div>
 

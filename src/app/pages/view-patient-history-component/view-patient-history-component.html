@@ -7,13 +7,12 @@
 
     <!-- اختيار الطبيب المتخصص -->
     <div class="col-md-3 my-4">
+      <i class="ti ti-stethoscope me-2"></i>
       <label class="form-label">{{ 'PROFILE.SPECIALTY' | translate }}</label>
-      <mat-select
-        (selectionChange)=" onSpecialistSelected($event.value)"
-        class="form-control"
-        placeholder="{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' | translate }}"
-      >
-        <mat-option [value]="null" disabled selected>-------{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' | translate}}-------</mat-option>
+      <mat-select (selectionChange)=" onSpecialistSelected($event.value)" class="form-control"
+        placeholder="{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' | translate }}">
+        <mat-option [value]="null" selected>-------{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' |
+          translate}}-------</mat-option>
         <mat-option *ngFor="let specialist of specialists" [value]="specialist.doctorSpecialistId">
           {{ specialist.specialistAR }}
         </mat-option>
@@ -22,7 +21,7 @@
 
     <!-- معلومات المريض الأساسية -->
 
-    <div *ngIf="patientHistory" class="patient-info-card mb-4 p-4 rounded shadow-sm">
+    <div *ngIf="patientHistory" class="patient-info-card mb-4 p-4 rounded shadow-sm ">
       <h2 class="mb-3">{{ 'PATIENT_HISTORY.DETAILS' | translate }}</h2>
       <div class="row g-3 gap-2 justify-content-around">
         <div class="col-md-3 info-item">
@@ -132,23 +131,13 @@
         </div>
 
         <!-- Image Content -->
-        <div
-          class="viewer-content"
-          (mousedown)="startDrag($event)"
-          (mouseup)="endDrag()"
-          (mousemove)="onDrag($event)"
-          (wheel)="onWheel($event)"
-        >
+        <div class="viewer-content" (mousedown)="startDrag($event)" (mouseup)="endDrag()" (mousemove)="onDrag($event)"
+          (wheel)="onWheel($event)">
           <button class="nav-btn left" (click)="prevImage()">❮</button>
 
-          <img
-            [src]="currentImage"
-            class="viewer-img"
+          <img [src]="currentImage" class="viewer-img"
             [style.transform]="'translate(' + posX + 'px,' + posY + 'px) scale(' + scale + ')'"
-            (touchstart)="startTouch($event)"
-            (touchmove)="onTouchMove($event)"
-            (touchend)="endTouch()"
-          />
+            (touchstart)="startTouch($event)" (touchmove)="onTouchMove($event)" (touchend)="endTouch()" />
 
           <button class="nav-btn right" (click)="nextImage()">❯</button>
         </div>

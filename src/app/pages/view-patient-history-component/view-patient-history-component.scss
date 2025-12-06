@@ -1,4 +1,6 @@
-/* أيقونات متحركة */
+/* =========================================================
+    ICON ANIMATION
+========================================================= */
 .icon-animate {
   font-size: 32px;
   margin-right: 10px;
@@ -7,98 +9,116 @@
     transform 0.4s ease,
     color 0.3s ease;
 }
+
 .icon-animate:hover {
   transform: rotate(-15deg) scale(1.1);
   color: #512da8;
 }
 
-/* العناوين */
+/* =========================================================
+    TITLES
+========================================================= */
 h3 {
   font-weight: 600;
   margin-bottom: 1rem;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #673ab7;
   display: inline-block;
   padding-bottom: 0.25rem;
 }
 
-/* كروت معلومات المريض */
+/* =========================================================
+    PATIENT INFO CARD + ANIMATED BACKGROUND
+========================================================= */
 .patient-info-card {
-  background-color: #fff;
+  position: relative;
+  padding: 20px;
+  background: linear-gradient(135deg, #ffffff, #faf7ff);
   border-left: 6px solid #673ab7;
+  border-radius: 12px;
+  animation: fadeIn 0.8s ease;
 }
 
 .patient-info-card h2 {
   color: #4527a0;
-  font-weight: 600;
+  font-weight: 700;
 }
 
+/* Info Items */
 .patient-info-card .info-item {
   display: flex;
   align-items: center;
-  padding: 10px 0;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  padding: 10px 12px;
+  background-color: #f4f3fd;
+  border-radius: 10px;
+  transition: 0.3s ease;
 }
 
 .patient-info-card .info-item:hover {
-  background-color: #e0e0e0;
+  background-color: #e0dbf7;
+  transform: translateX(5px);
 }
 
 .patient-info-card .info-icon {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: #673ab7;
   margin-right: 10px;
 }
 
 .patient-info-card .info-label {
-  font-weight: 500;
+  font-weight: 600;
   margin-right: 5px;
+  color: #4a3e7e;
 }
 
 .patient-info-card .info-value {
   color: #333;
 }
 
-/* كروت السجلات */
+/* Animation for Card */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+    RECORD CARDS
+========================================================= */
 .card-body {
-  background-color: #fdfdfd;
-  border-radius: 10px;
-  transition: all 0.3s ease;
+  background: linear-gradient(180deg, #ffffff 80%);
+  border-radius: 14px;
+  transition: 0.25s ease;
+  border: 1px solid #ebe6f8;
 }
 
-/* الصور المصغرة */
-.image-card {
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-.image-card:hover {
-  transform: scale(1.05);
+.card-body:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 18px rgba(103, 58, 183, 0.15);
 }
 
-/* تكبير الصورة */
-.zoom-img {
-  transition: transform 0.2s ease;
-  max-height: 80vh;
-  user-select: none;
-}
-
-/* بلوكات المعلومات */
+/* =========================================================
+    INFO BLOCKS INSIDE RECORDS
+========================================================= */
 .info-block {
-  background: #f9fafb;
+  background: #f7f7fb;
   border: 1px solid #e5e7eb;
   padding: 14px 16px;
   border-radius: 12px;
-  transition: 0.2s ease;
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  transition: 0.25s ease;
 }
 
 .info-block:hover {
-  background: #f3f4f6;
-  border-color: #d1d5db;
-  transform: translateY(-2px);
+  background: #eceafa;
+  border-color: #cfc6ef;
+  transform: translateY(-3px);
 }
 
 .info-block h6 {
@@ -112,41 +132,56 @@ h3 {
   margin: 0;
   color: #111827;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   word-break: break-word;
 }
 
-/* خلفية الـ Viewer */
+/* =========================================================
+    IMAGE THUMBNAILS
+========================================================= */
+.image-card {
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.image-card:hover {
+  transform: scale(1.07);
+}
+
+/* =========================================================
+    IMAGE VIEWER POPUP
+========================================================= */
 .image-viewer-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.88);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 99999;
 }
 
-/* الحاوية */
+/* Viewer Container */
 .image-viewer-container {
-  width: 90%;
-  height: 90%;
+  width: 92%;
+  height: 92%;
   display: flex;
   flex-direction: column;
 }
 
-/* الهيدر */
+/* Viewer Header */
 .viewer-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(18, 18, 18, 0.7);
   color: white;
   font-size: 18px;
   padding: 10px 20px;
-  border-radius: 8px 8px 0 0;
-  position: relative;
-  z-index: 100;
+  border-radius: 10px 10px 0 0;
+  backdrop-filter: blur(4px);
 }
 
 .viewer-title {
@@ -154,73 +189,61 @@ h3 {
   text-align: center;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #fff;
   user-select: none;
-  pointer-events: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-/* أزرار الهيدر */
+/* Buttons */
 .header-btn {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
   border: none;
-  padding: 6px 12px;
+  padding: 6px 14px;
   color: white;
   font-size: 16px;
   border-radius: 6px;
   cursor: pointer;
-  backdrop-filter: blur(4px);
+  transition: background 0.25s;
 }
 
-.header-btn.close {
-  font-size: 20px;
-  font-weight: bold;
+.header-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
-/* محتوى الـ Viewer */
+/* Content */
 .viewer-content {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
 }
 
-/* الصورة */
 .viewer-img {
   max-width: 100%;
   max-height: 100%;
-  transition: transform 0.1s ease-out;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
   cursor: grab;
+  transition: 0.1s ease-out;
 }
 
-/* أزرار التنقل */
+/* Navigation Buttons */
 .nav-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.3);
   border: none;
   padding: 20px 18px;
   font-size: 35px;
   color: white;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  user-select: none;
   transition: 0.3s;
-  z-index: 100;
 }
 
 .nav-btn:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 .nav-btn.left {
@@ -230,7 +253,7 @@ h3 {
   right: 20px;
 }
 
-/* minimized bar */
+/* Minimized Bar */
 .viewer-minimized {
   position: fixed;
   bottom: 20px;
@@ -239,8 +262,8 @@ h3 {
   padding: 12px 20px;
   color: white;
   font-size: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   z-index: 99999;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(103, 58, 183, 0.3);
 }
