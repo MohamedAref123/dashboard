@@ -64,21 +64,14 @@ export class AppontmentComponent implements OnInit {
   ngOnInit(): void {
     const today = new Date();
 
-    const from = new Date(today);
-    from.setDate(today.getDate() - 15);
-
-    const to = new Date(today);
-    to.setDate(today.getDate() + 15);
-
     const formatDate = (d: Date) => d.toISOString().split('T')[0];
 
     // Create search form
     this.searchForm = this.fb.group({
-      fromDate: [formatDate(from)],
-      toDate: [formatDate(to)],
+      fromDate: [formatDate(today)],
+      toDate: [formatDate(today)],
       status: ['Pending'], // empty = all statuses
       addressId: [null]
-
     });
 
     // Populate status dropdown
@@ -87,9 +80,8 @@ export class AppontmentComponent implements OnInit {
 
     this.loadAddresses();
     this.searchAppointments();
-
-
   }
+
 
   loadAddresses() {
     if (!this.doctorId) {
