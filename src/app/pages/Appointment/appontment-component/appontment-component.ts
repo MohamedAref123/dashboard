@@ -9,9 +9,10 @@ import { AppointmentStatus, JwtPayload } from 'src/app/Models/shared/SharedClass
 import { DateHelper } from 'src/app/shared/Helpers/DatesHelper';
 import { PageEvent } from '@angular/material/paginator';
 import { AppointmentSearchRequest } from 'src/app/Models/Requests/appointmentRequest';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AddressesResponse } from 'src/app/Models/Responses/AddressesResponse';
 import { jwtDecode } from 'jwt-decode';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-appontment-component',
@@ -33,6 +34,7 @@ export class AppontmentComponent implements OnInit {
   searchModel!: AppointmentSearchRequest;
   doctorId: string;
   addresses: AddressesResponse[] = [];
+  translate = inject(TranslateService);
 
   headers = [
     { key: 'patientName', label: 'APPOINTMENT.PATIENT' },
@@ -70,7 +72,7 @@ export class AppontmentComponent implements OnInit {
     this.searchForm = this.fb.group({
       fromDate: [formatDate(today)],
       toDate: [formatDate(today)],
-      status: ['Pending'], // empty = all statuses
+      status: [null], // empty = all statuses
       addressId: [null]
     });
 
@@ -104,7 +106,7 @@ export class AppontmentComponent implements OnInit {
     // Convert selected status to enum value
     this.searchModel.status = this.searchForm.value.status
       ? AppointmentStatus[this.searchForm.value.status as keyof typeof AppointmentStatus]
-      : 0;
+      : null;
 
     this.appointmentService.searchAppointments(this.searchModel).subscribe({
       next: (response) => {
@@ -141,6 +143,59 @@ export class AppontmentComponent implements OnInit {
     }
 
   }
+
+  openCancelDayModal() {
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+    Swal.fire({
+      title: this.translate.instant('SWAL.SELECT_DAY_TITLE'),
+      input: 'date',
+      inputAttributes: {
+        min: firstDay.toISOString().split('T')[0],
+        max: lastDay.toISOString().split('T')[0]
+      },
+      confirmButtonText: this.translate.instant('SWAL.CONFIRM_BUTTON'),
+      showCancelButton: true,
+      cancelButtonText: this.translate.instant('SWAL.CANCEL_BUTTON')
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        const selectedDate = new Date(result.value);
+        this.appointmentService.canceDoctorAllDay(selectedDate).subscribe({
+          next: () => Swal.fire(
+            this.translate.instant('SWAL.SUCCESS_TITLE'),
+            this.translate.instant('SWAL.SUCCESS_TEXT', { date: selectedDate.toLocaleDateString() }),
+            'success'
+          ),
+          error: () => Swal.fire(
+            this.translate.instant('SWAL.ERROR_TITLE'),
+            this.translate.instant('SWAL.ERROR_TEXT'),
+            'error'
+          )
+        });
+      }
+    });
+
+  }
+
+  cancelDoctorDayByDate(date: Date) {
+    this.appointmentService.canceDoctorAllDay(date).subscribe({
+      next: () => Swal.fire(
+        this.translate.instant('SWAL.SUCCESS_TITLE'),
+        this.translate.instant('SWAL.SUCCESS_TEXT', { date: date.toLocaleDateString() }),
+        'success'
+      ),
+      error: () => Swal.fire(
+        this.translate.instant('SWAL.ERROR_TITLE'),
+        this.translate.instant('SWAL.ERROR_TEXT'),
+        'error'
+      )
+    });
+  }
+
+
+
 
   getToken(): string | null {
     return localStorage.getItem('access_token');

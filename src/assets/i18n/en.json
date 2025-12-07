@@ -82,6 +82,7 @@
     "VIEW_APPOINTMENT": "View Appointment",
     "NEW_APPOINTMENT": "New Appointment",
     "ALL": "All",
+    "STATUS_ALL": "All Statuses",
     "DOCTOR": "Doctor",
     "NOTES": "Notes"
   },
@@ -164,6 +165,7 @@
     "BACK": "Back",
     "UPLOAD_BUTTON": "Upload Image",
     "CONFIRM": "Confirm",
+    "CANCEL_DAY": "Cancel Day",
     "CLOSE": "Close",
     "YES": "Yes",
     "NO": "No"
@@ -254,5 +256,14 @@
     "MIN_LENGTH": "Must contain at least {min} characters",
     "MAX_LENGTH": "Must not exceed {max} characters",
     "PHONE_INVALID": "Invalid phone number format"
+  },
+  "SWAL": {
+    "SELECT_DAY_TITLE": "Select a Day",
+    "CONFIRM_BUTTON": "Cancel Appointments",
+    "CANCEL_BUTTON": "Cancel",
+    "SUCCESS_TITLE": "Cancelled!",
+    "SUCCESS_TEXT": "Appointments for {{date}} have been cancelled",
+    "ERROR_TITLE": "Error",
+    "ERROR_TEXT": "Could not cancel appointments."
   }
 }

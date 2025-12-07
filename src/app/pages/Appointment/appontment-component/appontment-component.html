@@ -21,11 +21,16 @@
         <div class="col-md-3">
           <label class="form-label" style="color: gray">{{ 'APPOINTMENT.STATUS' | translate }}</label>
           <select class="form-control" formControlName="status">
+            <!-- خيار "كل الحالات" -->
+            <option [ngValue]="null">{{ 'APPOINTMENT.STATUS_ALL' | translate }}</option>
+
+            <!-- باقي الحالات -->
             <option *ngFor="let status of statusOptions" [value]="status">
               {{ ('APPOINTMENT.STATUS_' + status.toUpperCase()) | translate }}
             </option>
           </select>
         </div>
+
 
         <div class="col-md-3">
           <label class="form-label">{{ 'APPOINTMENT.ADDRESS' | translate }}</label>
@@ -37,10 +42,28 @@
           </select>
         </div>
 
+        <div class="d-flex w-100 align-items-end justify-content-between g-2">
 
-        <div class="col-md-2 d-flex align-items-end mt-3">
-          <button type="submit" class="btn btn-secondary btn-search w-100">{{ 'BUTTONS.SEARCH' | translate }}</button>
+          <!-- زر البحث على الشمال -->
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-search w-100 mx-2">
+              {{ 'BUTTONS.SEARCH' | translate }}
+            </button>
+          </div>
+
+          <button type="button" class="btn btn-cancel-day mx-2" (click)="openCancelDayModal()">
+            {{ 'BUTTONS.CANCEL_DAY' | translate }}
+          </button>
+
+
         </div>
+
+
+
+
+
+
+
       </div>
     </form>
 

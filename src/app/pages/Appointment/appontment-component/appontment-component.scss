@@ -1,9 +1,6 @@
-button {
-  margin-top: 8px;
-}
-
-.btn-search {
-  background: linear-gradient(45deg, #673ab7, #512da8);
+/* Base style لكل الأزرار */
+.btn-search,
+.btn-cancel-day {
   border: none;
   color: white;
   padding: 8px 22px;
@@ -17,12 +14,22 @@ button {
 
   &:hover {
     transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 6px 15px rgba(103, 58, 183, 0.3);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   }
 
   &:active {
     transform: scale(0.98);
   }
+}
+
+/* لون زر البحث */
+.btn-search {
+  background: linear-gradient(45deg, #673ab7, #512da8);
+}
+
+/* لون زر إلغاء يوم محدد */
+.btn-cancel-day {
+  background: linear-gradient(45deg, #e53935, #b71c1c);
 }
 
 .earning-card {

@@ -3,7 +3,7 @@ export interface AppointmentSearchRequest {
   pageIndex: number;
   appointmentType: number;
   totalRecords: number;
-  status: number;
+  status: number | null;
   userId: string;
   lang: string;
   fromDate?: string;
