@@ -7,14 +7,14 @@
 
     <!-- اختيار الطبيب المتخصص -->
     <div class="col-md-3 my-4">
-      <i class="ti ti-stethoscope me-2"></i>
+
       <label class="form-label">{{ 'PROFILE.SPECIALTY' | translate }}</label>
       <mat-select (selectionChange)=" onSpecialistSelected($event.value)" class="form-control"
         placeholder="{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' | translate }}">
         <mat-option [value]="null" selected>-------{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' |
           translate}}-------</mat-option>
         <mat-option *ngFor="let specialist of specialists" [value]="specialist.doctorSpecialistId">
-          {{ specialist.specialistAR }}
+          {{ currentLang === 'ar' ? specialist.specialistAR : specialist.specialistEN }}
         </mat-option>
       </mat-select>
     </div>

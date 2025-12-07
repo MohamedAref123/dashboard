@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatOption, MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DoctorSpecialistResponse } from 'src/app/Models/Responses/DoctorSpecialistResponses';
 import { GetPatientHistoryResponse, PatientHistoryItem } from 'src/app/Models/Responses/getHistoryResponse';
 import { environment } from 'src/environments/environment';
@@ -58,7 +58,17 @@ export class ViewPatientHistoryComponent implements OnInit {
   pageIndex = 0;
   loadingMore = false;
 
+  currentLang: string = 'ar';
+  translate = inject(TranslateService)
+
+
   ngOnInit(): void {
+    this.currentLang = this.translate.currentLang || 'ar';
+
+    this.translate.onLangChange.subscribe(lang => {
+      this.currentLang = lang.lang;
+    });
+
     this.patientId = this.route.snapshot.paramMap.get('patientId');
     this.loadSpecialists();
 
@@ -252,7 +262,7 @@ export class ViewPatientHistoryComponent implements OnInit {
     }
   }
 
-  endTouch() {}
+  endTouch() { }
 
   // reset when opening new image
   openPreview(img: string | null, item: PatientHistoryItem) {

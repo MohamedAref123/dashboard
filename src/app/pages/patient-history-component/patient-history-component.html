@@ -24,7 +24,7 @@
                   <mat-option [value]="null">------------------{{ 'PATIENT_HISTORY.SELECT_SPECIALIST' | translate
                     }}------------------</mat-option>
                   <mat-option *ngFor="let specialist of specialists" [value]="specialist.doctorSpecialistId">
-                    {{ specialist.specialistAR }}
+                    {{ currentLang === 'ar' ? specialist.specialistAR : specialist.specialistEN }}
                   </mat-option>
                 </mat-select>
               </div>

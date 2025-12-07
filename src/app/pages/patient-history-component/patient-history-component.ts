@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatOption, MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { jwtDecode } from 'jwt-decode';
 import { DoctorSpecialistResponse } from 'src/app/Models/Responses/DoctorSpecialistResponses';
 import { JwtPayload } from 'src/app/Models/shared/SharedClasses';
@@ -34,9 +34,16 @@ export class PatientHistoryComponent implements OnInit {
   diagnosis = '';
   notes = '';
   files: File[] = [];
-
+  currentLang: string = 'ar';
+  translate = inject(TranslateService)
 
   ngOnInit(): void {
+
+    this.currentLang = this.translate.currentLang || 'ar';
+
+    this.translate.onLangChange.subscribe(lang => {
+      this.currentLang = lang.lang;
+    });
 
     this.patientHistory = this.fb.group({
       doctorSpecialistId: [null],
