@@ -12,7 +12,7 @@ import { AppointmentSearchRequest } from 'src/app/Models/Requests/appointmentReq
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AddressesResponse } from 'src/app/Models/Responses/AddressesResponse';
 import { jwtDecode } from 'jwt-decode';
-import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-appontment-component',
@@ -144,55 +144,9 @@ export class AppontmentComponent implements OnInit {
 
   }
 
-  openCancelDayModal() {
-    const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
-    Swal.fire({
-      title: this.translate.instant('SWAL.SELECT_DAY_TITLE'),
-      input: 'date',
-      inputAttributes: {
-        min: firstDay.toISOString().split('T')[0],
-        max: lastDay.toISOString().split('T')[0]
-      },
-      confirmButtonText: this.translate.instant('SWAL.CONFIRM_BUTTON'),
-      showCancelButton: true,
-      cancelButtonText: this.translate.instant('SWAL.CANCEL_BUTTON')
-    }).then((result) => {
-      if (result.isConfirmed && result.value) {
-        const selectedDate = new Date(result.value);
-        this.appointmentService.canceDoctorAllDay(selectedDate).subscribe({
-          next: () => Swal.fire(
-            this.translate.instant('SWAL.SUCCESS_TITLE'),
-            this.translate.instant('SWAL.SUCCESS_TEXT', { date: selectedDate.toLocaleDateString() }),
-            'success'
-          ),
-          error: () => Swal.fire(
-            this.translate.instant('SWAL.ERROR_TITLE'),
-            this.translate.instant('SWAL.ERROR_TEXT'),
-            'error'
-          )
-        });
-      }
-    });
 
-  }
 
-  cancelDoctorDayByDate(date: Date) {
-    this.appointmentService.canceDoctorAllDay(date).subscribe({
-      next: () => Swal.fire(
-        this.translate.instant('SWAL.SUCCESS_TITLE'),
-        this.translate.instant('SWAL.SUCCESS_TEXT', { date: date.toLocaleDateString() }),
-        'success'
-      ),
-      error: () => Swal.fire(
-        this.translate.instant('SWAL.ERROR_TITLE'),
-        this.translate.instant('SWAL.ERROR_TEXT'),
-        'error'
-      )
-    });
-  }
 
 
 

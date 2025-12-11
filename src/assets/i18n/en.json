@@ -17,7 +17,8 @@
     "DOCTORS": "Doctors",
     "PATIENTS": "Patients",
 
-    "CURRENT_AVAILABILITIES": "Current Availabilities"
+    "CURRENT_AVAILABILITIES": "Current Availabilities",
+    "CANCEL_DAY": "Cancel Day"
   },
   "PROFILE": {
     "TITLE": "Doctor Profile",
@@ -165,7 +166,7 @@
     "BACK": "Back",
     "UPLOAD_BUTTON": "Upload Image",
     "CONFIRM": "Confirm",
-    "CANCEL_DAY": "Cancel Day",
+
     "CLOSE": "Close",
     "YES": "Yes",
     "NO": "No"
@@ -257,13 +258,14 @@
     "MAX_LENGTH": "Must not exceed {max} characters",
     "PHONE_INVALID": "Invalid phone number format"
   },
-  "SWAL": {
-    "SELECT_DAY_TITLE": "Select a Day",
-    "CONFIRM_BUTTON": "Cancel Appointments",
+  "CONFIRM": {
+    "TITLE": "Are you sure?",
+    "TEXT": "Do you want to cancel the appointment on {{date}}?",
+    "CONFIRM_BUTTON": "Yes, cancel appointment",
     "CANCEL_BUTTON": "Cancel",
     "SUCCESS_TITLE": "Cancelled!",
-    "SUCCESS_TEXT": "Appointments for {{date}} have been cancelled",
-    "ERROR_TITLE": "Error",
-    "ERROR_TEXT": "Could not cancel appointments."
+    "SUCCESS_TEXT": "The appointment has been successfully cancelled.",
+    "ERROR_TITLE": "Error!",
+    "ERROR_TEXT": "An error occurred while cancelling. Please try again."
   }
 }

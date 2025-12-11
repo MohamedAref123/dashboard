@@ -16,7 +16,8 @@
     "REPORTS": "التقارير",
     "DOCTORS": "الأطباء",
     "PATIENTS": "المرضى",
-    "CURRENT_AVAILABILITIES": "المواعيد الحالية"
+    "CURRENT_AVAILABILITIES": "المواعيد الحالية",
+    "CANCEL_DAY": "إلغاء يوم الطبيب"
   },
   "PROFILE": {
     "TITLE": "الملف الطبي",
@@ -165,7 +166,7 @@
     "UPLOAD_BUTTON": "رفع الصورة",
     "CONFIRM": "تأكيد",
     "CLOSE": "إغلاق",
-    "CANCEL_DAY": "إلغاء يوم ",
+
     "YES": "نعم",
     "NO": "لا"
   },
@@ -256,13 +257,14 @@
     "MAX_LENGTH": "يجب ألا يتجاوز {max} حرفًا",
     "PHONE_INVALID": "رقم الهاتف غير صحيح"
   },
-  "SWAL": {
-    "SELECT_DAY_TITLE": "اختر اليوم",
-    "CONFIRM_BUTTON": "إلغاء المواعيد",
+  "CONFIRM": {
+    "TITLE": "هل أنت متأكد؟",
+    "TEXT": "هل تريد إلغاء الموعد بتاريخ {{date}}؟",
+    "CONFIRM_BUTTON": "نعم، إلغاء الموعد",
     "CANCEL_BUTTON": "إلغاء",
     "SUCCESS_TITLE": "تم الإلغاء!",
-    "SUCCESS_TEXT": "تم إلغاء المواعيد ليوم {{date}}",
-    "ERROR_TITLE": "خطأ",
-    "ERROR_TEXT": "لم نتمكن من إلغاء المواعيد."
+    "SUCCESS_TEXT": "تم إلغاء الموعد بنجاح.",
+    "ERROR_TITLE": "خطأ!",
+    "ERROR_TEXT": "حدث خطأ أثناء الإلغاء، حاول مرة أخرى."
   }
 }

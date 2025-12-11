@@ -1,10 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from './Api.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AppointmentDetailsResponse, SearchAppointmentsResponse } from 'src/app/Models/Responses/AppointmentResponses';
 import { AppointmentSearchRequest } from 'src/app/Models/Requests/appointmentRequest';
 import { AddressesResponse } from 'src/app/Models/Responses/AddressesResponse';
 import { HttpClient } from '@angular/common/http';
+import { CancelDayRequest } from 'src/app/Models/Requests/CancelDayRequest';
+import { DoctorAppointmentResponse } from 'src/app/Models/Responses/DoctorAppointmentResponse';
 @Injectable({
   providedIn: 'root'
 })
@@ -32,11 +34,29 @@ export class AppointmentService {
 
 
 
-  canceDoctorAllDay(day: Date) {
-    const isoDate = day.toISOString().split('.')[0] + 'Z'; // optional trim ms
-    return this.apiService.get<void>(
-      `Appointments/CancelDoctorAllDay/${encodeURIComponent(isoDate)}`
+  canceDoctorAllDay(payload: CancelDayRequest): Observable<void> {
+    return this.apiService.post<void>(
+      `Appointments/CancelDoctorAllDay`,
+      payload
     );
   }
+
+
+  getDoctorAppointment(): Observable<DoctorAppointmentResponse[]> {
+    return this.apiService
+      .get<DoctorAppointmentResponse[]>('DoctorAdresses/GetDoctorAvailableDays')
+      .pipe(
+        map(response =>
+          response.map(item => ({
+            ...item,
+            details: item.details.map(detail => ({
+              ...detail,
+              appointmentDate: detail.appointmentDate.map(d => new Date(d))
+            }))
+          }))
+        )
+      );
+  }
+
 
 }

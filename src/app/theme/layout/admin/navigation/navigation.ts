@@ -59,6 +59,15 @@ export const NavigationItems: NavigationItem[] = [
         breadcrumbs: false
       },
       {
+        id: 'Cancel-Day',
+        title: 'MENU.CANCEL_DAY',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/Cancel-Day',
+        icon: 'ti ti-calendar-x',
+        breadcrumbs: false
+      },
+      {
         id: 'Reviews',
         title: 'MENU.REVIEWS',
         type: 'item',

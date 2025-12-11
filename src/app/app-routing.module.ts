@@ -60,6 +60,11 @@ const routes: Routes = [
         path: 'view-patient-History/:patientId',
         loadComponent: () =>
           import('./pages/view-patient-history-component/view-patient-history-component').then((c) => c.ViewPatientHistoryComponent)
+      },
+      {
+        path: 'Cancel-Day',
+        loadComponent: () =>
+          import('./pages/cancel-day-appointement.component/cancel-day-appointement.component').then((c) => c.CancelDayAppointementComponent)
       }
     ]
   },
