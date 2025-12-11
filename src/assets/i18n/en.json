@@ -244,6 +244,12 @@
     "SLOT_PLACEHOLDER": "e.g. 30",
     "IS_DELETED": "Is Deleted"
   },
+  "CANCEL_PAGE": {
+    "TITLE": "Select Appointment Dates to Cancel",
+    "SUBTITLE": "Choose the date you want to cancel from the list below",
+    "ADDRESS": "Address",
+    "APPOINTMENT_DATE": "Appointment Date"
+  },
   "COMMON": {
     "CANCEL": "Cancel",
     "UPDATE": "Update"

@@ -243,6 +243,12 @@
     "SLOT_PLACEHOLDER": "مثلاً 30",
     "IS_DELETED": "محذوف؟"
   },
+  "CANCEL_PAGE": {
+    "TITLE": "اختر مواعيد الحجز لإلغائها",
+    "SUBTITLE": "اختر التاريخ الذي تريد إلغاءه من القائمة أدناه",
+    "ADDRESS": "العنوان",
+    "APPOINTMENT_DATE": "تاريخ الموعد"
+  },
   "COMMON": {
     "CANCEL": "إلغاء",
     "UPDATE": "تحديث"

@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe, formatDate, NgFor } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CancelDayRequest } from 'src/app/Models/Requests/CancelDayRequest';
 import { DoctorAppointmentResponse, DoctorAvailabilityDetail, GroupedAppointment } from 'src/app/Models/Responses/DoctorAppointmentResponse';
 import { AppointmentService } from 'src/services/AppointmentService';
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cancel-day-appointement.component',
-  imports: [DatePipe, NgFor, CommonModule],
+  imports: [DatePipe, NgFor, CommonModule, TranslateModule],
   templateUrl: './cancel-day-appointement.component.html',
   styleUrl: './cancel-day-appointement.component.scss'
 })
