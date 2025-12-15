@@ -1,3 +1,5 @@
+import { AppointmentCategory } from "../shared/SharedClasses";
+
 export class DoctorSearchResponse {
   pageSize: number;
   pageIndex: number;
@@ -58,5 +60,6 @@ export interface AvailabilityResponse {
   startTime: string;
   endTime: string;
   slotTime: number;
+  category: AppointmentCategory[];
 }
 

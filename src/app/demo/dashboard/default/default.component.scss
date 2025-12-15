@@ -20,6 +20,80 @@ body.berry-dark .tab-content {
 
 .total-income-card {
   .avatar {
-    background: #1565c0;
+    background: #673ab7;
   }
+}
+
+.btn-save {
+  background: linear-gradient(45deg, #673ab7, #512da8);
+  border: none;
+  color: white;
+  padding: 8px 22px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 15px rgba(103, 58, 183, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+/* Header بنفس ستايل الكارد */
+.payroll-header {
+  background: linear-gradient(270deg, #b495ea, #673ab7, #0d6efd, #0dcaf0);
+  background-size: 600% 600%;
+  animation: payrollColorFlow 8s ease infinite;
+  color: #fff;
+}
+
+@keyframes payrollColorFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* الجدول */
+.payroll-table {
+  font-size: 0.9rem;
+}
+
+.payroll-table thead th {
+  background-color: transparent;
+  color: #673ab7;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+  padding: 14px 16px;
+}
+
+.payroll-table tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* Hover ناعم */
+.payroll-table tbody tr:hover {
+  background-color: rgba(103, 58, 183, 0.05);
+}
+
+/* Footer */
+.payroll-footer {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #eee;
+  background-color: #fafafa;
+  font-weight: 500;
 }

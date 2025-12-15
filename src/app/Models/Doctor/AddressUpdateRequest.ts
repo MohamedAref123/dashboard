@@ -1,3 +1,5 @@
+import { AppointmentCategory } from "../shared/SharedClasses";
+
 export interface Availability {
   doctorAvailabilityId: string;
   addressId: string;
@@ -5,6 +7,8 @@ export interface Availability {
   dayOfWeek: number;
   startTime: string;
   endTime: string;
+
+  category: AppointmentCategory;
 }
 
 export interface UpdateAddressRequest {
@@ -24,6 +28,7 @@ export interface UpdateAddressRequest {
   phoneNumber: string;
   latitude: number;
   longitude: number;
+  categoryType: AppointmentCategory[];
   availabilities?: Availability[];
 
 }

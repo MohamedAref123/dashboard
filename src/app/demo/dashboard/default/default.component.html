@@ -1,5 +1,53 @@
+<div class="col-xl-12 col-md-12">
+  <div class="card total-income-card  overflow-hidden">
+    <div class="card-body">
+      <div class="d-flex align-items-start">
+
+        <!-- أيقونة الavatar -->
+        <div class="avatar avatar-lg  me-4">
+          <i class="text-white ti ti-layout-board-split f-24"></i>
+        </div>
+
+
+        <!-- الفورم -->
+        <form [formGroup]="payrolForm" (ngSubmit)="search()" class="row g-5 flex-grow-1 justify-content-center">
+
+          <div class="d-flex align-items-center header-title">
+            <h2 style="color: #673ab7;font-weight: 600;margin-left: 10px; margin-right: 10px;">{{ 'PAYROLL.TITLE' |
+              translate }}</h2>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label"> {{ 'PAYROLL.FROM_DATE' | translate }}</label>
+            <input type="date" class="form-control" formControlName="fromDate">
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label">{{ 'PAYROLL.TO_DATE' | translate }}</label>
+            <input type="date" class="form-control" formControlName="toDate">
+          </div>
+
+
+
+          <div class="col-md-2 d-flex align-items-end">
+            <button class="btn btn-save mt-3" type="submit" [disabled]="payrolForm.invalid">
+              {{ 'PAYROLL.SEARCH' | translate }}
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="row">
-  <div class="col-xl-4 col-md-6">
+
+
+  <div class="col-xl-6 col-md-6">
     <div class="card earning-card bg-secondary-dark text-white overflow-hidden">
       <span class="round secondary-round small"></span>
       <span class="round secondary-round big"></span>
@@ -10,68 +58,126 @@
               <i class="text-white ti ti-credit-card f-24"></i>
             </div>
           </div>
-          <div class="col-auto">
-            <div class="btn-group" ngbDropdown>
-              <a type="button" class="avatar avatar-xs bg-secondary dropdown-toggle arrow-none" ngbDropdownToggle>
-                <i class="ti ti-dots"></i>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-                <li><button class="dropdown-item" type="button">Import Card</button></li>
-                <li><button class="dropdown-item" type="button">Export</button></li>
-              </ul>
-            </div>
-          </div>
         </div>
-        <span class="text-white d-block f-34 f-w-500 my-2">
-          $500.00
-          <i class="ti ti-circle-arrow-up-right opacity-50"></i>
-        </span>
-        <p class="mb-0 opacity-50">Total Earning</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-4 col-md-6">
-    <div class="card earning-card bg-primary-dark text-white overflow-hidden">
-      <span class="round primary-round small"></span>
-      <span class="round primary-round big"></span>
-      <div class="card-body">
-        <app-chart-data-month />
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-4 col-md-12">
-    <div class="card total-income-card overflow-hidden bg-primary-dark text-white">
-      <div class="card-body">
-        <div class="d-flex align-items-center">
-          <div class="avatar avatar-lg icon m-r-5">
-            <i class="text-white ti ti-layout-board-split f-24"></i>
-          </div>
-          <div class="ms-2">
-            <h4 class="text-white f-w-600 mb-1">$203k</h4>
-            <p class="mb-0 opacity-50 text-sm">Total Income</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card total-income-card warning overflow-hidden">
-      <div class="card-body">
-        <div class="d-flex align-items-center">
-          <div class="avatar avatar-lg icon-warning m-r-5">
-            <i class="text-warning ti ti-layout-board-split f-24"></i>
-          </div>
-          <div class="ms-2">
-            <h4 class="f-w-600 mb-1">$203k</h4>
-            <p class="mb-0 opacity-50 text-sm">Total Income</p>
-          </div>
+
+        <div class="mt-2">
+          <span class="opacity-50 me-2"> {{ totalPayroll | currency:'EGP':'symbol':'1.0-0' }}
+            <i class="ti ti-circle-arrow-up-right opacity-50"></i>
+          </span>
+          <p class="mb-0 opacity-50">{{ 'PAYROLL.TOTAL_EARNING' | translate }}</p>
+
         </div>
       </div>
     </div>
   </div>
 
-  <div class="col-xl-8 col-md-12">
-    <app-bar-chart />
+
+  <div class="col-xl-6 col-md-6">
+    <div class="card earning-card bg-primary-dark text-white overflow-hidden">
+      <span class="round primary-round small"></span>
+      <span class="round primary-round big"></span>
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col">
+            <div class="avatar avatar-lg">
+              <i class="text-white ti ti-credit-card"></i>
+            </div>
+          </div>
+
+
+          <div class="mt-2">
+            <h4 class="mb-0 opacity-50">{{ totalRecords }}</h4>
+            <p class="mb-0 opacity-50">{{ 'PAYROLL.TOTAL_APPOINTMENTS' | translate }}</p>
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
   </div>
-  <div class="col-xl-4 col-md-12">
+
+
+
+  <!--table -->
+  <div class="col-xl-12 col-md-12 mt-4">
+    <div class="card total-income-card overflow-hidden shadow-sm border-0">
+
+      <div class="card-body p-0">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center px-4 py-3 payroll-header">
+          <h5 class="mb-0 text-white">{{ 'PAYROLL.DETAILS_TITLE' | translate }}</h5>
+          <div class="fw-bold text-white">
+            {{ totalPayroll | currency:'EGP':'symbol':'1.0-0' }}
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table payroll-table mb-0 align-middle">
+            <thead>
+              <tr>
+                <th></th>
+                <th>{{ 'PAYROLL.TABLE.PATIENT_NAME' | translate }}</th>
+                <th>{{ 'PAYROLL.TABLE.CATEGORY_HEADER' | translate }}</th>
+                <th>{{ 'PAYROLL.TABLE.PRICE' | translate }}</th>
+                <th>{{ 'PAYROLL.TABLE.APPOINTMENT_DATE' | translate }}</th>
+              </tr>
+            </thead>
+
+            <tbody class="payroll-body">
+              <tr *ngFor="let item of payrollItems; let i = index" class="payroll-row">
+                <td class="index " style="color: #673ab7; background-color: white;">{{ i + 1 }}</td>
+                <td class="patient " style="color: #673ab7; background-color: white;">{{ item.patientName }}</td>
+
+                <td class="category" style="color:#673ab7; background-color:white;">
+                  {{ ('PAYROLL.TABLE.CATEGORY.' + getCategoryKey(item.category)) | translate }}
+                </td>
+
+
+
+                <td class="price" style="color: #673ab7;background-color: white;">
+
+                  <span *ngIf="item.price" class="value">
+                    {{ item.price | currency:'EGP':'symbol':'1.0-0' }}
+                  </span>
+                  <span *ngIf="!item.price" class="empty">—</span>
+                </td>
+                <td class="date " style="color: #673ab7; background-color: white;">
+                  {{ item.appointmentDate | date:'yyyy-MM-dd' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="payroll-footer px-4 py-3">
+          <span> {{'PAYROLL.TOTAL_RECORDS'|translate}} : {{ totalRecords }}</span>
+          <span>{{'PAYROLL.TOTAL_PAYROLL'|translate}}: {{ totalPayroll | currency:'EGP':'symbol':'1.0-0'
+            }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+</div>
+
+
+<!-- <div class="col-xl-8 col-md-12">
+  <app-bar-chart />
+</div> -->
+
+
+<!-- <div class="col-xl-4 col-md-12">
     <div class="card">
       <div class="card-body">
         <div class="row mb-3 align-items-center">
@@ -122,5 +228,4 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </div> -->

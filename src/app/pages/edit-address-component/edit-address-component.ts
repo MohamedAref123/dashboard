@@ -20,7 +20,7 @@ import { ToastService } from 'src/services/ToastService';
   selector: 'app-edit-address-component',
   imports: [ReactiveFormsModule, MatOption, NgFor, MatSelectModule, NgIf, ValidationError, TranslateModule],
   templateUrl: './edit-address-component.html',
-  styleUrl: './edit-address-component.scss'
+  styleUrl: './edit-address-component.scss',
 })
 export class EditAddressComponent implements OnInit {
   toast = inject(ToastService);
@@ -40,6 +40,10 @@ export class EditAddressComponent implements OnInit {
   regions: RegionResponse[] = [];
   currentLang: string = 'en'; // 🔹 هنا الخاصية المفقودة
   translate = inject(TranslateService)
+  appointmentCategories = [
+    { value: 0, text: this.translate.instant('AVAILABILITY.Examination') },
+    { value: 1, text: this.translate.instant('AVAILABILITY.Consultation') }
+  ];
 
 
   ngOnInit(): void {
@@ -87,7 +91,8 @@ export class EditAddressComponent implements OnInit {
           dayOfWeek: [a.dayOfWeek, Validators.required],
           startTime: [a.startTime, Validators.required],
           slotTime: [a.slotTime, Validators.required],
-          endTime: [a.endTime, Validators.required]
+          endTime: [a.endTime, Validators.required],
+          category: [a.category ?? 0, Validators.required]
         }))
       )
     });
@@ -159,14 +164,17 @@ export class EditAddressComponent implements OnInit {
   save() {
     const payload: UpdateAddressRequest = this.form.value;
 
-    // ✅ تأكد من تحويل الوقت إلى HH:mm:00 قبل الإرسال
+    // تحويل categoryType إلى category
     payload.availabilities = payload.availabilities.map(a => ({
       ...a,
       addressId: a.addressId || payload.addressId,
       startTime: a.startTime.length <= 5 ? a.startTime + ':00' : a.startTime,
       endTime: a.endTime.length <= 5 ? a.endTime + ':00' : a.endTime,
-
+      category: a.category  // ✅ تحويل categoryType إلى category
     }));
+
+    console.log('📦 Final payload for update:', payload);
+
 
     console.log('📦 Final payload:', payload);
 

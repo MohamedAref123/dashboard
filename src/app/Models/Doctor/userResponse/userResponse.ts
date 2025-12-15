@@ -1,4 +1,5 @@
 import { InsurancesResponse } from "../../Responses/insurancesResponse";
+import { AppointmentCategory } from "../../shared/SharedClasses";
 
 export interface userResponse {
 
@@ -18,7 +19,8 @@ export interface userResponse {
   yearsOfExperience: number;
   email: string;
   gender: string;
-  price: number;
+  examinationPrice: number;
+  consultationPrice: number | null;
   phoneNumber: string;
   isActive: boolean;
   addresses: DoctorAddress[];
@@ -50,4 +52,5 @@ export interface availabilities {
   startTime: string;
   endTime: string;
   slotTime: number;
+  category: AppointmentCategory[];
 }

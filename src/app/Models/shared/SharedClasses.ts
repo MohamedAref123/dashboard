@@ -48,3 +48,9 @@ export interface JwtPayload {
   exp?: number;
   iat?: number;
 }
+
+
+export enum AppointmentCategory {
+  Examination = 0,
+  Consultation = 1
+}

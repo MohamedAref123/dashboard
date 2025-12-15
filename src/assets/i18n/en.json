@@ -29,7 +29,8 @@
     "CONTACT_INFO": "Contact Information",
     "ADDRESS": "Address",
     "GENDER": "Gender",
-    "PRICE": "Price",
+    "EXAMINATION_PRICE": "Examination Price",
+    "CONSULTATION_PRICE": "Consultation Price",
     "REGION": "Region",
     "STREET": "Street",
     "BUILDING_NUMBER": "Building No",
@@ -61,7 +62,8 @@
     "FAILED_UPDATE": "An error occurred while updating the profile",
     "SELECT_IMAGE": "Please select an image first.",
     "DATE": "Date",
-    "TIME": "Time"
+    "TIME": "Time",
+    "CATEGORY": "Category"
   },
   "APPOINTMENT": {
     "SEARCH_TITLE": "Search Appointments by Date",
@@ -242,7 +244,10 @@
     "END": "End Time",
     "SLOT_TIME": "Visit duration",
     "SLOT_PLACEHOLDER": "e.g. 30",
-    "IS_DELETED": "Is Deleted"
+    "IS_DELETED": "Is Deleted",
+    "CATEGORY_TYPE": "Category",
+    "EXAMINATION": "Examination",
+    "CONSULTATION": "Consultation"
   },
   "CANCEL_PAGE": {
     "TITLE": "Select Appointment Dates to Cancel",
@@ -273,5 +278,30 @@
     "SUCCESS_TEXT": "The appointment has been successfully cancelled.",
     "ERROR_TITLE": "Error!",
     "ERROR_TEXT": "An error occurred while cancelling. Please try again."
+  },
+  "PAYROLL": {
+    "TITLE": "Doctor Payroll",
+    "FROM_DATE": "From Date",
+    "TO_DATE": "To Date",
+    "SEARCH": "Search",
+    "TOTAL_EARNING": "Total Earning",
+    "TOTAL_APPOINTMENTS": "Total Appointments",
+    "DETAILS_TITLE": "Doctor Payroll Details",
+    "TOTAL_RECORDS": "Total Records",
+    "TOTAL_PAYROLL": "Total Payroll",
+    "TABLE": {
+      "INDEX": "#",
+      "PATIENT_NAME": "Patient Name",
+      "CATEGORY_HEADER": "Category",
+      "PRICE": "Price",
+      "APPOINTMENT_DATE": "Appointment Date",
+      "EMPTY_PRICE": "—",
+      "CATEGORY": {
+        "CONSULTATION": "Consultation",
+        "FOLLOW_UP": "Follow Up",
+        "OPERATION": "Operation",
+        "UNKNOWN": "Unknown"
+      }
+    }
   }
 }

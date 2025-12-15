@@ -28,7 +28,8 @@
     "CONTACT_INFO": "معلومات التواصل",
     "ADDRESS": "العنوان",
     "GENDER": "الجنس",
-    "PRICE": "السعر",
+    "EXAMINATION_PRICE": "سعر الفحص",
+    "CONSULTATION_PRICE": "سعر الاستشارة",
     "REGION": "المنطقة",
     "STREET": "الشارع",
     "BUILDING_NUMBER": "رقم المبنى",
@@ -60,7 +61,8 @@
     "FAILED_UPDATE": "حدث خطأ أثناء تحديث الملف",
     "SELECT_IMAGE": "الرجاء تحديد الصورة أولاً",
     "TIME": "الوقت",
-    "DATE": "التاريخ"
+    "DATE": "التاريخ",
+    "CATEGORY": "الفئة"
   },
   "APPOINTMENT": {
     "SEARCH_TITLE": "البحث عن المواعيد حسب التاريخ",
@@ -241,7 +243,10 @@
     "END": "وقت الانتهاء",
     "SLOT_TIME": "وقت الكشف",
     "SLOT_PLACEHOLDER": "مثلاً 30",
-    "IS_DELETED": "محذوف؟"
+    "IS_DELETED": "محذوف؟",
+    "CATEGORY_TYPE": "الخدمة",
+    "EXAMINATION": "فحص",
+    "CONSULTATION": "استشارة"
   },
   "CANCEL_PAGE": {
     "TITLE": "اختر مواعيد الحجز لإلغائها",
@@ -272,5 +277,30 @@
     "SUCCESS_TEXT": "تم إلغاء الموعد بنجاح.",
     "ERROR_TITLE": "خطأ!",
     "ERROR_TEXT": "حدث خطأ أثناء الإلغاء، حاول مرة أخرى."
+  },
+  "PAYROLL": {
+    "TITLE": "كشف حساب الطبيب",
+    "FROM_DATE": "من تاريخ",
+    "TO_DATE": "إلى تاريخ",
+    "SEARCH": "بحث",
+    "TOTAL_EARNING": "إجمالي الأرباح",
+    "TOTAL_APPOINTMENTS": "إجمالي المواعيد",
+    "DETAILS_TITLE": "تفاصيل كشف حساب الطبيب",
+    "TOTAL_RECORDS": "إجمالي السجلات",
+    "TOTAL_PAYROLL": "إجمالي المستحقات",
+    "TABLE": {
+      "INDEX": "#",
+      "PATIENT_NAME": "اسم المريض",
+      "CATEGORY_HEADER": "الفئة",
+      "PRICE": "السعر",
+      "APPOINTMENT_DATE": "تاريخ الموعد",
+      "EMPTY_PRICE": "—",
+      "CATEGORY": {
+        "CONSULTATION": "استشارة",
+        "FOLLOW_UP": "متابعة",
+        "OPERATION": "عملية",
+        "UNKNOWN": "غير معروف"
+      }
+    }
   }
 }

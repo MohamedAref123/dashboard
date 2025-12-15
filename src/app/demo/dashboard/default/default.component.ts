@@ -1,19 +1,74 @@
 // Angular Import
-import { Component } from '@angular/core';
-import { BajajChartComponent } from 'src/app/theme/shared/components/apexchart/bajaj-chart/bajaj-chart.component';
-import { BarChartComponent } from 'src/app/theme/shared/components/apexchart/bar-chart/bar-chart.component';
-import { ChartDataMonthComponent } from 'src/app/theme/shared/components/apexchart/chart-data-month/chart-data-month.component';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { PayrollItem } from 'src/app/Models/Responses/PayrollResponse';
+
+
 
 // project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { PayrollService } from 'src/services/payroll.service';
 
 @Component({
   selector: 'app-default',
-  imports: [BajajChartComponent, BarChartComponent, ChartDataMonthComponent, SharedModule],
+  imports: [SharedModule, TranslateModule],
   templateUrl: './default.component.html',
   styleUrls: ['./default.component.scss']
 })
-export class DefaultComponent {
+export class DefaultComponent implements OnInit {
+
+  payrolForm!: FormGroup;
+  fb = inject(FormBuilder);
+  payrollService = inject(PayrollService);
+  payrollItems: PayrollItem[] = [];
+  totalPayroll: number = 0;
+  totalRecords: number = 0;
+
+
+  ngOnInit(): void {
+    const today = new Date();
+
+    this.payrolForm = this.fb.group({ // ✅ الاسم الجديد
+      pageSize: [20, [Validators.required, Validators.min(1)]],
+      pageIndex: [0, [Validators.required, Validators.min(0)]],
+      fromDate: [today.toISOString().split('T')[0], Validators.required], // اليوم فقط
+      toDate: [today.toISOString().split('T')[0], Validators.required]
+    });
+
+    // البحث تلقائياً عند تحميل الصفحة
+    this.search();
+  }
+
+
+  search(): void {
+    if (this.payrolForm.invalid) return;
+
+    const formValue = { ...this.payrolForm.value };
+    formValue.fromDate = new Date(formValue.fromDate).toISOString();
+    formValue.toDate = new Date(formValue.toDate).toISOString();
+
+    this.payrollService.getDoctorAppointments(formValue).subscribe({
+      next: res => {
+        this.payrollItems = res.items;
+        this.totalPayroll = res.totalPayroll;
+        this.totalRecords = res.totalRecords;
+      },
+      error: err => console.error(err)
+    });
+  }
+
+  getCategoryKey(category: number): string {
+    switch (category) {
+      case 0: return 'CONSULTATION';
+      case 1: return 'FOLLOW_UP';
+      case 2: return 'OPERATION';
+      default: return 'UNKNOWN';
+    }
+  }
+
+
+
   // public method
   ListGroup = [
     {
@@ -76,4 +131,7 @@ export class DefaultComponent {
       color: 'text-warning'
     }
   ];
+
+
+
 }

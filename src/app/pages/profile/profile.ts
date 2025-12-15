@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 import { CommonModule, NgFor } from '@angular/common';
 import { DoctorAddress, userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { DoctorService } from 'src/services/doctor.service';
-import { ShardEnums, DaysOfWeek, Genders } from 'src/app/Models/shared/SharedClasses';
+import { ShardEnums, DaysOfWeek, Genders, AppointmentCategory } from 'src/app/Models/shared/SharedClasses';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditAddressComponent } from '../edit-address-component/edit-address-component';
@@ -61,6 +61,9 @@ export class Profile implements OnInit {
   doctorId: string = ''; // ✅ لحفظ الـ id
 
   openedIndex: number | null = null;
+
+  appointmentCategories = ShardEnums.getEnumOptions(AppointmentCategory);
+
 
   constructor() { }
 
@@ -198,7 +201,8 @@ export class Profile implements OnInit {
                 startTime: [av.startTime],
                 endTime: [av.endTime],
                 slotTime: [av.slotTime, [Validators.required, Validators.min(1)]], // ✅ مضاف حديثًا
-                isDeleted: [av.isDeleted]
+                isDeleted: [av.isDeleted],
+                category: [av.category ?? null, Validators.required]
               })
             )
           )
@@ -220,7 +224,8 @@ export class Profile implements OnInit {
       yearsOfExperience: user.yearsOfExperience,
 
       gender: user.gender,
-      price: user.price,
+      examinationPrice: user.examinationPrice,
+      consultationPrice: user.consultationPrice,
       descriptionAR: [user.descriptionAR, arabicOnlyValidator],
       descriptionEN: [user.descriptionEN, englishOnlyValidator],
       education: user.education,
@@ -245,6 +250,20 @@ export class Profile implements OnInit {
   }
 
 
+
+  getCategoryName(value: number): string {
+    switch (value) {
+      case 0:
+        return this.translate.instant('AVAILABILITY.EXAMINATION');
+      case 1:
+        return this.translate.instant('AVAILABILITY.CONSULTATION');
+      default:
+        return '';
+    }
+  }
+
+
+
   onUpdateAddress(addr: DoctorAddress) {
     console.log('Address data:', addr);
 
@@ -257,7 +276,8 @@ export class Profile implements OnInit {
         doctorId: this.profileForm.get('doctorId')?.value, // ✅ إضافة doctorId هنا
         cityId: addr.cityId, // ✔ فقط القيمة الصحيحة
         regionId: addr.regionId // ✔ فقط القيمة الصحيحة
-      }
+      },
+
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

@@ -64,7 +64,7 @@
           </div>
           <div class="col-md-4">
             <label class="form-label">{{'PROFILE.SPECIALTY'|translate}}</label>
-            <mat-select formControlName="doctorSpecialistId" class="form-control mt-2"
+            <mat-select formControlName="doctorSpecialistId" class="form-control "
               placeholder="------------------Select------------------">
               <mat-option [value]="null">------------------Select------------------</mat-option>
               <mat-option *ngFor="let specialist of specialists" [value]="specialist.doctorSpecialistId">
@@ -83,8 +83,12 @@
           </div>
 
           <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.PRICE'|translate}}</label>
-            <input type="number" formControlName="price" class="form-control" />
+            <label class="form-label">{{'PROFILE.EXAMINATION_PRICE'|translate}}</label>
+            <input type="number" formControlName="examinationPrice" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">{{'PROFILE.CONSULTATION_PRICE'|translate}}</label>
+            <input type="number" formControlName="consultationPrice" class="form-control" />
           </div>
 
           <div class="col-md-6">
@@ -211,10 +215,21 @@
 
               <div *ngFor="let av of addr.get('availabilities')['controls']; let j = index" [formGroupName]="j"
                 class="row g-2 align-items-center">
-                <div class="col-md-4">
+
+                <div class="col-md-2">
                   <label class="form-label">{{ 'PROFILE.DAY' | translate }}</label>
                   <input type="text" class="form-control" [value]="getDayName(av.get('dayOfWeek')?.value)" readonly />
                 </div>
+
+                <div class="col-md-2">
+                  <label class="form-label">{{ 'PROFILE.CATEGORY' | translate }}</label>
+                  <input type="text" class="form-control" [value]="getCategoryName(av.get('category')?.value)"
+                    readonly />
+                </div>
+
+
+
+
 
                 <div class="col-md-2">
                   <label class="form-label">{{ 'PROFILE.START_TIME' | translate }}</label>

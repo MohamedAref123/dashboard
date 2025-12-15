@@ -6,5 +6,6 @@ export interface GetPatientByPhoneResponse {
   chronicDiseases: string;
   medicines: string;
   surgeries: string;
-  birthday: string
+  birthday: string,
+  bloodType: string
 }

@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { CreateOfflineAppointmentRequest } from 'src/app/Models/Requests/CreateOfflineAppointmentRequest';
 import { DoctorAvailableTime, DoctorAvialabilitiesModel } from 'src/app/Models/Responses/Current-AvailabilitiesResponse';
 import { GetPatientByPhoneResponse } from 'src/app/Models/Responses/GetPatientByPhoneResponse ';
-import { AppointmentStatus, JwtPayload } from 'src/app/Models/shared/SharedClasses';
+import { AppointmentCategory, AppointmentStatus, JwtPayload } from 'src/app/Models/shared/SharedClasses';
 import { DoctorService } from 'src/services/doctor.service';
 import { ToastService } from 'src/services/ToastService';
 import { ValidationError } from 'src/app/shared/validation-error/validation-error';
@@ -126,8 +126,10 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
       next: (data) => {
         this.doctoravailabilities = data;
         this.doctoravailabilities.availableAppointments.forEach((appointment) => {
-          appointment.groupedItems = this.groupByDay(appointment.doctorAvailableTimes);
+          appointment.groupedItems = this.groupByDayAndCategory(appointment.doctorAvailableTimes);
         });
+        this.initOpenedIndices();
+        console.log('✅ Availabilities loaded:', data);
 
         this.isLoading = false;
       },
@@ -138,15 +140,30 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  groupByDay(times: DoctorAvailableTime[]): Record<string, DoctorAvailableTime[]> {
-    if (!times) return {};
-    return times.reduce((groups: Record<string, DoctorAvailableTime[]>, time: DoctorAvailableTime) => {
-      const day = time.dayOfWeek;
-      if (!groups[day]) groups[day] = [];
-      groups[day].push(time);
-      return groups;
-    }, {});
+
+  groupByDayAndCategory(times: DoctorAvailableTime[]): Record<string, Record<AppointmentCategory, DoctorAvailableTime[]>> {
+    const grouped: Record<string, Record<AppointmentCategory, DoctorAvailableTime[]>> = {};
+
+    times.forEach(time => {
+      const day = time.dayOfWeek.toString();
+      const cat = time.category;
+
+      // أنشئ كل الفئات 0 و 1 لكل يوم إذا لم تكن موجودة
+      if (!grouped[day]) {
+        grouped[day] = {
+          0: [],
+          1: []
+        };
+      }
+
+      grouped[day][cat].push(time);
+    });
+
+    return grouped;
   }
+
+
+
 
   selectTime(t: DoctorAvailableTime): void {
     this.selectedSlotId = `${t.doctorAvailabilityId}-${t.time}-${t.appointmentDate}`;
@@ -192,7 +209,8 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
             surgeries: res.surgeries,
             medicines: res.medicines,
             chronicDiseases: res.chronicDiseases,
-            birthday: formattedBirthday
+            birthday: formattedBirthday,
+            bloodType: res.bloodType
           });
         }
       },

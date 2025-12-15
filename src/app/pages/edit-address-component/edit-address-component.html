@@ -106,7 +106,7 @@
                     class="row g-2 align-items-center mb-2">
 
 
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-2">
                       <label class="form-label">{{ 'AVAILABILITY.DAY' | translate }}</label>
                       <mat-select formControlName="dayOfWeek" class="form-control">
                         <mat-option *ngFor="let day of days" [value]="day.value">
@@ -114,6 +114,18 @@
                         </mat-option>
                       </mat-select>
                     </div>
+
+                    <div class="col-12 col-md-2">
+                      <label class="form-label">{{ 'AVAILABILITY.CATEGORY_TYPE' | translate }}</label>
+                      <mat-select formControlName="category" class="form-control">
+
+                        <mat-option *ngFor="let category of appointmentCategories" [value]="category.value">
+                          {{ 'AVAILABILITY.' + (category.value === 0 ? 'EXAMINATION' : 'CONSULTATION') | translate }}
+                        </mat-option>
+
+                      </mat-select>
+                    </div>
+
 
                     <div class="col-12 col-md-2">
                       <label class="form-label">{{ 'AVAILABILITY.START' | translate }}</label>

@@ -1,3 +1,4 @@
+import { AppointmentCategory } from '../shared/SharedClasses';
 import { InsurancesResponse } from './insurancesResponse';
 
 export interface DoctorAvialabilitiesModel {
@@ -25,7 +26,7 @@ export interface AvailableAppointment {
   addressName: string;
   googleLocation: string;
   doctorAvailableTimes: DoctorAvailableTime[];
-  groupedItems: Record<string, DoctorAvailableTime[]>;
+  groupedItems: Record<string, Record<AppointmentCategory, DoctorAvailableTime[]>>;
 }
 
 export interface DoctorAvailableTime {
@@ -33,4 +34,5 @@ export interface DoctorAvailableTime {
   dayOfWeek: string;
   time: string;
   appointmentDate: string; // ISO date string
+  category: AppointmentCategory;
 }
