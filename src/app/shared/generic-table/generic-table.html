@@ -21,7 +21,8 @@
             {{ row[column.key] | slice:0:70 }}{{ row[column.key]?.length > 70 ? '...' : '' }}
           </ng-container>
           <ng-template #normalText>
-            {{ getTranslatedValue(column.key, row[column.key]) }}
+            {{ row[column.key] | translate }}
+
           </ng-template>
         </ng-container>
 

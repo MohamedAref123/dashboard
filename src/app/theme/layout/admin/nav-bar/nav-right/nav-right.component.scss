@@ -7,3 +7,80 @@
   color: gray; /* لون النص */
   font-weight: 600;
 }
+
+.notification-tooltip {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #673ab7;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  z-index: 100;
+  margin-top: 20px;
+}
+
+.pc-head-link:hover .notification-tooltip {
+  display: block;
+}
+
+.github-tooltip {
+  display: none;
+  position: absolute;
+  top: 100%; /* يظهر تحت الأيقونة */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2196f3;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  z-index: 100;
+  margin-top: 20px;
+}
+
+.pc-head-link:hover .github-tooltip {
+  display: block;
+}
+
+.pc-head-link {
+  position: relative; /* مهم */
+  display: inline-flex;
+  align-items: center;
+}
+
+.tooltip-text {
+  position: absolute;
+  bottom: -40px; /* مسافة تحت الأيقونة */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #673ab7;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 1000;
+}
+
+.pc-head-link:hover .tooltip-text {
+  opacity: 1;
+}
+
+.dropdown-menu.dropdown-notification.show {
+  position: fixed !important; /* يثبتها على الشاشة */
+  top: 70px !important; /* مسافة من الأعلى */
+  left: 20px !important; /* مسافة من الشمال */
+  transform: none !important; /* تلغي الـ translate3d */
+  margin-left: -100px; /* لو محتاج تعديل المسافة */
+  width: 300px; /* عرض مناسب */
+  z-index: 1050; /* لتكون فوق باقي العناصر */
+}

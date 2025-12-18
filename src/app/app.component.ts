@@ -21,18 +21,38 @@ export class AppComponent implements OnInit {
   private toaster = inject(ToastService);
 
   private translate = inject(TranslateService);
+
   constructor() {
     this.translate.addLangs(['en', 'ar']);
-    this.translate.setDefaultLang('en');
-    this.translate.use('en');
+
+    const savedLang = localStorage.getItem('lang');
+    const lang = savedLang ? savedLang : 'ar';
+
+    this.translate.setDefaultLang(lang);
+    this.translate.use(lang);
+
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   }
 
+
+
   switchLang(lang: string) {
+    localStorage.setItem('lang', lang);
     this.translate.use(lang);
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   }
 
+
+
   ngOnInit() {
+    const savedLang = localStorage.getItem('lang') || 'en';
+    this.setLang(savedLang);
+
+    this.translate.onLangChange.subscribe(event => {
+      document.documentElement.dir = event.lang === 'ar' ? 'rtl' : 'ltr';
+      localStorage.setItem('lang', event.lang);
+    });
+
     const doctorId = this.getDoctorId(); // or get from AuthService / token
     if (doctorId === null) return;
     this.signalR.startConnection(doctorId);
@@ -43,6 +63,12 @@ export class AppComponent implements OnInit {
     });
   }
 
+  private setLang(lang: string) {
+    this.translate.use(lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    localStorage.setItem('lang', lang);
+  }
 
   getToken(): string | null {
     return localStorage.getItem('access_token');

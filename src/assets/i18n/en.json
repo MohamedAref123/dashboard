@@ -303,5 +303,20 @@
         "UNKNOWN": "Unknown"
       }
     }
+  },
+
+  "LOADER": {
+    "MESSAGE": "Loading Please Wait..."
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "Notifications",
+    "NO_NOTIFICATIONS": "No notifications available",
+    "MARK_ALL_READ": "Mark all as read"
+  },
+  "GITHUB": {
+    "VIEW_ON_GITHUB": "View on GitHub"
+  },
+  "LANGUAGE": {
+    "TITLE": "Language"
   }
 }

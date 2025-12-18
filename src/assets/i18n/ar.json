@@ -302,5 +302,20 @@
         "UNKNOWN": "غير معروف"
       }
     }
+  },
+
+  "LOADER": {
+    "MESSAGE": "جار التحميل، يرجى الانتظار..."
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "الإشعارات",
+    "NO_NOTIFICATIONS": "لا توجد إشعارات متاحة",
+    "MARK_ALL_READ": "وضع الكل كمقروء"
+  },
+  "GITHUB": {
+    "TITLE": "رابط GitHub"
+  },
+  "LANGUAGE": {
+    "TITLE": "اللغة"
   }
 }

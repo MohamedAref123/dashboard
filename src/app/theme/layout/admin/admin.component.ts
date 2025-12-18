@@ -37,11 +37,6 @@ export class AdminComponent implements AfterViewInit {
 
   // life cycle hook
 
-  constructor() {
-    this.translate.addLangs(['en', 'ar']);
-    this.translate.setDefaultLang('en'); // لغة افتراضية
-    this.translate.use('en'); // تغيير اللغة الحالية إلى الإنجليزية
-  }
 
   ngAfterViewInit() {
     let current_url = this.location.path();

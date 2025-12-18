@@ -2,7 +2,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { jwtDecode } from 'jwt-decode';
 import { userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { NotificationItem, NotificationPagedResponse } from 'src/app/Models/Responses/NotificationResponse';
@@ -19,7 +19,7 @@ import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-nav-right',
-  imports: [RouterModule, SharedModule, NgbDropdownModule],
+  imports: [RouterModule, SharedModule, NgbDropdownModule, TranslateModule,],
   templateUrl: './nav-right.component.html',
   styleUrls: ['./nav-right.component.scss']
 })
@@ -40,21 +40,20 @@ export class NavRightComponent implements OnInit {
   notificationService = inject(NotificationService);
 
   constructor() {
-    this.currentLang = this.translate.currentLang || 'en';
     this.translate.onLangChange.subscribe((event) => {
-      this.currentLang = event.lang;
+      document.documentElement.dir = event.lang === 'ar' ? 'rtl' : 'ltr';
     });
 
-    this.translate.addLangs(['en', 'ar']);
-    this.translate.setDefaultLang('en');
-    this.translate.use('en');
-    const lang = localStorage.getItem('lang') || 'en';
-    this.changeLang(lang);
   }
+
 
   ngOnInit(): void {
 
-    this.doctorService.getuser('EN').subscribe((res: userResponse) => {
+    const lang: "EN" | "AR" =
+      (this.translate.currentLang?.toUpperCase() === 'AR' ? 'AR' : 'EN');
+
+
+    this.doctorService.getuser(lang).subscribe((res: userResponse) => {
 
       console.log('Loaded user profile:', res);
 
@@ -86,15 +85,26 @@ export class NavRightComponent implements OnInit {
 
     this.notificationService.getNotifications(payload).subscribe((res: NotificationPagedResponse) => {
       this.unSeenRecords = res.unSeenRecords; // عدد الإشعارات غير المقروءة
-      this.notifications = res.items.map(n => ({
-        ...n,
-        title: n.type,
-        message: n.text,
-        createdDate: n.createdDate,
-        isSeen: n.isSeen,
-        displayTime: formatDate(n.createdDate, 'medium', 'en-US')
-      }));
+
+      this.notifications = res.items.map(n => {
+        const parts = n.text.split('\n');       // يفصل السطر الأول عن الثاني
+        const mainText = parts[0] || '';        // "New appointment from $Alla Araf at"
+        const secondLine = parts[1] || '';      // "$20-12-2025 09:00 in $15 شارع 15"
+
+        // نفصل التاريخ/الوقت عن المكان
+        const [dateTime, place] = secondLine.split(' in ');
+
+        return {
+          ...n,
+          mainText: mainText.replace(/\$/g, ''),
+          dateTime: dateTime?.replace(/\$/g, '') || '',
+          place: place?.replace(/\$/g, '') || '',
+          displayTime: formatDate(n.createdDate, 'medium', 'en-US')
+        };
+      });
+
     });
+
 
 
 

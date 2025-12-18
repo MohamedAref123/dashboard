@@ -38,31 +38,10 @@ export class GenericTable<T> implements OnChanges {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private translate = inject(TranslateService)
-  getTranslatedValue(key: string | undefined, value: string | undefined) {
-    // إذا لم يوجد key أو value
-    if (!key || value === undefined || value === null) {
-      console.warn('GenericTable: key or value is missing', { key, value });
-      return value ?? '';
-    }
-
-    const val = value.toString();
-
-    // حالات خاصة للـ status أو day
-    if (key.toLowerCase().includes('status')) {
-      return this.translate.instant('STATUS.' + val.toUpperCase());
-    }
-    if (key.toLowerCase().includes('day')) {
-      return this.translate.instant('DAYS.' + val.toUpperCase());
-    }
-
-    // الترجمة العامة
-    return this.translate.instant(val);
-  }
 
   constructor() {
     this.translate.addLangs(['en', 'ar']);
-    this.translate.setDefaultLang('en');
-    this.translate.use('en');
+
     const lang = localStorage.getItem('lang') || 'en';
     this.changeLang(lang);
   }

@@ -36,6 +36,7 @@ export class AppontmentComponent implements OnInit {
   addresses: AddressesResponse[] = [];
   translate = inject(TranslateService);
 
+
   headers = [
     { key: 'patientName', label: 'APPOINTMENT.PATIENT' },
     { key: 'formattedDate', label: 'APPOINTMENT.DATE' },
@@ -76,6 +77,11 @@ export class AppontmentComponent implements OnInit {
       addressId: [null]
     });
 
+    this.translate.onLangChange.subscribe(event => {
+      console.log('Language changed to:', event.lang);
+      this.searchAppointments();
+    });
+
     // Populate status dropdown
     this.statusOptions = Object.keys(AppointmentStatus).filter(k => isNaN(Number(k)));
     console.log(this.statusOptions); // يجب أن تظهر ["Pending", "Confirmed", "Cancelled", "Completed"]
@@ -101,7 +107,7 @@ export class AppontmentComponent implements OnInit {
     this.searchModel = this.searchForm.value as AppointmentSearchRequest;
     this.searchModel.pageIndex = this.pagenation.pageIndex;
     this.searchModel.pageSize = this.pagenation.pageSize;
-    this.searchModel.lang = 'en';
+    this.searchModel.lang = this.translate.currentLang || 'ar';
 
     // Convert selected status to enum value
     this.searchModel.status = this.searchForm.value.status
@@ -112,7 +118,9 @@ export class AppontmentComponent implements OnInit {
       next: (response) => {
         this.appointments = (response.items || []).map(item => ({
           ...item,
-          statusText: AppointmentStatus[item.status] ?? 'Unknown',
+          statusText: 'STATUS.' + AppointmentStatus[item.status].toUpperCase()
+
+          ,
           formattedDate: this.dateHelper.formatDateString(item.appointmentDate, 'dd-MM-yyyy'),
         }));
 

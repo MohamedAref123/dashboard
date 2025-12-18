@@ -6,6 +6,9 @@ export interface NotificationItem {
   loggedId: string;
   createdDate: string;
   displayTime?: string;
+  mainText?: string;
+  dateTime?: string;
+  place?: string;
 }
 
 export interface NotificationPagedResponse {

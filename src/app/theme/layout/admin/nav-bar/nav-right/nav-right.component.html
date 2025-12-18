@@ -7,85 +7,79 @@
 
     <li>
       <div class="dropdown pc-h-item" ngbDropdown>
-        <a class="pc-head-link head-link-secondary dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown"
+        <a class="pc-head-link head-link-secondary arrow-none me-0 position-relative d-inline-flex align-items-center"
           href="javascript:" ngbDropdownToggle>
-          <span class="material-icons ">language</span>
+          <span class="material-icons language-icon">language</span>
+          <span class="tooltip-text"> {{ 'LANGUAGE.TITLE' | translate }} </span>
         </a>
 
-        <div>
-          <div class="dropdown-menu  dropdown-menu-start pc-h-dropdown" ngbDropdownMenu>
-            <ul class="list-unstyled m-0 p-2 ">
-              <li>
-                <button class="dropdown-item" [ngClass]="{ 'active-lang': currentLang === 'en' }"
-                  (click)="switchLang('en')">
-                  English
-                </button>
-              </li>
-              <li>
-                <button class="dropdown-item" [ngClass]="{ 'active-lang': currentLang === 'ar' }"
-                  (click)="switchLang('ar')">
-                  العربية
-                </button>
-              </li>
-            </ul>
-          </div>
+        <div class="dropdown-menu dropdown-menu-start pc-h-dropdown" ngbDropdownMenu>
+          <ul class="list-unstyled m-0 p-2">
+            <li>
+              <button class="dropdown-item" [ngClass]="{ 'active-lang': currentLang === 'en' }"
+                (click)="switchLang('en')">English</button>
+            </li>
+            <li>
+              <button class="dropdown-item" [ngClass]="{ 'active-lang': currentLang === 'ar' }"
+                (click)="switchLang('ar')">العربية</button>
+            </li>
+          </ul>
         </div>
       </div>
     </li>
 
+
+
     <!--style="background-color: rgb(224.4, 207.2, 252.4);color: #673ab7;border: none;"
-     -->
+    -->
 
 
 
     <li>
       <div class="dropdown pc-h-item">
-        <a class="pc-head-link head-link-primary arrow-none me-0"
+        <a class="pc-head-link head-link-primary arrow-none me-0 position-relative"
           href="https://github.com/codedthemes/berry-free-angular-admin-template/" target="_blank">
-          <i class="ti ti-brand-github"></i>
+          <div class="position-relative d-inline-flex align-items-center">
+            <i class="ti ti-brand-github" style="font-size: 24px;"></i>
+            <!-- نص يظهر عند hover -->
+            <span class="github-tooltip">{{ 'GITHUB.TITLE' | translate }}</span>
+          </div>
         </a>
       </div>
     </li>
 
 
+
     <!--Notification-->
 
     <li>
+
       <div class="dropdown pc-h-item" ngbDropdown>
+
         <a class="pc-head-link head-link-secondary dropdown-toggle arrow-none me-0 position-relative" href="javascript:"
           ngbDropdownToggle>
           <div class="position-relative d-inline-block">
-
             <i class="ti ti-bell" style="font-size: 24px;"></i>
-
-
-            <span class="badge rounded-pill"
-              style="background-color: #673ab7; color: white; position: absolute; top: -5px; right: -5px; font-size: 0.7rem;"
-              *ngIf="unSeenRecords > 0">
-              {{ unSeenRecords }}
-            </span>
+            <span class="badge rounded-pill" *ngIf="unSeenRecords > 0">{{ unSeenRecords }}</span>
+            <!-- أضف tooltip بدلاً من ظهور النص داخل hover -->
+            <span class="notification-tooltip">{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
           </div>
-
-
-
         </a>
 
 
-
         <div class="dropdown-menu dropdown-notification dropdown-menu-start pc-h-dropdown" ngbDropdownMenu>
+
           <div class="dropdown-header">
             <h5>
-              Notifications
-              <span class="badge  rounded-pill ms-1" style="background-color: #673ab7; color: white;"
-                *ngIf="notifications?.length">{{ notifications.length
-                }}</span>
+              {{ 'NOTIFICATIONS.TITLE' | translate }}
+              <span class="badge rounded-pill ms-1" style="background-color: #673ab7; color: white;"
+                *ngIf="notifications?.length">{{ notifications.length }}</span>
             </h5>
           </div>
 
           <ng-scrollbar style="height: calc(100vh - 215px)" visibility="hover">
             <div class="dropdown-header px-0 text-wrap">
               <div class="list-group list-group-flush w-100">
-
                 <!-- إشعارات ديناميكية -->
                 <ng-container *ngIf="notifications?.length; else noNotifications">
                   <a class="list-group-item list-group-item-action" *ngFor="let notify of notifications"
@@ -97,20 +91,22 @@
                         </div>
                       </div>
                       <div class="flex-grow-1 ms-1">
-                        <span class="float-end text-muted">{{ notify.displayTime }}</span>
+                        <p>{{ notify.mainText }}</p>
+                        <p>{{ notify.dateTime }}</p>
+                        <p>{{ notify.place }}</p>
 
-                        <p class="text-body fs-6">{{ notify.text }}</p>
+
+                        <p class="float-end text-muted">{{ notify.displayTime }}</p>
+
                       </div>
-
                     </div>
                   </a>
-
                 </ng-container>
 
                 <!-- حالة عدم وجود إشعارات -->
                 <ng-template #noNotifications>
                   <div class="list-group-item text-center text-muted">
-                    No notifications available
+                    {{ 'NOTIFICATIONS.NO_NOTIFICATIONS' | translate }}
                   </div>
                 </ng-template>
 
@@ -120,12 +116,16 @@
 
           <div class="dropdown-divider"></div>
           <div class="text-center py-2">
-            <a href="javascript:" class="link-primary" (click)="markAllAsRead()">Mark all as read</a>
+            <a href="javascript:" class="link-primary" (click)="markAllAsRead()">
+              {{ 'NOTIFICATIONS.MARK_ALL_READ' | translate }}
+            </a>
           </div>
 
         </div>
+
       </div>
     </li>
+
 
 
 
@@ -202,5 +202,7 @@
         </div>
       </div>
     </li>
+
+
   </ul>
 </div>
