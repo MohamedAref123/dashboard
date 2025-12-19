@@ -74,13 +74,3 @@
 .pc-head-link:hover .tooltip-text {
   opacity: 1;
 }
-
-.dropdown-menu.dropdown-notification.show {
-  position: fixed !important; /* يثبتها على الشاشة */
-  top: 70px !important; /* مسافة من الأعلى */
-  left: 20px !important; /* مسافة من الشمال */
-  transform: none !important; /* تلغي الـ translate3d */
-  margin-left: -100px; /* لو محتاج تعديل المسافة */
-  width: 300px; /* عرض مناسب */
-  z-index: 1050; /* لتكون فوق باقي العناصر */
-}

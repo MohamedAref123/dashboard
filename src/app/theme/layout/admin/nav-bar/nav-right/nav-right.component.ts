@@ -84,14 +84,13 @@ export class NavRightComponent implements OnInit {
     };
 
     this.notificationService.getNotifications(payload).subscribe((res: NotificationPagedResponse) => {
-      this.unSeenRecords = res.unSeenRecords; // عدد الإشعارات غير المقروءة
+      this.unSeenRecords = res.unSeenRecords;
 
       this.notifications = res.items.map(n => {
-        const parts = n.text.split('\n');       // يفصل السطر الأول عن الثاني
-        const mainText = parts[0] || '';        // "New appointment from $Alla Araf at"
-        const secondLine = parts[1] || '';      // "$20-12-2025 09:00 in $15 شارع 15"
+        const parts = n.text.split('\n');
+        const mainText = parts[0] || '';
+        const secondLine = parts[1] || '';
 
-        // نفصل التاريخ/الوقت عن المكان
         const [dateTime, place] = secondLine.split(' in ');
 
         return {
@@ -102,8 +101,9 @@ export class NavRightComponent implements OnInit {
           displayTime: formatDate(n.createdDate, 'medium', 'en-US')
         };
       });
-
     });
+
+
 
 
 

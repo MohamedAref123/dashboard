@@ -69,9 +69,10 @@
 
         <div class="dropdown-menu dropdown-notification dropdown-menu-start pc-h-dropdown" ngbDropdownMenu>
 
-          <div class="dropdown-header">
+          <div class="dropdown-header justify-content-between d-flex align-items-center px-3">
+            <h4> {{ 'NOTIFICATIONS.TITLE' | translate }}</h4>
             <h5>
-              {{ 'NOTIFICATIONS.TITLE' | translate }}
+
               <span class="badge rounded-pill ms-1" style="background-color: #673ab7; color: white;"
                 *ngIf="notifications?.length">{{ notifications.length }}</span>
             </h5>
@@ -90,13 +91,11 @@
                           <i class="ti ti-bell"></i>
                         </div>
                       </div>
-                      <div class="flex-grow-1 ms-1">
-                        <p>{{ notify.mainText }}</p>
-                        <p>{{ notify.dateTime }}</p>
-                        <p>{{ notify.place }}</p>
-
-
-                        <p class="float-end text-muted">{{ notify.displayTime }}</p>
+                      <div class="flex-grow-1 mx-3">
+                        <span class="float-start">{{ notify.mainText }}</span>
+                        <span class="float-start">{{ notify.dateTime }}</span>
+                        <span class="float-start">{{ notify.place }}</span>
+                        <p class=" float-start text-muted">{{ notify.displayTime }}</p>
 
                       </div>
                     </div>
