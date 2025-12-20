@@ -50,7 +50,7 @@ export class AppontmentComponent implements OnInit {
   tableActions: TableAction[] = [
     { icon: 'visibility', label: 'BUTTONS.VIEW', color: 'primary', action: 'view' },
     { icon: 'visibility', label: 'BUTTONS.HISTORY', color: 'primary', action: 'history' },
-    { icon: 'visibility', label: 'view history', color: 'primary', action: 'view-histort' }
+    { icon: 'visibility', label: 'BUTTONS.VIEW_HISTORY', color: 'primary', action: 'view-histort' }
   ];
 
   pagenation = {
@@ -122,6 +122,7 @@ export class AppontmentComponent implements OnInit {
 
           ,
           formattedDate: this.dateHelper.formatDateString(item.appointmentDate, 'dd-MM-yyyy'),
+          dayOfWeek: 'DAYS.' + item.dayOfWeek.toUpperCase()
         }));
 
         this.pagenation.totalRecords = response.totalRecords || 0;
