@@ -251,7 +251,7 @@
     "CONSULTATION": "Consultation"
   },
   "CANCEL_PAGE": {
-    "TITLE": "Select Appointment Dates to Cancel",
+    "TITLE": "Select Appointment Date to Cancel",
     "SUBTITLE": "Choose the date you want to cancel from the list below",
     "ADDRESS": "Address",
     "APPOINTMENT_DATE": "Appointment Date"
@@ -319,5 +319,19 @@
   },
   "LANGUAGE": {
     "TITLE": "Language"
+  },
+  "SETTINGS": {
+    "TITLE": "Settings",
+    "GOOD_MORNING": "Good Morning",
+    "PROJECT_ADMIN": "Project Admin",
+    "SEARCH_PLACEHOLDER": "Search profile options",
+    "ACCOUNT_PROFILE": "Account Profile",
+    "SOCIAL_PROFILE": "Social Profile",
+    "LOGOUT": "Logout",
+    "START_DND": "Start DND Mode",
+    "ALLOW_NOTIFICATIONS": "Allow Notifications",
+    "UPGRADE_TITLE": "Upgrade your plan",
+    "UPGRADE_DESCRIPTION": "70% discount for 1 year subscriptions.",
+    "UPGRADE_BUTTON": "Go Premium"
   }
 }

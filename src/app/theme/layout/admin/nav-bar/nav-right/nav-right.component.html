@@ -135,72 +135,80 @@
 
 
     <li>
-      <div class="dropdown pc-h-item header-user-profile" ngbDropdown>
-        <a class="pc-head-link head-link-primary dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown"
-          href="javascript:" ngbDropdownToggle>
-
+      <div class="dropdown pc-h-item header-user-profile  " ngbDropdown>
+        <a class="pc-head-link head-link-primary dropdown-toggle arrow-none me-0" href="javascript:" ngbDropdownToggle>
           <img *ngIf="profileImageUrl" [src]="getImageUrl(profileImageUrl)" alt="Profile Image" class="user-avtar"
             style="width: 40px; height: 40px;" />
-          <span>
-            <i class="ti ti-settings"></i>
+          <span><i class="ti ti-settings"></i></span>
+          <span class="settings-tooltip">
+            {{ 'SETTINGS.TITLE' | translate }}
           </span>
         </a>
-        <div class="dropdown-menu dropdown-user-profile dropdown-menu-start pc-h-dropdown" ngbDropdownMenu>
+
+        <div class="dropdown-menu dropdown-user-profile dropdown-menu-start pc-h-dropdown " ngbDropdownMenu>
           <div class="dropdown-header">
+
             <h4>
-              Good Morning,
-              <span class="small text-muted">John Doe</span>
+              {{ 'SETTINGS.GOOD_MORNING' | translate }},
+              <span class="small text-muted">{{ doctorname }}</span>
             </h4>
-            <p class="text-muted">Project Admin</p>
-            <form class="header-search">
-              <div class="search-btn">
-                <i class="ti ti-search"></i>
-              </div>
-              <input type="search" class="form-control" placeholder="Search profile options" />
-            </form>
-            <hr />
-            <ng-scrollbar style="height: calc(100vh - 280px)" visibility="hover">
-              <div class="upgradeplan-block bg-light-warning rounded">
-                <h4>Upgrade your plan</h4>
-                <p class="text-muted">
-                  70% discount for 1 years
-                  <br />
-                  subscriptions.
-                </p>
+
+            <ng-scrollbar visibility="hover">
+
+              <!-- <div class="upgradeplan-block bg-light-warning rounded">
+                <h4>{{ 'SETTINGS.UPGRADE_TITLE' | translate }}</h4>
+                <p class="text-muted">{{ 'SETTINGS.UPGRADE_DESCRIPTION' | translate }}</p>
                 <a href="https://codedthemes.com/item/berry-angular-admin-dashboard-template/" target="_blank"
                   class="btn btn-warning">
-                  Go Premium
+                  {{ 'SETTINGS.UPGRADE_BUTTON' | translate }}
                 </a>
               </div>
+
               <hr />
+
               <div class="settings-block bg-light-primary rounded">
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-                  <label class="form-check-label" for="flexSwitchCheckDefault">Start DND Mode</label>
+                <div class="form-check form-switch d-flex justify-content-between">
+                  <input class="form-check-input" type="checkbox" role="switch" id="dndSwitch" />
+                  <label class="form-check-label" for="dndSwitch">
+                    {{ 'SETTINGS.START_DND' | translate }}
+                  </label>
                 </div>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked />
-                  <label class="form-check-label" for="flexSwitchCheckChecked">Allow Notifications</label>
+
+                <div class="form-check form-switch d-flex justify-content-between">
+                  <input class="form-check-input" type="checkbox" role="switch" id="notifySwitch" checked />
+                  <label class="form-check-label" for="notifySwitch">
+                    {{ 'SETTINGS.ALLOW_NOTIFICATIONS' | translate }}
+                  </label>
                 </div>
-              </div>
+              </div> -->
+
               <hr />
-              <a [routerLink]="['/guest/register']" class="dropdown-item">
-                <i class="ti ti-settings"></i>
-                <span>Account Profile</span>
-              </a>
-              <a href="profile" class="dropdown-item">
-                <i class="ti ti-user"></i>
-                <span>Social Profile</span>
-              </a>
+
+              <!-- <a [routerLink]="['/register']" class="dropdown-item">
+                <i class="ti ti-settings mx-2"></i>
+                <span>{{ 'SETTINGS.ACCOUNT_PROFILE' | translate }}</span>
+              </a> -->
+
+              <!-- <a href="profile" class="dropdown-item">
+                <i class="ti ti-user mx-2"></i>
+                <span>{{ 'SETTINGS.SOCIAL_PROFILE' | translate }}</span>
+              </a> -->
+
               <a [routerLink]="['/login']" (click)="logout($event)" class="dropdown-item">
-                <i class="ti ti-logout"></i>
-                <span>Logout</span>
+                <i class="ti ti-logout mx-2"></i>
+                <span>{{ 'SETTINGS.LOGOUT' | translate }}</span>
               </a>
+
             </ng-scrollbar>
+
+
+
           </div>
         </div>
       </div>
     </li>
+
+
 
 
   </ul>

@@ -1,18 +1,26 @@
-<div class="card p-3">
+<div class="card total-income-card  overflow-hidden p-4">
+
   <!-- عنوان القسم -->
-  <div class="d-flex p-3 align-items-center">
-    <i class="ti ti-star icon-animate mb-3" style="font-size: 25px; color: #673ab7;"></i>
-    <h2 class="mb-3 mx-2" style="color: #673ab7;">
-      {{ 'REVIEWS.TITLE' | translate }}
-    </h2>
+  <div class="doctor-header d-flex  align-items-center m-2">
+    <div class="d-flex flex-column">
+      <div class="d-flex  header-title">
+
+        <i class="ti ti-star icon-animate mb-3" style="font-size: 25px; color: #673ab7;"></i>
+        <h2 class="mb-3 mx-2">
+          {{ 'REVIEWS.TITLE' | translate }}
+        </h2>
+      </div>
+
+    </div>
 
 
-    <span *ngFor="let star of [1,2,3,4,5]">
+
+    <span *ngFor="let star of [1,2,3,4,5]" class="mx-2">
       <mat-icon [style.color]="star <= totalRating ? 'gold' : '#ccc'">star</mat-icon>
     </span>
 
     <!-- عرض الرقم بجانبها -->
-    <span class="ms-2 text-muted">({{ totalRating }}/5)</span>
+    <span class="mx-2 text-muted">({{ totalRating }}/5)</span>
   </div>
 
   <!-- جدول المراجعات -->

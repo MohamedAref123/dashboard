@@ -38,6 +38,7 @@ export class NavRightComponent implements OnInit {
   unSeenRecords: number = 0;
 
   notificationService = inject(NotificationService);
+  doctorname: string = '';
 
   constructor() {
     this.translate.onLangChange.subscribe((event) => {
@@ -58,6 +59,10 @@ export class NavRightComponent implements OnInit {
       console.log('Loaded user profile:', res);
 
       this.profileImageUrl = this.getImageUrl(res.image) || localStorage.getItem('profile_image');
+      this.doctorname =
+        this.currentLang === 'EN'
+          ? res.doctorNameEN
+          : res.doctorNameAR;
 
     });
 

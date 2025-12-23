@@ -1,266 +1,281 @@
 <div *ngIf="profileForm">
-  <!-- Header -->
-  <div class="doctor-header d-flex justify-content-between align-items-center">
-    <div class="d-flex flex-column">
-      <div class="d-flex align-items-center header-title">
-        <i class="ti ti-stethoscope icon-animate"></i>
-        <h2 class="mb-2">{{ 'PROFILE.TITLE' | translate }}</h2>
+
+  <div class="card total-income-card  overflow-hidden">
+    <!-- Header -->
+    <div class="doctor-header d-flex justify-content-between align-items-center ">
+      <div class="d-flex flex-column">
+        <div class="d-flex align-items-center header-title">
+          <i class="ti ti-user-cog header-icon  icon-animate  mx-3"></i>
+
+          <h2 class="mb-2">{{ 'PROFILE.TITLE' | translate }}</h2>
+        </div>
+        <p style="color: gray">{{ 'PROFILE.DESCRIPTION' | translate }}</p>
       </div>
-      <p style="color: gray">{{ 'PROFILE.DESCRIPTION' | translate }}</p>
+
+      <button class="btn btn-save" type="submit" (click)="onSubmit()">
+        <span>{{'BUTTONS.SAVE'|translate}}</span>
+      </button>
     </div>
 
-    <button class="btn btn-save" type="submit" (click)="onSubmit()">
-      <span>{{'BUTTONS.SAVE'|translate}}</span>
-    </button>
+
+
+    <!-- Form -->
+    <form [formGroup]="profileForm" class="pt-4 pb-4">
+
+      <!-- Basic Information -->
+      <div class="container">
+        <div class="sidebar ">
+
+          <div class="text-center mb-3">
+            <h5>{{ 'PROFILE.PROFILE_IMAGE' | translate }}</h5>
+            <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Profile Image" class="img-thumbnail rounded"
+              width="150" height="150" />
+            <div class="mt-2">
+              <div class="mt-2">
+                <label for="fileInput" class="form-label">{{ 'PROFILE.CHOOSE_IMAGE' | translate }}</label>
+                <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="image/*"
+                  class="form-control mb-2" />
+                <button class="btn btn-primary" (click)="onUploadImage()">{{ 'BUTTONS.UPLOAD_BUTTON' | translate
+                  }}</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card p-3 m-0">
+          <h3>{{'PROFILE.BASIC_INFO'|translate}}</h3>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">{{'PROFILE.doctorNameAR'|translate}}</label>
+              <input type="text" formControlName="doctorNameAR" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">{{'PROFILE.doctorNameEN'|translate}}</label>
+              <input type="text" formControlName="doctorNameEN" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">{{'PROFILE.EMAIL'|translate}}</label>
+              <input type="email" formControlName="email" class="form-control" readonly />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">{{'PROFILE.PHONE'|translate}}</label>
+              <input type="text" formControlName="phoneNumber" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">{{'PROFILE.LICENSE_NUMBER'|translate}}</label>
+              <input type="text" formControlName="licenseNumber" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">{{'PROFILE.EXPERIENCE'|translate}}</label>
+              <input type="number" formControlName="yearsOfExperience" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">{{'PROFILE.SPECIALTY'|translate}}</label>
+              <mat-select formControlName="doctorSpecialistId" class="form-control "
+                placeholder="------------------Select------------------">
+                <mat-option [value]="null">------------------Select------------------</mat-option>
+                <mat-option *ngFor="let specialist of specialists" [value]="specialist.doctorSpecialistId">
+                  {{ specialist.specialistAR }}
+                  <!-- {{ specialist.specialistEN }}-->
+                </mat-option>
+              </mat-select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">{{'PROFILE.GENDER'|translate}}</label>
+              <select class="form-select" formControlName="gender">
+                <option *ngFor="let g of genders" [value]="g.value">{{ g.text }}</option>
+              </select>
+              <app-validation-error [form]="profileForm" controlName="gender"></app-validation-error>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">{{'PROFILE.EXAMINATION_PRICE'|translate}}</label>
+              <input type="number" formControlName="examinationPrice" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">{{'PROFILE.CONSULTATION_PRICE'|translate}}</label>
+              <input type="number" formControlName="consultationPrice" class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+              <mat-label>{{'PROFILE.INSURANCE'|translate}}</mat-label>
+              <mat-select formControlName="insuranceId" class="form-control mt-2"
+                (selectionChange)="onInsuranceChange($event.value)">
+                <!-- ✅ Custom trigger shows selected insurance with icon -->
+                <mat-select-trigger *ngIf="selectedInsurance">
+                  <img [src]="'data:image/png;base64,' + selectedInsurance.icon"
+                    class="img-thumbnail rounded-circle me-2" width="40" height="40" alt="Selected Insurance Icon" />
+                  {{ selectedInsurance.text }}
+                </mat-select-trigger>
+
+                <mat-option value="" disabled>select insurance</mat-option>
+
+                <mat-option *ngFor="let insurance of insurances" [value]="insurance.value">
+                  <img [src]="'data:image/png;base64,' + insurance.icon" class="img-thumbnail rounded-circle me-2"
+                    width="40" height="40" alt="Insurance Icon" />
+                  {{ insurance.text }}
+                </mat-option>
+              </mat-select>
+
+              <app-validation-error [form]="profileForm" controlName="insuranceId"></app-validation-error>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Descriptions -->
+      <div class="d-flex gap-3 mt-3">
+        <div class="card w-50 p-3">
+          <label class="form-label">{{'PROFILE.DescriptionAR'|translate}}</label>
+          <input type="text" formControlName="descriptionAR" class="form-control" />
+          <app-validation-error [form]="profileForm" controlName="descriptionAR"></app-validation-error>
+        </div>
+        <div class="card w-50 p-3">
+          <label class="form-label">{{'PROFILE.DescriptionEN'|translate}}</label>
+          <input type="text" formControlName="descriptionEN" class="form-control" />
+          <app-validation-error [form]="profileForm" controlName="descriptionEN"></app-validation-error>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="card mt-3 p-3">
+        <label class="form-label">{{'PROFILE.Education'|translate}}</label>
+        <input type="text" formControlName="education" class="form-control" />
+      </div>
+
+      <!-- Addresses Accordion -->
+      <div class="accordion mt-4" id="accordionExample" formArrayName="addresses">
+        <div class="accordion-item" *ngFor="let addr of getAddresses.controls; let i = index" [formGroupName]="i">
+          <h2 class="accordion-header" id="heading{{ i }}">
+            <button class="accordion-button" type="button" [class.collapsed]="openedIndex !== i"
+              (click)="toggleAccordion(i)"
+              style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7;margin-bottom: 10px;">
+              {{ addr.value.addressName || ('Address ' + (i + 1)) }}
+            </button>
+          </h2>
+
+          <div [id]="'collapse' + i" class="accordion-collapse"
+            [ngClass]="{ show: openedIndex === i, collapse: openedIndex !== i }" [attr.aria-labelledby]="'heading' + i">
+            <div class="accordion-body row g-3">
+              <div class="d-flex justify-content-start align-items-center gap-3">
+                <p class="mt-2"> {{ addr.value.addressName }}</p>
+                <button type=" button" class="btn btn-sm  d-flex justify-content-center align-items-center"
+                  (click)="onUpdateAddress(addr.value)"
+                  style="border-radius: 8px; padding: 6px 10px;background: linear-gradient(45deg, #673ab7, #512da8);">
+                  <mat-icon role="img" aria-hidden="true" style="color: #fff; font-size: 20px;">
+                    edit
+                  </mat-icon>
+                </button>
+
+              </div>
+
+              <!-- Address Fields -->
+              <div class="col-md-6">
+                <label class="form-label">{{ 'PROFILE.ADDRESS' | translate }}</label>
+                <input type="text" class="form-control" formControlName="addressName" readonly />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ 'PROFILE.COUNTRY' | translate }}</label>
+                <input type="text" class="form-control" formControlName="country" readonly />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ 'PROFILE.CITY' | translate }}</label>
+                <input type="text" class="form-control" formControlName="city" readonly />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ 'PROFILE.REGION' | translate }}</label>
+                <input type="text" class="form-control" formControlName="region" readonly />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ 'PROFILE.STREET' | translate }}</label>
+                <input type="text" class="form-control" formControlName="street" readonly />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ 'PROFILE.BUILDING_NUMBER' | translate }}</label>
+                <input type="text" class="form-control" formControlName="buildingNumber" readonly />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ 'PROFILE.POSTAL_CODE' | translate }}</label>
+                <input type="text" class="form-control" formControlName="postalCode" readonly />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ 'PROFILE.PHONE' | translate }}</label>
+                <input type="text" class="form-control" formControlName="phoneNumber" readonly />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ 'ADDRESS.GOOGLE_LOCATION' | translate }}</label>
+                <input class="form-control" placeholder="Google Location" formControlName="googleLocation" readonly />
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-check mt-4">
+                  <input class="form-check-input" id="addresIsDeleted" type="checkbox" formControlName="isDeleted" />
+                  <label class="form-check-label" for="addresIsDeleted">{{ 'ADDRESS.IS_DELETED' | translate }}</label>
+                </div>
+              </div>
+
+              <!-- Availabilities -->
+              <div class="col-12 mt-3" formArrayName="availabilities">
+                <h5>{{ 'PROFILE.AVAILABILITIES' | translate }}</h5>
+
+                <div *ngFor="let av of addr.get('availabilities')['controls']; let j = index" [formGroupName]="j"
+                  class="row g-2 align-items-center">
+
+                  <div class="col-md-2">
+                    <label class="form-label">{{ 'PROFILE.DAY' | translate }}</label>
+                    <input type="text" class="form-control" [value]="getDayName(av.get('dayOfWeek')?.value)" readonly />
+                  </div>
+
+                  <div class="col-md-2">
+                    <label class="form-label">{{ 'PROFILE.CATEGORY' | translate }}</label>
+                    <input type="text" class="form-control" [value]="getCategoryName(av.get('category')?.value)"
+                      readonly />
+                  </div>
+
+
+
+
+
+                  <div class="col-md-2">
+                    <label class="form-label">{{ 'PROFILE.START_TIME' | translate }}</label>
+                    <input type="time" class="form-control" formControlName="startTime" readonly />
+                  </div>
+
+                  <div class="col-md-2">
+                    <label class="form-label">{{ 'PROFILE.END_TIME' | translate }}</label>
+                    <input type="time" class="form-control" formControlName="endTime" readonly />
+                  </div>
+
+                  <div class="col-md-2">
+                    <label class="form-label">{{ 'PROFILE.SLOT_TIME' | translate }}</label>
+                    <input type="number" class="form-control" formControlName="slotTime" min="1"
+                      placeholder="{{ 'PROFILE.SLOT_TIME_PLACEHOLDER' | translate }}" readonly />
+                  </div>
+
+                  <div class="col-md-2 form-check mt-4">
+                    <input type="checkbox" formControlName="isDeleted" [id]="'av' + i + '-' + j"
+                      class="form-check-input" />
+                    <label class="form-check-label" [for]="'av' + i + '-' + j">{{ 'PROFILE.IS_DELETED' | translate
+                      }}</label>
+                  </div>
+                </div>
+              </div>
+              <!-- End Availabilities -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- End Addresses Accordion -->
+    </form>
   </div>
 
-  <!-- Form -->
-  <form [formGroup]="profileForm" class="pt-4 pb-4">
-    <!-- Basic Information -->
-    <div class="container">
-      <div class="sidebar">
-        <div class="text-center mb-3">
-          <h5>{{ 'PROFILE.PROFILE_IMAGE' | translate }}</h5>
-          <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Profile Image" class="img-thumbnail rounded"
-            width="150" height="150" />
-          <div class="mt-2">
-            <div class="mt-2">
-              <label for="fileInput" class="form-label">{{ 'PROFILE.CHOOSE_IMAGE' | translate }}</label>
-              <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="image/*"
-                class="form-control mb-2" />
-              <button class="btn btn-primary" (click)="onUploadImage()">{{ 'BUTTONS.UPLOAD_BUTTON' | translate
-                }}</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card p-3 m-0">
-        <h3>{{'PROFILE.BASIC_INFO'|translate}}</h3>
-        <div class="row g-3">
-          <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.doctorNameAR'|translate}}</label>
-            <input type="text" formControlName="doctorNameAR" class="form-control" />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.doctorNameEN'|translate}}</label>
-            <input type="text" formControlName="doctorNameEN" class="form-control" />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.EMAIL'|translate}}</label>
-            <input type="email" formControlName="email" class="form-control" readonly />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.PHONE'|translate}}</label>
-            <input type="text" formControlName="phoneNumber" class="form-control" />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.LICENSE_NUMBER'|translate}}</label>
-            <input type="text" formControlName="licenseNumber" class="form-control" />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.EXPERIENCE'|translate}}</label>
-            <input type="number" formControlName="yearsOfExperience" class="form-control" />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.SPECIALTY'|translate}}</label>
-            <mat-select formControlName="doctorSpecialistId" class="form-control "
-              placeholder="------------------Select------------------">
-              <mat-option [value]="null">------------------Select------------------</mat-option>
-              <mat-option *ngFor="let specialist of specialists" [value]="specialist.doctorSpecialistId">
-                {{ specialist.specialistAR }}
-                <!-- {{ specialist.specialistEN }}-->
-              </mat-option>
-            </mat-select>
-          </div>
-
-          <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.GENDER'|translate}}</label>
-            <select class="form-select" formControlName="gender">
-              <option *ngFor="let g of genders" [value]="g.value">{{ g.text }}</option>
-            </select>
-            <app-validation-error [form]="profileForm" controlName="gender"></app-validation-error>
-          </div>
-
-          <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.EXAMINATION_PRICE'|translate}}</label>
-            <input type="number" formControlName="examinationPrice" class="form-control" />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">{{'PROFILE.CONSULTATION_PRICE'|translate}}</label>
-            <input type="number" formControlName="consultationPrice" class="form-control" />
-          </div>
-
-          <div class="col-md-6">
-            <mat-label>{{'PROFILE.INSURANCE'|translate}}</mat-label>
-            <mat-select formControlName="insuranceId" class="form-control mt-2"
-              (selectionChange)="onInsuranceChange($event.value)">
-              <!-- ✅ Custom trigger shows selected insurance with icon -->
-              <mat-select-trigger *ngIf="selectedInsurance">
-                <img [src]="'data:image/png;base64,' + selectedInsurance.icon" class="img-thumbnail rounded-circle me-2"
-                  width="40" height="40" alt="Selected Insurance Icon" />
-                {{ selectedInsurance.text }}
-              </mat-select-trigger>
-
-              <mat-option value="" disabled>select insurance</mat-option>
-
-              <mat-option *ngFor="let insurance of insurances" [value]="insurance.value">
-                <img [src]="'data:image/png;base64,' + insurance.icon" class="img-thumbnail rounded-circle me-2"
-                  width="40" height="40" alt="Insurance Icon" />
-                {{ insurance.text }}
-              </mat-option>
-            </mat-select>
-
-            <app-validation-error [form]="profileForm" controlName="insuranceId"></app-validation-error>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Descriptions -->
-    <div class="d-flex gap-3 mt-3">
-      <div class="card w-50 p-3">
-        <label class="form-label">{{'PROFILE.DescriptionAR'|translate}}</label>
-        <input type="text" formControlName="descriptionAR" class="form-control" />
-        <app-validation-error [form]="profileForm" controlName="descriptionAR"></app-validation-error>
-      </div>
-      <div class="card w-50 p-3">
-        <label class="form-label">{{'PROFILE.DescriptionEN'|translate}}</label>
-        <input type="text" formControlName="descriptionEN" class="form-control" />
-        <app-validation-error [form]="profileForm" controlName="descriptionEN"></app-validation-error>
-      </div>
-    </div>
-
-    <!-- Education -->
-    <div class="card mt-3 p-3">
-      <label class="form-label">{{'PROFILE.Education'|translate}}</label>
-      <input type="text" formControlName="education" class="form-control" />
-    </div>
-
-    <!-- Addresses Accordion -->
-    <div class="accordion mt-4" id="accordionExample" formArrayName="addresses">
-      <div class="accordion-item" *ngFor="let addr of getAddresses.controls; let i = index" [formGroupName]="i">
-        <h2 class="accordion-header" id="heading{{ i }}">
-          <button class="accordion-button" type="button" [class.collapsed]="openedIndex !== i"
-            (click)="toggleAccordion(i)"
-            style="background-color: rgb(224.6, 215.6, 240.6); color: #673ab7;margin-bottom: 10px;">
-            {{ addr.value.addressName || ('Address ' + (i + 1)) }}
-          </button>
-        </h2>
-
-        <div [id]="'collapse' + i" class="accordion-collapse"
-          [ngClass]="{ show: openedIndex === i, collapse: openedIndex !== i }" [attr.aria-labelledby]="'heading' + i">
-          <div class="accordion-body row g-3">
-            <div class="d-flex justify-content-start align-items-center gap-3">
-              <p class="mt-2"> {{ addr.value.addressName }}</p>
-              <button type=" button" class="btn btn-sm  d-flex justify-content-center align-items-center"
-                (click)="onUpdateAddress(addr.value)"
-                style="border-radius: 8px; padding: 6px 10px;background: linear-gradient(45deg, #673ab7, #512da8);">
-                <mat-icon role="img" aria-hidden="true" style="color: #fff; font-size: 20px;">
-                  edit
-                </mat-icon>
-              </button>
-
-            </div>
-
-            <!-- Address Fields -->
-            <div class="col-md-6">
-              <label class="form-label">{{ 'PROFILE.ADDRESS' | translate }}</label>
-              <input type="text" class="form-control" formControlName="addressName" readonly />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">{{ 'PROFILE.COUNTRY' | translate }}</label>
-              <input type="text" class="form-control" formControlName="country" readonly />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">{{ 'PROFILE.CITY' | translate }}</label>
-              <input type="text" class="form-control" formControlName="city" readonly />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">{{ 'PROFILE.REGION' | translate }}</label>
-              <input type="text" class="form-control" formControlName="region" readonly />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">{{ 'PROFILE.STREET' | translate }}</label>
-              <input type="text" class="form-control" formControlName="street" readonly />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">{{ 'PROFILE.BUILDING_NUMBER' | translate }}</label>
-              <input type="text" class="form-control" formControlName="buildingNumber" readonly />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">{{ 'PROFILE.POSTAL_CODE' | translate }}</label>
-              <input type="text" class="form-control" formControlName="postalCode" readonly />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">{{ 'PROFILE.PHONE' | translate }}</label>
-              <input type="text" class="form-control" formControlName="phoneNumber" readonly />
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label">{{ 'ADDRESS.GOOGLE_LOCATION' | translate }}</label>
-              <input class="form-control" placeholder="Google Location" formControlName="googleLocation" readonly />
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-check mt-4">
-                <input class="form-check-input" id="addresIsDeleted" type="checkbox" formControlName="isDeleted" />
-                <label class="form-check-label" for="addresIsDeleted">{{ 'ADDRESS.IS_DELETED' | translate }}</label>
-              </div>
-            </div>
-
-            <!-- Availabilities -->
-            <div class="col-12 mt-3" formArrayName="availabilities">
-              <h5>{{ 'PROFILE.AVAILABILITIES' | translate }}</h5>
-
-              <div *ngFor="let av of addr.get('availabilities')['controls']; let j = index" [formGroupName]="j"
-                class="row g-2 align-items-center">
-
-                <div class="col-md-2">
-                  <label class="form-label">{{ 'PROFILE.DAY' | translate }}</label>
-                  <input type="text" class="form-control" [value]="getDayName(av.get('dayOfWeek')?.value)" readonly />
-                </div>
-
-                <div class="col-md-2">
-                  <label class="form-label">{{ 'PROFILE.CATEGORY' | translate }}</label>
-                  <input type="text" class="form-control" [value]="getCategoryName(av.get('category')?.value)"
-                    readonly />
-                </div>
 
 
 
 
-
-                <div class="col-md-2">
-                  <label class="form-label">{{ 'PROFILE.START_TIME' | translate }}</label>
-                  <input type="time" class="form-control" formControlName="startTime" readonly />
-                </div>
-
-                <div class="col-md-2">
-                  <label class="form-label">{{ 'PROFILE.END_TIME' | translate }}</label>
-                  <input type="time" class="form-control" formControlName="endTime" readonly />
-                </div>
-
-                <div class="col-md-2">
-                  <label class="form-label">{{ 'PROFILE.SLOT_TIME' | translate }}</label>
-                  <input type="number" class="form-control" formControlName="slotTime" min="1"
-                    placeholder="{{ 'PROFILE.SLOT_TIME_PLACEHOLDER' | translate }}" readonly />
-                </div>
-
-                <div class="col-md-2 form-check mt-4">
-                  <input type="checkbox" formControlName="isDeleted" [id]="'av' + i + '-' + j"
-                    class="form-check-input" />
-                  <label class="form-check-label" [for]="'av' + i + '-' + j">{{ 'PROFILE.IS_DELETED' | translate
-                    }}</label>
-                </div>
-              </div>
-            </div>
-            <!-- End Availabilities -->
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- End Addresses Accordion -->
-  </form>
 </div>

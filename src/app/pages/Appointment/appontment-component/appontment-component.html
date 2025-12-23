@@ -1,8 +1,12 @@
-<div class="card mt-4">
-  <div class="d-flex p-3">
-    <h2 style="color: #673ab7; margin-bottom: 15px; margin-right: 10px">{{ 'APPOINTMENT.SEARCH_TITLE' | translate }}
-    </h2>
-    <i class="ti ti-alarm icon-animate" style="font-size: 25px; color: #673ab7"></i>
+<div class="card total-income-card  overflow-hidden p-4">
+
+  <div class="doctor-header d-flex justify-content-between align-items-center m-2">
+    <div class="d-flex flex-column">
+      <div class="d-flex  header-title">
+        <i class="ti ti-alarm icon-animate" style="font-size: 25px; color: #673ab7"></i>
+        <h2 style=" margin-bottom: 15px; margin-right: 10px">{{ 'APPOINTMENT.SEARCH_TITLE' | translate }} </h2>
+      </div>
+    </div>
   </div>
 
   <div class="p-3">
@@ -46,7 +50,7 @@
 
           <!-- زر البحث على الشمال -->
           <div class="col-md-2">
-            <button type="submit" class="btn btn-search w-100 mx-2">
+            <button type="submit" class="btn btn-search w-100 mx-2 my-2">
               {{ 'BUTTONS.SEARCH' | translate }}
             </button>
           </div>

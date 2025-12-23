@@ -74,3 +74,26 @@
 .pc-head-link:hover .tooltip-text {
   opacity: 1;
 }
+
+/*setting*/
+
+.settings-tooltip {
+  display: none;
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2196f3;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  z-index: 100;
+  margin-top: 20px;
+}
+
+/* يظهر عند hover */
+.pc-head-link:hover .settings-tooltip {
+  display: block;
+}

@@ -1,15 +1,17 @@
-<!-- 🩺 بيانات  المريض -->
-<div class="doctor-header d-flex justify-content-between align-items-center">
-  <div class="d-flex flex-column">
-    <div class="d-flex align-items-center header-title">
-      <i class="ti ti-stethoscope icon-animate"></i>
-      <h2 class="mb-2">{{ 'CURRENT_AVAILABILITIES.TITLE' | translate }}</h2>
-    </div>
-    <p style="color: gray">{{ 'CURRENT_AVAILABILITIES.DESCRIPTION' | translate }}</p>
-  </div>
-</div>
+<div class="card total-income-card  overflow-hidden p-4">
 
-<div class="card p-4">
+  <!-- 🩺 بيانات  المريض -->
+  <div class="doctor-header d-flex justify-content-between align-items-center m-2">
+    <div class="d-flex flex-column">
+      <div class="d-flex align-items-center header-title">
+        <i class="ti ti-calendar-check icon-animate mx-2"></i>
+        <h2 class="mb-2">{{ 'CURRENT_AVAILABILITIES.TITLE' | translate }}</h2>
+      </div>
+      <p style="color: gray">{{ 'CURRENT_AVAILABILITIES.DESCRIPTION' | translate }}</p>
+    </div>
+  </div>
+
+
   <div *ngIf="doctoravailabilities">
     <!-- Patient Form -->
     <div class="card p-3 mb-4 shadow-sm border-0">

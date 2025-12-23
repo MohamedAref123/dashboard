@@ -250,7 +250,7 @@
     "CONSULTATION": "استشارة"
   },
   "CANCEL_PAGE": {
-    "TITLE": "اختر مواعيد الحجز لإلغائها",
+    "TITLE": "اختر موعد الحجز لإلغائه",
     "SUBTITLE": "اختر التاريخ الذي تريد إلغاءه من القائمة أدناه",
     "ADDRESS": "العنوان",
     "APPOINTMENT_DATE": "تاريخ الموعد"
@@ -318,5 +318,19 @@
   },
   "LANGUAGE": {
     "TITLE": "اللغة"
+  },
+  "SETTINGS": {
+    "TITLE": "الإعدادات",
+    "GOOD_MORNING": "صباح الخير",
+    "PROJECT_ADMIN": "مسؤول المشروع",
+    "SEARCH_PLACEHOLDER": "ابحث في إعدادات الحساب",
+    "ACCOUNT_PROFILE": "الملف الشخصي",
+    "SOCIAL_PROFILE": "الملف الاجتماعي",
+    "LOGOUT": "تسجيل الخروج",
+    "START_DND": "بدء وضع عدم الإزعاج",
+    "ALLOW_NOTIFICATIONS": "السماح بالإشعارات",
+    "UPGRADE_TITLE": "قم بالترقية إلى الخطة المدفوعة",
+    "UPGRADE_DESCRIPTION": "خصم 70٪ على اشتراك لمدة سنة واحدة.",
+    "UPGRADE_BUTTON": "اشترك الآن"
   }
 }
