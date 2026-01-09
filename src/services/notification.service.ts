@@ -18,6 +18,6 @@ export class NotificationService {
   }
 
   markallAsRead(loggedId: string): Observable<void> {
-    return this.apiService.get<void>('Notifications/MarkAllAsRead', { loggedId });
+    return this.apiService.get<void>(`Notifications/MarkAllAsRead/${loggedId}`);
   }
 }

@@ -4,6 +4,7 @@ import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthGuard } from './auth.guard';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -22,6 +23,17 @@ const routes: Routes = [
       {
         path: 'main',
         loadComponent: () => import('./demo/dashboard/default/default.component').then((c) => c.DefaultComponent)
+      },
+      {
+        path: 'permission',
+        loadComponent: () => import('./shared/error-page/permissoin-page.component/permissoin-page.component').then((c) => c.PermissoinPageComponent)
+        //  ,
+        //  canActivate: [AuthGuard, PermissionGuard],
+        //   //data: { permission: 'Sales.list' }
+      },
+      {
+        path: 'user-permission/:subuserID',
+        loadComponent: () => import('./pages/user-permission.component/user-permission.component').then((c) => c.UserPermissionComponent)
       },
       {
         path: 'profile',
@@ -65,6 +77,16 @@ const routes: Routes = [
         path: 'Cancel-Day',
         loadComponent: () =>
           import('./pages/cancel-day-appointement.component/cancel-day-appointement.component').then((c) => c.CancelDayAppointementComponent)
+      },
+      {
+        path: 'Subuser',
+        loadComponent: () =>
+          import('./pages/subuser.component/subuser.component').then((c) => c.SubuserComponent)
+      },
+      {
+        path: 'update-Sub-user/:subuserId',
+        loadComponent: () =>
+          import('./pages/update-subuser.component/update-subuser.component').then((c) => c.UpdateSubuserComponent)
       }
     ]
   },

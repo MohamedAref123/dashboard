@@ -25,7 +25,15 @@ export function englishOnlyValidator(control: AbstractControl): ValidationErrors
   return englishRegex.test(value) ? null : { englishOnly: 'Only English letters are allowed' };
 }
 
+export function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+  const password = control.get('password')?.value;
+  const confirmedPassword = control.get('confirmedPassword')?.value;
 
+  // لو واحد منهم فاضي، سيب التحقق للـ required
+  if (!password || !confirmedPassword) return null;
+
+  return password === confirmedPassword ? null : { mismatch: 'Password and confirmed password are not the same' };
+}
 
 export const timeRangeValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
   const startControl = group.get('startTime');

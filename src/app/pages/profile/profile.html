@@ -146,6 +146,8 @@
         <input type="text" formControlName="education" class="form-control" />
       </div>
 
+
+
       <!-- Addresses Accordion -->
       <div class="accordion mt-4" id="accordionExample" formArrayName="addresses">
         <div class="accordion-item" *ngFor="let addr of getAddresses.controls; let i = index" [formGroupName]="i">

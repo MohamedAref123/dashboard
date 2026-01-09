@@ -41,7 +41,7 @@ export interface DoctorAddress {
   addressName: string;
   addressId: string;
   doctorId: string;
-  isDeleted: true;
+  isDeleted: boolean;
   availabilities: availabilities[];
 }
 export interface availabilities {

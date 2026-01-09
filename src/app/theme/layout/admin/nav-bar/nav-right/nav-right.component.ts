@@ -56,7 +56,7 @@ export class NavRightComponent implements OnInit {
 
     this.doctorService.getuser(lang).subscribe((res: userResponse) => {
 
-      console.log('Loaded user profile:', res);
+
 
       this.profileImageUrl = this.getImageUrl(res.image) || localStorage.getItem('profile_image');
       this.doctorname =
@@ -124,9 +124,19 @@ export class NavRightComponent implements OnInit {
   }
 
   markAllAsRead() {
-    this.notifications = this.notifications.map(n => ({ ...n, isNew: false, isUnread: false }));
-    // يمكنك هنا استدعاء API لتحديث حالة الإشعارات في السيرفر
+    this.notificationService.markallAsRead(this.doctorId).subscribe({
+      next: () => {
+        this.notifications = this.notifications.map(n => ({
+          ...n,
+          isSeen: true
+        }));
+
+        this.unSeenRecords = 0;
+      },
+      error: err => console.error(err)
+    });
   }
+
 
   openNotification(notification: NotificationItem) {
     console.log('Notification clicked:', notification);

@@ -18,7 +18,12 @@
     "PATIENTS": "Patients",
 
     "CURRENT_AVAILABILITIES": "Current Availabilities",
-    "CANCEL_DAY": "Cancel Day"
+    "CANCEL_DAY": "Cancel Day",
+    "SUBUSER": {
+      "GROUP": "Sub Users",
+      "COLLAPSE": "Sub Users",
+      "USERS": "Users"
+    }
   },
   "PROFILE": {
     "TITLE": "Doctor Profile",
@@ -293,7 +298,7 @@
     "TABLE": {
       "INDEX": "#",
       "PATIENT_NAME": "Patient Name",
-      "CATEGORY_HEADER": "Category",
+      "CATEGORY_HEADER": "Type",
       "PRICE": "Price",
       "APPOINTMENT_DATE": "Appointment Date",
       "EMPTY_PRICE": "—",
@@ -306,6 +311,23 @@
     }
   },
 
+  "SUBUSER": {
+    "UPDATE_TITLE": "Update Sub User",
+    "CUSTOM_NAME": "Custom Name",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "PASSWORD_PLACEHOLDER": "Password",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm Password",
+    "BACK": "Back",
+    "UPDATE": "Update Sub User",
+
+    "ERRORS": {
+      "CUSTOM_NAME_REQUIRED": "Custom name is required",
+      "EMAIL_REQUIRED": "Valid email is required",
+      "PASSWORD_MISMATCH": "Password and confirmed password are not the same"
+    }
+  },
   "LOADER": {
     "MESSAGE": "Loading Please Wait..."
   },
@@ -315,7 +337,7 @@
     "MARK_ALL_READ": "Mark all as read"
   },
   "GITHUB": {
-    "VIEW_ON_GITHUB": "View on GitHub"
+    "TITLE": " GitHub"
   },
   "LANGUAGE": {
     "TITLE": "Language"

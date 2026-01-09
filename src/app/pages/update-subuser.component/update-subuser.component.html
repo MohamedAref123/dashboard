@@ -1,0 +1,77 @@
+<div class="card p-4">
+
+  <!-- Title -->
+  <h2 class="mb-4" style="color: #673ab7; margin-right: 10px">
+    {{ 'SUBUSER.UPDATE_TITLE' | translate }}
+  </h2>
+
+  <form [formGroup]="subUserForm" (ngSubmit)="submit()">
+
+    <div class="row">
+      <!-- Custom Name -->
+      <div class="col-md-6 mb-3">
+        <label class="form-label">{{ 'SUBUSER.CUSTOM_NAME' | translate }}</label>
+        <input type="text" class="form-control" formControlName="customName"
+          [placeholder]="'SUBUSER.CUSTOM_NAME' | translate">
+        <div *ngIf="subUserForm.get('customName')?.touched && subUserForm.get('customName')?.invalid"
+          class="text-danger small">
+          {{ 'SUBUSER.ERRORS.CUSTOM_NAME_REQUIRED' | translate }}
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="col-md-6 mb-3">
+        <label class="form-label">{{ 'SUBUSER.EMAIL' | translate }}</label>
+        <input type="email" class="form-control" formControlName="email" [placeholder]="'SUBUSER.EMAIL' | translate">
+        <div *ngIf="subUserForm.get('email')?.touched && subUserForm.get('email')?.invalid" class="text-danger small">
+          {{ 'SUBUSER.ERRORS.EMAIL_REQUIRED' | translate }}
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="col-md-6 mb-3">
+        <label class="form-label">{{ 'SUBUSER.PASSWORD' | translate }}</label>
+        <div class="custom-input">
+          <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+            [placeholder]="'SUBUSER.PASSWORD_PLACEHOLDER' | translate" class="form-control" />
+          <span class="icon" (click)="showPassword = !showPassword">
+            <span class="material-icons">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="col-md-6 mb-3">
+        <label class="form-label">{{ 'SUBUSER.CONFIRM_PASSWORD' | translate }}</label>
+        <div class="custom-input">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmedPassword"
+            [placeholder]="'SUBUSER.CONFIRM_PASSWORD_PLACEHOLDER' | translate" class="form-control" />
+          <span class="icon" (click)="showConfirmPassword = !showConfirmPassword">
+            <span class="material-icons">{{ showConfirmPassword ? 'visibility_off' : 'visibility' }}</span>
+          </span>
+        </div>
+
+        <!-- Password mismatch error -->
+        <div *ngIf="subUserForm.errors?.['mismatch'] &&
+                     (subUserForm.get('password')?.touched || subUserForm.get('confirmedPassword')?.touched)"
+          class="text-danger mt-2">
+          {{ 'SUBUSER.ERRORS.PASSWORD_MISMATCH' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden parentDoctorId -->
+    <input type="hidden" formControlName="parentDoctorId">
+
+    <!-- Buttons -->
+    <div class="mt-4 d-flex gap-3">
+      <button type="button" class="btn btn-light" (click)="goback()">
+        {{ 'SUBUSER.BACK' | translate }}
+      </button>
+      <button type="submit" class="btn-save">
+        {{ 'SUBUSER.UPDATE' | translate }}
+      </button>
+    </div>
+
+  </form>
+</div>

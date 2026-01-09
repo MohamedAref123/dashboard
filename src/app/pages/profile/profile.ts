@@ -70,7 +70,7 @@ export class Profile implements OnInit {
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
       this.patchForm(res);
-      console.log('Loaded user profile:', res);
+
       this.doctorId = res.doctorId;
       this.profileImageUrl = this.getImageUrl(res.image);
       this.previewUrl = this.profileImageUrl;

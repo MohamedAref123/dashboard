@@ -17,7 +17,12 @@
     "DOCTORS": "الأطباء",
     "PATIENTS": "المرضى",
     "CURRENT_AVAILABILITIES": "المواعيد الحالية",
-    "CANCEL_DAY": "إلغاء يوم الطبيب"
+    "CANCEL_DAY": "إلغاء يوم الطبيب",
+    "SUBUSER": {
+      "GROUP": "المستخدمون الفرعيون",
+      "COLLAPSE": "إدارة المستخدمين الفرعيين",
+      "USERS": "المستخدمون"
+    }
   },
   "PROFILE": {
     "TITLE": "الملف الطبي",
@@ -305,6 +310,23 @@
     }
   },
 
+  "SUBUSER": {
+    "UPDATE_TITLE": "تعديل المستخدم الفرعي",
+    "CUSTOM_NAME": "الاسم المخصص",
+    "EMAIL": "البريد الإلكتروني",
+    "PASSWORD": "كلمة المرور",
+    "CONFIRM_PASSWORD": "تأكيد كلمة المرور",
+    "PASSWORD_PLACEHOLDER": "كلمة المرور",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "تأكيد كلمة المرور",
+    "BACK": "رجوع",
+    "UPDATE": "تحديث المستخدم الفرعي",
+
+    "ERRORS": {
+      "CUSTOM_NAME_REQUIRED": "الاسم المخصص مطلوب",
+      "EMAIL_REQUIRED": "البريد الإلكتروني غير صالح",
+      "PASSWORD_MISMATCH": "كلمة المرور وتأكيدها غير متطابقين"
+    }
+  },
   "LOADER": {
     "MESSAGE": "جار التحميل، يرجى الانتظار..."
   },

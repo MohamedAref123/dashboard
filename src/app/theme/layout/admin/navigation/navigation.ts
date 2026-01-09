@@ -79,6 +79,56 @@ export const NavigationItems: NavigationItem[] = [
 
 
     ]
+  },
+
+  // {
+  //   id: 'Subuser',
+  //   title: 'MENU.SUBUSER.GROUP',
+  //   type: 'group',
+  //   icon: 'ti ti-users',
+  //   children: [
+  //     {
+  //       id: 'subusers',
+  //       title: 'MENU.SUBUSER.GROUP',
+  //       type: 'collapse',
+  //       classes: 'nav-item',
+  //       icon: 'ti ti-user-cog',
+  //       breadcrumbs: false,
+  //       children: [
+  //         {
+  //           id: 'sub-user',
+  //           title: 'MENU.SUBUSER.USERS',
+  //           type: 'item',
+  //           url: '/Subuser',
+  //           icon: 'ti ti-user',
+  //           breadcrumbs: false
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // }
+
+
+  {
+    id: 'Subuser',
+    title: 'MENU.SUBUSER.GROUP',
+    type: 'group',
+    icon: 'ti ti-users',
+    children: [
+      {
+        id: 'sub-user',
+        title: 'MENU.SUBUSER.USERS',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/Subuser',
+        icon: 'ti ti-user',
+        breadcrumbs: false
+      }
+    ]
   }
+
+
+
+
 ];
 

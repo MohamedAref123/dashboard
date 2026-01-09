@@ -1,0 +1,32 @@
+.custom-input {
+  position: relative;
+}
+
+.custom-input input {
+  width: 100%;
+  padding-right: 40px; /* Space for icon */
+  padding-left: 12px;
+  height: 38px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+}
+
+.custom-input input:focus {
+  border-color: #6c63ff; /* Optional highlight color */
+}
+
+.custom-input .icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  color: #888;
+}
+
+.custom-input .icon:hover {
+  color: #333;
+}

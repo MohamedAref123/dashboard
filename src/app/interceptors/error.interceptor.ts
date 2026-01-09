@@ -27,7 +27,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
       // Handle 401 separately (session expired)
       if (error.status === 401) {
-        localStorage.removeItem('token');
+        localStorage.removeItem('access_token');
         router.navigate(['/login']);
         toast.error("Session expired. Please login again.", 5000);
       } else {

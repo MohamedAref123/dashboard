@@ -17,6 +17,7 @@ import { DoctorAvialabilitiesModel } from 'src/app/Models/Responses/Current-Avai
 import { CreateOfflineAppointmentRequest } from 'src/app/Models/Requests/CreateOfflineAppointmentRequest';
 import { GetPatientByPhoneResponse } from 'src/app/Models/Responses/GetPatientByPhoneResponse ';
 import { environment } from 'src/environments/environment';
+import { AddressRequest } from 'src/app/Models/Doctor/DoctorCreateRequest';
 
 
 @Injectable({
@@ -79,6 +80,12 @@ export class DoctorService {
   getavailabilities(doctorid: string, lang: string): Observable<DoctorAvialabilitiesModel> {
     return this.apiService.get<DoctorAvialabilitiesModel>(`Appointments/doctor/current/availabilities/${doctorid}/${lang}`);
   }
+
+  // Create a new address
+  createAddress(request: AddressRequest): Observable<AddressResponse> {
+    return this.apiService.post<AddressResponse>('Accounts/CreateAddress', request);
+  }
+
 
   createOfflineAppointment(payload: CreateOfflineAppointmentRequest): Observable<CreateOfflineAppointmentRequest> {
     return this.apiService.post(`Appointments/CreateOffline`, payload);
