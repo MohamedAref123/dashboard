@@ -21,7 +21,18 @@
             {{ row[column.key] | slice:0:70 }}{{ row[column.key]?.length > 70 ? '...' : '' }}
           </ng-container>
           <ng-template #normalText>
-            {{ row[column.key] | translate }}
+            <ng-container *ngIf="row[column.key] === true">
+              {{ 'BOOLEAN.TRUE' | translate }}
+            </ng-container>
+
+            <ng-container *ngIf="row[column.key] === false">
+              {{ 'BOOLEAN.FALSE' | translate }}
+            </ng-container>
+
+            <ng-container *ngIf="row[column.key] !== true && row[column.key] !== false">
+              {{ row[column.key] | translate }}
+            </ng-container>
+
 
           </ng-template>
         </ng-container>

@@ -325,8 +325,64 @@
       "CUSTOM_NAME_REQUIRED": "الاسم المخصص مطلوب",
       "EMAIL_REQUIRED": "البريد الإلكتروني غير صالح",
       "PASSWORD_MISMATCH": "كلمة المرور وتأكيدها غير متطابقين"
+    },
+
+    "TITLE": " ادارة المستخدمون الفرعيون",
+    "DOCTOR_NAME": "اسم الطبيب",
+    "DOCTOR": "د.",
+    "TABLE": {
+      "CUSTOM_NAME": "الاسم المخصص",
+      "EMAIL": "البريد الإلكتروني",
+      "USERNAME": "اسم المستخدم",
+      "DELETED": "محذوف",
+      "ACTIONS": "الإجراءات"
+    },
+
+    "ACTIONS": {
+      "EDIT": "تعديل",
+      "PERMISSION": "الصلاحيات",
+      "BACK": "رجوع"
+    },
+
+    "MESSAGES": {
+      "LOAD_ERROR": "حدث خطأ أثناء تحميل المستخدمين",
+      "NO_DATA": "لا يوجد مستخدمون فرعيون"
     }
   },
+
+  "CLAIMS": {
+    "CANCEL.DAYS": "الإلغاء حسب الأيام",
+    "CANCEL": "إلغاء",
+
+    "PROFILE": "الملف الشخصي",
+    "UPDATE": {
+      "DOCTOR": "تعديل الطبيب",
+      "ADDRESS": "تعديل العنوان"
+    },
+    "CREATE": {
+      "ADDRESS": "إضافة عنوان"
+    },
+
+    "PAYROLL": "كشف الأرباح",
+    "EARNING": "الأرباح",
+
+    "APPOINTMENTS": "المواعيد",
+    "ALL": {
+      "APPOINTMENTS": "المواعيد"
+    }
+  },
+
+  "PERMISSIONS": {
+    "TITLE": "صلاحيات المستخدم",
+    "USERNAME": "اسم المستخدم",
+    "SAVE": "حفظ الصلاحيات"
+  },
+
+  "BOOLEAN": {
+    "TRUE": "نعم",
+    "FALSE": "لا"
+  },
+
   "LOADER": {
     "MESSAGE": "جار التحميل، يرجى الانتظار..."
   },

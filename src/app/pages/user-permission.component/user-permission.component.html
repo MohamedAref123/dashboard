@@ -1,51 +1,59 @@
 <div class="card total-income-card overflow-hidden p-3">
+
   <!-- Header -->
   <div class="doctor-header d-flex justify-content-between align-items-center ">
     <div class="d-flex flex-column">
       <div class="d-flex align-items-center header-title">
-        <i class="bi bi-shield-lock-fill header-icon  icon-animate  mx-3"></i>
-        <h2> User Permissions</h2>
+        <i class="bi bi-shield-lock-fill header-icon icon-animate mx-3"></i>
+        <h2>{{ 'PERMISSIONS.TITLE' | translate }}</h2>
       </div>
     </div>
   </div>
 
-
   <!-- User Info -->
   <div *ngIf="permission" class="card mb-4 shadow-sm p-3 d-flex">
-    <div class="d-flex  gap-3">
+    <div class="d-flex gap-3">
       <i class="bi bi-person-circle fs-2 text-secondary"></i>
       <h5 class="mb-0">{{ permission.customName }}</h5>
-      <p class="mb-0 text-muted">( {{ permission.userName }} )</p>
+      <p class="mb-0 text-muted">
+        ( {{ 'PERMISSIONS.USERNAME' | translate }}: {{ permission.userName }} )
+      </p>
     </div>
-
   </div>
 
   <!-- Claims Cards -->
   <div class="row g-4" *ngIf="permission">
     <div *ngFor="let claim of permission.claims" class="col-sm-6 col-lg-4">
       <div class="card h-100 shadow-sm p-3 claim-card">
+
         <!-- Claim Header -->
         <div class="d-flex align-items-center mb-3">
-          <i class="bi bi-list-check me-2 text-primary fs-5"></i>
-          <h5 class="mb-0">{{ claim.name }}</h5>
+          <i class="bi bi-list-check mx-2 text-primary fs-5"></i>
+          <h5 class="mb-0">
+            {{ claim.name | claimTranslate | translate }}
+          </h5>
         </div>
 
         <!-- Permissions as toggle switches -->
         <div class="d-flex flex-column gap-2">
           <div *ngFor="let perm of claim.permissions" class="form-check form-switch">
             <input class="form-check-input" type="checkbox" [(ngModel)]="perm.checked" id="{{ perm.value }}" />
-            <label class="form-check-label" [for]="perm.value">{{ perm.name }}</label>
+
+            <label class="form-check-label" [for]="perm.value">
+              {{ perm.name | claimTranslate | translate }}
+
+            </label>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
   <!-- Save Button -->
   <div class="text-end mt-4" *ngIf="permission">
-    <button class=" btn-save" (click)="savePermissions()">
-
-      Save Permissions
+    <button class="btn-save" (click)="savePermissions()">
+      {{ 'PERMISSIONS.SAVE' | translate }}
     </button>
   </div>
 

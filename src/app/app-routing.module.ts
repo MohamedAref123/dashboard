@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthGuard } from './auth.guard';
+import { PermissionGuard } from './permission.guard';
 
 
 const routes: Routes = [
@@ -15,29 +16,33 @@ const routes: Routes = [
         redirectTo: '/login',
         pathMatch: 'full'
       },
-      {
-        path: 'main',
-        canActivate: [AuthGuard],
-        loadComponent: () => import('./demo/dashboard/default/default.component').then((m) => m.DefaultComponent)
-      },
+      // {
+      //   path: 'main',
+      //   canActivate: [AuthGuard],
+      //   loadComponent: () => import('./demo/dashboard/default/default.component').then((m) => m.DefaultComponent)
+
+      // },
       {
         path: 'main',
         loadComponent: () => import('./demo/dashboard/default/default.component').then((c) => c.DefaultComponent)
+
       },
       {
         path: 'permission',
         loadComponent: () => import('./shared/error-page/permissoin-page.component/permissoin-page.component').then((c) => c.PermissoinPageComponent)
-        //  ,
-        //  canActivate: [AuthGuard, PermissionGuard],
-        //   //data: { permission: 'Sales.list' }
+        ,
+
       },
       {
         path: 'user-permission/:subuserID',
         loadComponent: () => import('./pages/user-permission.component/user-permission.component').then((c) => c.UserPermissionComponent)
+
       },
       {
         path: 'profile',
         loadComponent: () => import('./pages/profile/profile').then((c) => c.Profile)
+
+
       },
       {
         path: 'edit-address',
@@ -50,13 +55,18 @@ const routes: Routes = [
       },
       {
         path: 'appointments',
-        loadComponent: () =>
-          import('./pages/Appointment/appontment-component/appontment-component').then((c) => c.AppontmentComponent)
-      },
+        loadComponent: () => import('./pages/Appointment/appontment-component/appontment-component')
+          .then(c => c.AppontmentComponent),
+        canActivate: [AuthGuard, PermissionGuard],
+        data: { permissions: ['Appointments|All Appointments'] } // ✅ لازم تطابق بالضبط
+      }
+
+      ,
       {
         path: 'reviews',
         loadComponent: () =>
-          import('./pages/reviews.component/reviews.component').then((c) => c.ReviewsComponent)
+          import('./pages/reviews.component/reviews.component').then((c) => c.ReviewsComponent),
+
       },
       {
         path: 'current-availabilities',
@@ -76,8 +86,14 @@ const routes: Routes = [
       {
         path: 'Cancel-Day',
         loadComponent: () =>
-          import('./pages/cancel-day-appointement.component/cancel-day-appointement.component').then((c) => c.CancelDayAppointementComponent)
-      },
+          import('./pages/cancel-day-appointement.component/cancel-day-appointement.component')
+            .then(c => c.CancelDayAppointementComponent),
+        canActivate: [AuthGuard, PermissionGuard],
+        data: {
+          permissions: ['Cancel Days|Cancel']
+        }
+      }
+      ,
       {
         path: 'Subuser',
         loadComponent: () =>

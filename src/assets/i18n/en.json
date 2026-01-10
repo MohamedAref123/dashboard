@@ -326,8 +326,61 @@
       "CUSTOM_NAME_REQUIRED": "Custom name is required",
       "EMAIL_REQUIRED": "Valid email is required",
       "PASSWORD_MISMATCH": "Password and confirmed password are not the same"
+    },
+    "TITLE": "manage Sub Users",
+    "DOCTOR_NAME": "Doctor Name",
+    "DOCTOR": "Dr",
+    "TABLE": {
+      "CUSTOM_NAME": "Custom Name",
+      "EMAIL": "Email",
+      "USERNAME": "Username",
+      "DELETED": "Deleted",
+      "ACTIONS": "Actions"
+    },
+
+    "ACTIONS": {
+      "EDIT": "Edit",
+      "PERMISSION": "Permissions",
+      "BACK": "Back"
+    },
+
+    "MESSAGES": {
+      "LOAD_ERROR": "Failed to load sub users",
+      "NO_DATA": "No sub users found"
     }
   },
+
+  "PERMISSIONS": {
+    "TITLE": "User Permissions",
+    "USERNAME": "Username",
+    "SAVE": "Save Permissions"
+  },
+
+  "CLAIMS": {
+    "CANCEL.DAYS": " Cancel by Days ",
+    "CANCEL": "Cancel",
+
+    "PROFILE": "Profile",
+    "UPDATE": {
+      "DOCTOR": "Update Doctor",
+      "ADDRESS": "Update Address"
+    },
+    "CREATE": {
+      "ADDRESS": "Create Address"
+    },
+
+    "PAYROLL": "Payroll",
+    "EARNING": "Earnings",
+    "APPOINTMENTS": "Appointments",
+    "ALL": {
+      "APPOINTMENTS": "Appointments"
+    }
+  },
+  "BOOLEAN": {
+    "TRUE": "Yes",
+    "FALSE": "No"
+  },
+
   "LOADER": {
     "MESSAGE": "Loading Please Wait..."
   },

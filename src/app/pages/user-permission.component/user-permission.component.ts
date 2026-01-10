@@ -2,14 +2,17 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { PermissionRequest } from 'src/app/Models/Requests/assignpermissionRequest';
 import { UserClaims } from 'src/app/Models/Responses/permissionResponse';
 import { PermissionService } from 'src/services/permission.service';
 import { ToastService } from 'src/services/ToastService';
+import { ClaimTranslatePipe } from "../../shared/pipes/claim-translate-pipe";
+
 
 @Component({
   selector: 'app-user-permission',
-  imports: [NgFor, NgIf, CommonModule, FormsModule],
+  imports: [NgFor, NgIf, CommonModule, FormsModule, TranslateModule, ClaimTranslatePipe],
   templateUrl: './user-permission.component.html',
   styleUrls: ['./user-permission.component.scss']
 })

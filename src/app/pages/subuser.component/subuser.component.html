@@ -1,5 +1,8 @@
 <div class="card w-100 card-body mt-4">
-  <h2 class="mb-4" style="color: #673ab7">Manage Subuser ({{ "DR/"+doctorname}})</h2>
+  <h2 class="mb-4" style="color: #673ab7">
+    {{ 'SUBUSER.TITLE' | translate }} ({{ 'SUBUSER.DOCTOR' | translate }}: {{ doctorname }})
+  </h2>
+
 
   <app-generic-table [_headers]="headers" [_items]="subuserlist" [totalRecords]="pagination.totalRecords"
     [_actions]="actions" [pageSize]="pagination.pageSize" (actionClicked)="handleAction($event)"
