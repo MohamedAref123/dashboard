@@ -8,7 +8,6 @@ export const permissionGuard =
   () => {
     const permissionService = inject(AuthService);
     const router = inject(Router);
-
     if (permissionService.has(requiredPermission)) {
       return true;
     }

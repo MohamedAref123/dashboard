@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   get permissions(): string[] {
-    const permisions = this.claims?.permissions;
+    const permisions = this.claims?.Permission;
     return permisions;
   }
 
