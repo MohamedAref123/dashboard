@@ -1,36 +1,18 @@
 import { Injectable, inject } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router, CanActivateFn } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
+import { DoctorClaims } from './Models/shared/system-claims';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class PermissionGuard implements CanActivate {
+export const permissionGuard =
+  (requiredPermission: DoctorClaims): CanActivateFn =>
+  () => {
+    const permissionService = inject(AuthService);
+    const router = inject(Router);
 
-  private auth = inject(AuthService);
-  private router = inject(Router);
+    if (permissionService.has(requiredPermission)) {
+      return true;
+    }
 
-
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-
-    if (this.auth.isSubUser()) {
-      const requiredPermissions = route.data['permissions'] as string[] | undefined;
-
-      if (!requiredPermissions?.length) {
-        this.router.navigate(['/permission']);
-        return false;
-      }
-
-      const allowed = requiredPermissions.some(p => this.auth.hasPermission(p));
-      console.log('SubUser allowed:', allowed);
-      if (allowed) return true;
-
-      this.router.navigate(['/permission']);
-      return false;
-    
-
-    this.router.navigate(['/permission']);
+    router.navigate(['/unauthorized']);
     return false;
-  }
-
-}
+  };

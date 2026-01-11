@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AuthGuard } from './auth.guard';
-import { PermissionGuard } from './permission.guard';
-
+import { permissionGuard } from './permission.guard';
+import { DoctorClaims } from './Models/shared/system-claims';
 
 const routes: Routes = [
   {
@@ -25,24 +25,19 @@ const routes: Routes = [
       {
         path: 'main',
         loadComponent: () => import('./demo/dashboard/default/default.component').then((c) => c.DefaultComponent)
-
       },
       {
         path: 'permission',
-        loadComponent: () => import('./shared/error-page/permissoin-page.component/permissoin-page.component').then((c) => c.PermissoinPageComponent)
-        ,
-
+        loadComponent: () =>
+          import('./shared/error-page/permissoin-page.component/permissoin-page.component').then((c) => c.PermissoinPageComponent)
       },
       {
         path: 'user-permission/:subuserID',
         loadComponent: () => import('./pages/user-permission.component/user-permission.component').then((c) => c.UserPermissionComponent)
-
       },
       {
         path: 'profile',
         loadComponent: () => import('./pages/profile/profile').then((c) => c.Profile)
-
-
       },
       {
         path: 'edit-address',
@@ -55,28 +50,23 @@ const routes: Routes = [
       },
       {
         path: 'appointments',
-        loadComponent: () => import('./pages/Appointment/appontment-component/appontment-component')
-          .then(c => c.AppontmentComponent),
-        canActivate: [AuthGuard, PermissionGuard],
-        data: { permissions: ['Appointments|All Appointments'] } // ✅ لازم تطابق بالضبط
-      }
-
-      ,
+        loadComponent: () => import('./pages/Appointment/appontment-component/appontment-component').then((c) => c.AppontmentComponent),
+        canActivate: [permissionGuard(DoctorClaims.Appointments)]
+      },
       {
         path: 'reviews',
-        loadComponent: () =>
-          import('./pages/reviews.component/reviews.component').then((c) => c.ReviewsComponent),
-
+        loadComponent: () => import('./pages/reviews.component/reviews.component').then((c) => c.ReviewsComponent)
       },
       {
         path: 'current-availabilities',
         loadComponent: () =>
-          import('./pages/current-availlabilities.component/current-availlabilities.component').then((c) => c.CurrentAvaillabilitiesComponent)
+          import('./pages/current-availlabilities.component/current-availlabilities.component').then(
+            (c) => c.CurrentAvaillabilitiesComponent
+          )
       },
       {
         path: 'patientHistory/:patientId',
-        loadComponent: () =>
-          import('./pages/patient-history-component/patient-history-component').then((c) => c.PatientHistoryComponent)
+        loadComponent: () => import('./pages/patient-history-component/patient-history-component').then((c) => c.PatientHistoryComponent)
       },
       {
         path: 'view-patient-History/:patientId',
@@ -86,23 +76,17 @@ const routes: Routes = [
       {
         path: 'Cancel-Day',
         loadComponent: () =>
-          import('./pages/cancel-day-appointement.component/cancel-day-appointement.component')
-            .then(c => c.CancelDayAppointementComponent),
-        canActivate: [AuthGuard, PermissionGuard],
-        data: {
-          permissions: ['Cancel Days|Cancel']
-        }
-      }
-      ,
+          import('./pages/cancel-day-appointement.component/cancel-day-appointement.component').then(
+            (c) => c.CancelDayAppointementComponent
+          )
+      },
       {
         path: 'Subuser',
-        loadComponent: () =>
-          import('./pages/subuser.component/subuser.component').then((c) => c.SubuserComponent)
+        loadComponent: () => import('./pages/subuser.component/subuser.component').then((c) => c.SubuserComponent)
       },
       {
         path: 'update-Sub-user/:subuserId',
-        loadComponent: () =>
-          import('./pages/update-subuser.component/update-subuser.component').then((c) => c.UpdateSubuserComponent)
+        loadComponent: () => import('./pages/update-subuser.component/update-subuser.component').then((c) => c.UpdateSubuserComponent)
       }
     ]
   },
@@ -126,4 +110,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

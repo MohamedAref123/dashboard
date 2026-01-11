@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { JwtClaims } from 'src/app/Models/shared/jwt-chaims.model';
 import { JwtPayload } from 'src/app/Models/shared/SharedClasses';
+import { DoctorClaims } from 'src/app/Models/shared/system-claims';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +28,19 @@ export class AuthService {
     return permisions;
   }
 
-  hasPermission(permission: string): boolean {
-    return this.permissions.includes(permission);
+  private hasPermission(permission: DoctorClaims): boolean {
+    return this.permissions?.includes(permission) ?? false;
+  }
+  has(permission: DoctorClaims): boolean {
+    return this.hasPermission(permission);
+  }
+
+  hasAny(permissions: DoctorClaims[]): boolean {
+    return permissions.some((p) => this.has(p));
+  }
+
+  hasAll(permissions: DoctorClaims[]): boolean {
+    return permissions.every((p) => this.has(p));
   }
 
   getDoctorId(): string | null {
