@@ -7,7 +7,6 @@ import { JwtPayload } from 'src/app/Models/shared/SharedClasses';
   providedIn: 'root'
 })
 export class AuthService {
-
   get token(): string | null {
     return localStorage.getItem('access_token');
   }
@@ -24,39 +23,13 @@ export class AuthService {
   }
 
   get permissions(): string[] {
-    const groups = this.claims?.permissions;
-    if (!groups) return [];
-
-    return groups.flatMap(group =>
-      group.permissions
-        .filter(p => p.checked)   // ✅ هنا فقط الـ checked = true
-        .map(p => `${group.name}|${p.name}`)
-    );
+    const permisions = this.claims?.permissions;
+    return permisions;
   }
-
-
-
-
-
 
   hasPermission(permission: string): boolean {
     return this.permissions.includes(permission);
   }
-
-
-
-  get role(): string | null {
-    return this.claims?.role || null;
-  }
-
-  isDoctor(): boolean {
-    return this.role === 'Doctor';
-  }
-
-  isSubUser(): boolean {
-    return this.role === 'SubUser';
-  }
-
 
   getDoctorId(): string | null {
     const token = this.token;
@@ -72,6 +45,5 @@ export class AuthService {
     }
   }
 
-
-  constructor() { }
+  constructor() {}
 }

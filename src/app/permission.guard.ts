@@ -13,12 +13,6 @@ export class PermissionGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
 
-    console.log('Role:', this.auth.role);
-    console.log('JWT Permissions:', this.auth.permissions);
-    console.log('Route required:', route.data['permissions']);
-
-    if (this.auth.isDoctor()) return true;
-
     if (this.auth.isSubUser()) {
       const requiredPermissions = route.data['permissions'] as string[] | undefined;
 
@@ -33,7 +27,7 @@ export class PermissionGuard implements CanActivate {
 
       this.router.navigate(['/permission']);
       return false;
-    }
+    
 
     this.router.navigate(['/permission']);
     return false;
