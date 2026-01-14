@@ -31,7 +31,7 @@ export class EditAddressComponent implements OnInit {
   fb = inject(FormBuilder);
   addressData = inject(MAT_DIALOG_DATA) as AddressResponse;
   cdr = inject(ChangeDetectorRef);
-  isLoading: boolean;
+
   form: FormGroup = this.fb.group({});
   days = ShardEnums.getEnumOptions(DaysOfWeek);
   route = inject(ActivatedRoute)
@@ -47,7 +47,7 @@ export class EditAddressComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.isLoading = true;
+
 
     this.addressId = this.addressData?.addressId;
 
@@ -56,12 +56,12 @@ export class EditAddressComponent implements OnInit {
       next: (cities) => {
         this.city = cities; // city.value يجب أن يكون ID الصحيح
         this.createForm();  // إنشاء الفورم بعد توفر المدن
-        this.isLoading = false;
+
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);
-        this.isLoading = false;
+
         this.cdr.detectChanges();
       }
     });

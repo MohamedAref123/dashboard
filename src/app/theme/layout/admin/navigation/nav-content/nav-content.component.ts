@@ -16,6 +16,7 @@ import { NavItemComponent } from './nav-item/nav-item.component';
 // NgScrollbarModule
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthService } from 'src/services/auth.service';
 
 @Component({
   selector: 'app-nav-content',
@@ -25,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class NavContentComponent implements OnInit {
   private location = inject(Location);
+  private auth = inject(AuthService);
 
   // public props
   NavCollapsedMob = output();
@@ -39,7 +41,8 @@ export class NavContentComponent implements OnInit {
 
   // Constructor
   constructor() {
-    this.navigations = NavigationItems;
+    this.navigations = this.filterMenu(NavigationItems);
+
     this.windowWidth = window.innerWidth;
   }
 
@@ -51,6 +54,27 @@ export class NavContentComponent implements OnInit {
       }, 500);
     }
   }
+
+  filterMenu(items: NavigationItem[]): NavigationItem[] {
+    return items
+      .map(item => ({ ...item }))
+      .filter(item => {
+        // لو عنده role و checked=false → اختفاء
+        if (item.role && !this.auth.hasAnyPermission(item.role)) {
+          return false;
+        }
+
+        // فلترة الأبناء recursively
+        if (item.children) {
+          item.children = this.filterMenu(item.children);
+          return item.children.length > 0; // لو مفيش أبناء، اختفي الاب
+        }
+
+        return true; // checked=true → تظهر
+      });
+  }
+
+
 
   fireOutClick() {
     let current_url = this.location.path();

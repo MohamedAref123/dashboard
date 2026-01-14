@@ -1,3 +1,5 @@
+import { DoctorClaims } from "src/app/Models/shared/system-claims";
+
 export interface NavigationItem {
   id: string;
   title: string;
@@ -11,7 +13,7 @@ export interface NavigationItem {
   target?: boolean;
   breadcrumbs?: boolean;
   children?: NavigationItem[];
-  role?: string[];
+  role?: DoctorClaims[];
   isMainParent?: boolean;
 }
 
@@ -47,7 +49,8 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/appointments',
         icon: 'ti ti-calendar',
-        breadcrumbs: false
+        breadcrumbs: false,
+        role: [DoctorClaims.Appointments]
       },
       {
         id: 'CurrentAvailabilities',
@@ -65,7 +68,8 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/Cancel-Day',
         icon: 'ti ti-calendar-x',
-        breadcrumbs: false
+        breadcrumbs: false,
+        role: [DoctorClaims.CancelDayAppointments]
       },
       {
         id: 'Reviews',
@@ -124,7 +128,8 @@ export const NavigationItems: NavigationItem[] = [
         icon: 'ti ti-user',
         breadcrumbs: false
       }
-    ]
+    ],
+    role: [DoctorClaims.SubUsers]
   }
 
 

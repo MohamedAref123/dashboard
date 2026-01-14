@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
-import { AuthGuard } from './auth.guard';
+
 import { permissionGuard } from './permission.guard';
 import { DoctorClaims } from './Models/shared/system-claims';
 
@@ -24,7 +24,8 @@ const routes: Routes = [
       // },
       {
         path: 'main',
-        loadComponent: () => import('./demo/dashboard/default/default.component').then((c) => c.DefaultComponent)
+        loadComponent: () => import('./demo/dashboard/default/default.component').then((c) => c.DefaultComponent),
+        canActivate: [permissionGuard(DoctorClaims.PayrolEarning)]
       },
       {
         path: 'permission',
@@ -78,7 +79,8 @@ const routes: Routes = [
         loadComponent: () =>
           import('./pages/cancel-day-appointement.component/cancel-day-appointement.component').then(
             (c) => c.CancelDayAppointementComponent
-          )
+          ),
+        canActivate: [permissionGuard(DoctorClaims.CancelDayAppointments)]
       },
       {
         path: 'Subuser',
@@ -110,4 +112,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

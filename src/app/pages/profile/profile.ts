@@ -18,6 +18,7 @@ import { DoctorSpecialistService } from 'src/services/DoctorSpecialistService';
 import { DoctorSpecialistResponse } from 'src/app/Models/Responses/DoctorSpecialistResponses';
 import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
 import { environment } from 'src/environments/environment';
+import { DoctorClaims } from 'src/app/Models/shared/system-claims';
 
 @Component({
   selector: 'app-profile',
@@ -64,6 +65,8 @@ export class Profile implements OnInit {
 
   appointmentCategories = ShardEnums.getEnumOptions(AppointmentCategory);
 
+  permissionsMap: Record<string, boolean> = {};
+  DoctorClaims = DoctorClaims;
 
   constructor() { }
 
@@ -74,11 +77,24 @@ export class Profile implements OnInit {
       this.doctorId = res.doctorId;
       this.profileImageUrl = this.getImageUrl(res.image);
       this.previewUrl = this.profileImageUrl;
+
+      this.permissionsMap = {};
+      res.permissions.forEach(p => {
+        this.permissionsMap[p.value] = p.checked;
+      });
+
+
     });
 
     this.loadInsurances();
     this.loadSpecialists();
   }
+
+
+  hasPermission(claim: DoctorClaims): boolean {
+    return this.permissionsMap[claim] === true;
+  }
+
 
   toggleAccordion(i: number) {
     this.openedIndex = this.openedIndex === i ? null : i;

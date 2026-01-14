@@ -24,7 +24,21 @@ export interface userResponse {
   phoneNumber: string;
   isActive: boolean;
   addresses: DoctorAddress[];
+  permissions: PagePermission[];
 }
+
+export interface PagePermission {
+  value: string;
+  name: string;
+  checked: boolean;
+}
+
+export interface PagePermissionsResponse {
+  name: string;
+  permissions: PagePermission[];
+}
+
+
 
 export interface DoctorAddress {
 
