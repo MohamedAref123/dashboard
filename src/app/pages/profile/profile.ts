@@ -19,6 +19,7 @@ import { DoctorSpecialistResponse } from 'src/app/Models/Responses/DoctorSpecial
 import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
 import { environment } from 'src/environments/environment';
 import { DoctorClaims } from 'src/app/Models/shared/system-claims';
+import { AuthService } from 'src/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -67,7 +68,7 @@ export class Profile implements OnInit {
 
   permissionsMap: Record<string, boolean> = {};
   DoctorClaims = DoctorClaims;
-
+  authService = inject(AuthService);
   constructor() { }
 
   ngOnInit(): void {
@@ -92,7 +93,7 @@ export class Profile implements OnInit {
 
 
   hasPermission(claim: DoctorClaims): boolean {
-    return this.permissionsMap[claim] === true;
+    return this.authService.has(claim);
   }
 
 

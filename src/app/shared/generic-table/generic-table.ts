@@ -4,7 +4,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -15,7 +15,7 @@ export interface TableHeader {
 @Component({
   selector: 'app-generic-table',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, CommonModule, MatIconModule, TranslateModule, MatButtonModule, MatMenuModule],
+  imports: [MatTableModule, MatPaginatorModule, CommonModule, MatIconModule, TranslateModule, MatButtonModule, MatMenuModule, NgIf],
   templateUrl: './generic-table.html',
   styleUrl: './generic-table.scss'
 })

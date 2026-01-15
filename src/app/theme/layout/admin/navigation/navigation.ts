@@ -31,7 +31,8 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/main',
         icon: 'ti ti-home',
-        breadcrumbs: false
+        breadcrumbs: false,
+        role: [DoctorClaims.PayrolEarning]
       },
       {
         id: 'profile',
