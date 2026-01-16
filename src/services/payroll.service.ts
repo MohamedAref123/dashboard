@@ -3,16 +3,14 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PayrollRequest } from 'src/app/Models/Requests/PayrollRequest';
 import { PayrollResponse } from 'src/app/Models/Responses/PayrollResponse';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PayrollService {
-
   http = inject(HttpClient);
   private apiUrl = `${environment.baseurl}/v1/Payroll/DoctorAppointments`;
-
 
   getDoctorAppointments(body: PayrollRequest): Observable<PayrollResponse> {
     const token = localStorage.getItem('access_token');

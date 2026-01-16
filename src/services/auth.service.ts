@@ -61,16 +61,14 @@ export class AuthService {
 
   setPermissions(perms: { value: string; checked: boolean }[]) {
     this.permissionsMap = {};
-    perms.forEach(p => {
+    perms.forEach((p) => {
       this.permissionsMap[p.value] = p.checked;
     });
   }
 
-
   hasAnyPermission(claims: DoctorClaims[]): boolean {
-    return claims.some(c => this.hasPermission(c));
+    return claims.some((c) => this.hasPermission(c));
   }
 
-
-  constructor() { }
+  constructor() {}
 }

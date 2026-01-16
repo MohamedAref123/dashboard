@@ -1,51 +1,47 @@
 <div class="col-xl-12 col-md-12">
-  <div class="card total-income-card  overflow-hidden">
+  <div class="card total-income-card overflow-hidden">
     <div class="card-body">
-      <div class="d-flex align-items-start">
-
+      <div class="align-items-start">
         <!-- أيقونة الavatar -->
-        <div class="avatar avatar-lg  me-4">
-          <i class="text-white ti ti-layout-board-split f-24"></i>
+        <div class="doctor-header d-flex justify-content-between align-items-center m-2">
+          <div class="d-flex flex-column">
+            <div class="d-flex header-title">
+              <div class="avatar avatar-lg me-4">
+                <i class="text-white ti ti-layout-board-split f-24"></i>
+              </div>
+              <h2 class="mt-2" style="padding-right: 10px !important">{{ 'PAYROLL.TITLE' | translate }}</h2>
+            </div>
+          </div>
         </div>
 
-
         <!-- الفورم -->
-        <form [formGroup]="payrolForm" (ngSubmit)="search()" class="row g-5 flex-grow-1 ">
+        <div class="row">
+          <div class="col-md-12">
+            <form [formGroup]="payrolForm" (ngSubmit)="search()" class="row g-5 flex-grow-1">
+              <div class="col-md-3">
+                <label class="form-label">{{ 'PAYROLL.FROM_DATE' | translate }}</label>
+                <input type="date" class="form-control" formControlName="fromDate" />
+              </div>
 
-          <div class="d-flex align-items-center header-title">
-            <h2 style="margin-left: 10px; margin-right: 10px;">{{ 'PAYROLL.TITLE' |translate }}</h2>
+              <div class="col-md-3">
+                <label class="form-label">{{ 'PAYROLL.TO_DATE' | translate }}</label>
+                <input type="date" class="form-control" formControlName="toDate" />
+              </div>
+
+              <div class="col-md-2 d-flex align-items-end">
+                <button class="btn btn-save mt-3" type="submit" [disabled]="payrolForm.invalid">
+                  {{ 'PAYROLL.SEARCH' | translate }}
+                </button>
+              </div>
+            </form>
           </div>
-
-          <div class="col-md-3">
-            <label class="form-label"> {{ 'PAYROLL.FROM_DATE' | translate }}</label>
-            <input type="date" class="form-control" formControlName="fromDate">
-          </div>
-
-          <div class="col-md-3">
-            <label class="form-label">{{ 'PAYROLL.TO_DATE' | translate }}</label>
-            <input type="date" class="form-control" formControlName="toDate">
-          </div>
-
-
-
-          <div class="col-md-2 d-flex align-items-end">
-            <button class="btn btn-save mt-3" type="submit" [disabled]="payrolForm.invalid">
-              {{ 'PAYROLL.SEARCH' | translate }}
-            </button>
-          </div>
-
-        </form>
-
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-
-
 <div class="row">
-
-
   <div class="col-xl-6 col-md-6" *ngIf="hasPermission(DoctorClaims.PayrolEarning)">
     <div class="card earning-card bg-secondary-dark text-white overflow-hidden">
       <span class="round secondary-round small"></span>
@@ -60,7 +56,8 @@
         </div>
 
         <div class="mt-2">
-          <span class="opacity-50 me-2"> {{ totalPayroll | currency:'EGP':'symbol':'1.0-0' }}
+          <span class="opacity-50 me-2">
+            {{ totalPayroll | currency: 'EGP' : 'symbol' : '1.0-0' }}
             <i class="ti ti-circle-arrow-up-right opacity-50"></i>
           </span>
           <p class="mb-0 opacity-50">{{ 'PAYROLL.TOTAL_EARNING' | translate }}</p>
@@ -69,13 +66,11 @@
     </div>
   </div>
 
-
   <div class="col-xl-6 col-md-6">
     <div class="card earning-card bg-primary-dark text-white overflow-hidden">
       <span class="round primary-round small"></span>
       <span class="round primary-round big"></span>
       <div class="card-body">
-
         <div class="row">
           <div class="col">
             <div class="avatar avatar-lg">
@@ -83,32 +78,24 @@
             </div>
           </div>
 
-
           <div class="mt-2">
             <h4 class="mb-0 opacity-50">{{ totalRecords }}</h4>
             <p class="mb-0 opacity-50">{{ 'PAYROLL.TOTAL_APPOINTMENTS' | translate }}</p>
-
           </div>
         </div>
-
-
       </div>
     </div>
   </div>
 
-
-
   <!--table -->
   <div class="col-xl-12 col-md-12 mt-4">
     <div class="card total-income-card overflow-hidden shadow-sm border-0">
-
       <div class="card-body p-0">
-
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center px-4 py-3 payroll-header">
           <h5 class="mb-0 text-white">{{ 'PAYROLL.DETAILS_TITLE' | translate }}</h5>
           <div class="fw-bold text-white">
-            {{ totalPayroll | currency:'EGP':'symbol':'1.0-0' }}
+            {{ totalPayroll | currency: 'EGP' : 'symbol' : '1.0-0' }}
           </div>
         </div>
 
@@ -127,24 +114,21 @@
 
             <tbody class="payroll-body">
               <tr *ngFor="let item of payrollItems; let i = index" class="payroll-row">
-                <td class="index " style="color: #673ab7; background-color: white;">{{ i + 1 }}</td>
-                <td class="patient " style="color: #673ab7; background-color: white;">{{ item.patientName }}</td>
+                <td class="index" style="color: #673ab7; background-color: white">{{ i + 1 }}</td>
+                <td class="patient" style="color: #673ab7; background-color: white">{{ item.patientName }}</td>
 
-                <td class="category" style="color:#673ab7; background-color:white;">
-                  {{ ('PAYROLL.TABLE.CATEGORY.' + getCategoryKey(item.category)) | translate }}
+                <td class="category" style="color: #673ab7; background-color: white">
+                  {{ 'PAYROLL.TABLE.CATEGORY.' + getCategoryKey(item.category) | translate }}
                 </td>
 
-
-
-                <td class="price" style="color: #673ab7;background-color: white;">
-
+                <td class="price" style="color: #673ab7; background-color: white">
                   <span *ngIf="item.price" class="value">
-                    {{ item.price | currency:'EGP':'symbol':'1.0-0' }}
+                    {{ item.price | currency: 'EGP' : 'symbol' : '1.0-0' }}
                   </span>
                   <span *ngIf="!item.price" class="empty">—</span>
                 </td>
-                <td class="date " style="color: #673ab7; background-color: white;">
-                  {{ item.appointmentDate | date:'yyyy-MM-dd' }}
+                <td class="date" style="color: #673ab7; background-color: white">
+                  {{ item.appointmentDate | date: 'yyyy-MM-dd' }}
                 </td>
               </tr>
             </tbody>
@@ -153,27 +137,18 @@
 
         <!-- Footer -->
         <div class="payroll-footer px-4 py-3">
-          <span> {{'PAYROLL.TOTAL_RECORDS'|translate}} : {{ totalRecords }}</span>
+          <span>{{ 'PAYROLL.TOTAL_RECORDS' | translate }} : {{ totalRecords }}</span>
           <!-- <span>{{'PAYROLL.TOTAL_PAYROLL'|translate}}: {{ totalPayroll | currency:'EGP':'symbol':'1.0-0'
             }}</span> -->
         </div>
-
       </div>
     </div>
   </div>
-
-
-
-
-
-
 </div>
-
 
 <!-- <div class="col-xl-8 col-md-12">
   <app-bar-chart />
 </div> -->
-
 
 <!-- <div class="col-xl-4 col-md-12">
     <div class="card">
