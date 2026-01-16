@@ -14,9 +14,15 @@ export class AuthService {
 
   get claims(): JwtClaims | null {
     if (!this.token) return null;
+
     try {
       const payload = this.token.split('.')[1];
-      return JSON.parse(atob(payload)) as JwtClaims;
+      const json = JSON.parse(atob(payload));
+
+      return {
+        ...json,
+        Permission: json.Permission ? (Array.isArray(json.Permission) ? json.Permission : [json.Permission]) : []
+      } as JwtClaims;
     } catch (e) {
       console.error('JWT parsing error', e);
       return null;

@@ -66,10 +66,9 @@ export class Profile implements OnInit {
 
   appointmentCategories = ShardEnums.getEnumOptions(AppointmentCategory);
 
-  permissionsMap: Record<string, boolean> = {};
   DoctorClaims = DoctorClaims;
   authService = inject(AuthService);
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
@@ -78,24 +77,15 @@ export class Profile implements OnInit {
       this.doctorId = res.doctorId;
       this.profileImageUrl = this.getImageUrl(res.image);
       this.previewUrl = this.profileImageUrl;
-
-      this.permissionsMap = {};
-      res.permissions.forEach(p => {
-        this.permissionsMap[p.value] = p.checked;
-      });
-
-
     });
 
     this.loadInsurances();
     this.loadSpecialists();
   }
 
-
   hasPermission(claim: DoctorClaims): boolean {
     return this.authService.has(claim);
   }
-
 
   toggleAccordion(i: number) {
     this.openedIndex = this.openedIndex === i ? null : i;
@@ -262,11 +252,9 @@ export class Profile implements OnInit {
   }
 
   getDayName(dayValue: number): string {
-    const day = this.days.find(d => d.value === dayValue);
+    const day = this.days.find((d) => d.value === dayValue);
     return day ? day.text : '';
   }
-
-
 
   getCategoryName(value: number): string {
     switch (value) {
@@ -278,8 +266,6 @@ export class Profile implements OnInit {
         return '';
     }
   }
-
-
 
   onUpdateAddress(addr: DoctorAddress) {
     console.log('Address data:', addr);
@@ -293,8 +279,7 @@ export class Profile implements OnInit {
         doctorId: this.profileForm.get('doctorId')?.value, // ✅ إضافة doctorId هنا
         cityId: addr.cityId, // ✔ فقط القيمة الصحيحة
         regionId: addr.regionId // ✔ فقط القيمة الصحيحة
-      },
-
+      }
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -302,7 +287,6 @@ export class Profile implements OnInit {
         this.reloadAddresses(); // 🔹 سنضيف هذه الدالة الآن
       }
     });
-
   }
 
   onSubmit() {
