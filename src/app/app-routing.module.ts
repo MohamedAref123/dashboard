@@ -25,7 +25,7 @@ const routes: Routes = [
       {
         path: 'main',
         loadComponent: () => import('./demo/dashboard/default/default.component').then((c) => c.DefaultComponent),
-        canActivate: [permissionGuard(DoctorClaims.PayrolEarning)]
+
       },
       {
         path: 'permission',

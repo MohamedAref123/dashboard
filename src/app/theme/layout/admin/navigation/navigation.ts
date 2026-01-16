@@ -32,7 +32,7 @@ export const NavigationItems: NavigationItem[] = [
         url: '/main',
         icon: 'ti ti-home',
         breadcrumbs: false,
-        role: [DoctorClaims.PayrolEarning]
+
       },
       {
         id: 'profile',

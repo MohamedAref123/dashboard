@@ -46,7 +46,7 @@
 <div class="row">
 
 
-  <div class="col-xl-6 col-md-6">
+  <div class="col-xl-6 col-md-6" *ngIf="hasPermission(DoctorClaims.PayrolEarning)">
     <div class="card earning-card bg-secondary-dark text-white overflow-hidden">
       <span class="round secondary-round small"></span>
       <span class="round secondary-round big"></span>
@@ -64,7 +64,6 @@
             <i class="ti ti-circle-arrow-up-right opacity-50"></i>
           </span>
           <p class="mb-0 opacity-50">{{ 'PAYROLL.TOTAL_EARNING' | translate }}</p>
-
         </div>
       </div>
     </div>
@@ -155,8 +154,8 @@
         <!-- Footer -->
         <div class="payroll-footer px-4 py-3">
           <span> {{'PAYROLL.TOTAL_RECORDS'|translate}} : {{ totalRecords }}</span>
-          <span>{{'PAYROLL.TOTAL_PAYROLL'|translate}}: {{ totalPayroll | currency:'EGP':'symbol':'1.0-0'
-            }}</span>
+          <!-- <span>{{'PAYROLL.TOTAL_PAYROLL'|translate}}: {{ totalPayroll | currency:'EGP':'symbol':'1.0-0'
+            }}</span> -->
         </div>
 
       </div>

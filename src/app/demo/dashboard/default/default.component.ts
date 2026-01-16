@@ -1,18 +1,21 @@
 // Angular Import
+import { NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { PayrollItem } from 'src/app/Models/Responses/PayrollResponse';
+import { DoctorClaims } from 'src/app/Models/shared/system-claims';
 
 
 
 // project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { AuthService } from 'src/services/auth.service';
 import { PayrollService } from 'src/services/payroll.service';
 
 @Component({
   selector: 'app-default',
-  imports: [SharedModule, TranslateModule],
+  imports: [SharedModule, TranslateModule, NgIf],
   templateUrl: './default.component.html',
   styleUrls: ['./default.component.scss']
 })
@@ -24,8 +27,8 @@ export class DefaultComponent implements OnInit {
   payrollItems: PayrollItem[] = [];
   totalPayroll: number = 0;
   totalRecords: number = 0;
-
-
+  authService = inject(AuthService)
+  DoctorClaims = DoctorClaims;
   ngOnInit(): void {
     const today = new Date();
 
@@ -38,6 +41,10 @@ export class DefaultComponent implements OnInit {
 
     // البحث تلقائياً عند تحميل الصفحة
     this.search();
+  }
+
+  hasPermission(claim: DoctorClaims): boolean {
+    return this.authService.has(claim);
   }
 
 
