@@ -47,26 +47,60 @@ export class EditAddressComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.createForm(); // الفورم جاهز، addresses موجودة
 
     this.addressId = this.addressData?.addressId;
 
-    // 1️⃣ تحميل المدن أولاً
+    // 1️⃣ تحميل المدن
     this.countryService.getCountries('en', 'EGYPT').subscribe({
       next: (cities) => {
-        this.city = cities; // city.value يجب أن يكون ID الصحيح
-        this.createForm();  // إنشاء الفورم بعد توفر المدن
+        this.city = cities; // array of { value, text }
 
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error(err);
+        // بعد تحميل المدن، حدّد المدينة الموجودة
+        this.setCityAndRegion();
 
         this.cdr.detectChanges();
       }
     });
-
   }
+
+
+  private setCityAndRegion() {
+    if (!this.addressData?.cityId) return;
+
+    const selectedCity = this.city.find(c => c.value === this.addressData.cityId);
+    if (selectedCity) {
+      this.form.get('cityId')?.setValue(selectedCity.value);
+
+      // تحميل المناطق الخاصة بهذه المدينة
+      this.countryService.getRegions('en', selectedCity.value).subscribe({
+        next: (regions) => {
+          this.regions = regions;
+
+          // تعيين المنطقة إذا موجودة
+          if (this.addressData?.regionId) {
+            const selectedRegion = this.regions.find(r => r.value === this.addressData.regionId);
+            if (selectedRegion) {
+              this.form.get('regionId')?.setValue(selectedRegion.value);
+            }
+          }
+          this.cdr.detectChanges();
+        }
+      });
+    }
+  }
+
+
+  patchCityAndRegion() {
+    if (this.addressData?.cityId) {
+      const selectedCity = this.city.find(c => c.value === this.addressData.cityId);
+      if (selectedCity) {
+        this.form.get('cityId')?.setValue(selectedCity.value);
+        this.loadRegions('en', selectedCity.value, this.addressData?.regionId);
+      }
+    }
+  }
+
 
   createForm() {
     // إنشاء الفورم
@@ -99,7 +133,8 @@ export class EditAddressComponent implements OnInit {
 
     // تعيين المدينة القديمة تلقائيًا إذا موجودة
     if (this.addressData?.city) {
-      const selectedCity = this.city.find(c => c.text === this.addressData.city);
+      const selectedCity = this.city.find(c => c.value === this.addressData.cityId);
+
       if (selectedCity) {
         this.form.get('cityId')?.setValue(selectedCity.value);
 

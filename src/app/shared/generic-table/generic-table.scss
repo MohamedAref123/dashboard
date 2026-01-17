@@ -1,17 +1,33 @@
 table {
   width: 100%;
   height: 100%;
-
 }
 .bordered-table {
   border: 2px solid #dee2e6; /* حدود حول الجدول بالكامل */
-  border-radius: 6px;        /* زوايا ناعمة */
-  overflow: hidden;          /* يمنع الجدول من كسر الحدود */
+  border-radius: 6px; /* زوايا ناعمة */
+  overflow: hidden; /* يمنع الجدول من كسر الحدود */
 }
 
 .bordered-table table {
   width: 100%;
   border-collapse: collapse; /* يضمن الجدول ما يكسرش البوردر */
-
 }
 
+/* Header بنفس ستايل الكارد */
+.payroll-header {
+  background: linear-gradient(270deg, #b495ea, #673ab7, #0d6efd, #0dcaf0);
+  background-size: 600% 600%;
+  animation: payrollColorFlow 8s ease infinite;
+  color: #fff;
+}
+@keyframes payrollColorFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

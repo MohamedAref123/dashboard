@@ -29,7 +29,7 @@
                     <label class="form-label">{{'PROFILE.CITY'|translate}}</label>
                     <select class="form-control" formControlName="cityId"
                       (change)="loadRegions(currentLang, $event.target['value'])">
-                      <option value="" disabled selected>
+                      <option value="" disabled>
                         {{ 'ADDRESS.SELECT_CITY' | translate }}
                       </option>
                       <option *ngFor="let c of city" [value]="c.value">
@@ -41,7 +41,7 @@
                   <div class="col-md-6">
                     <label class="form-label">{{'PROFILE.REGION'|translate}}</label>
                     <select class="form-control" formControlName="regionId">
-                      <option value="" disabled selected>
+                      <option value="" disabled>
                         {{ 'ADDRESS.SELECT_REGION' | translate }}
                       </option>
                       <option *ngFor="let r of regions" [value]="r.value">

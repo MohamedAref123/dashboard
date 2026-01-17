@@ -233,7 +233,11 @@
   },
   "ADDRESS": {
     "UPDATE_TITLE": "Update Doctor Address",
+    "CREATE_TITLE": "Create Doctor Address",
     "NAME": "Address Name",
+    "COUNTRY": "Country",
+    "CITY": "City",
+    "REGION": "Region",
     "SELECT_CITY": "Select City",
     "SELECT_REGION": "Select Region",
     "POSTAL_CODE": "Postal Code",
@@ -241,7 +245,14 @@
     "BUILDING_NUMBER": "Building Number",
     "PHONE": "Phone",
     "GOOGLE_LOCATION": "Google Location",
-    "IS_DELETED": "Is Deleted"
+    "IS_DELETED": "Is Deleted",
+    "AVAILABILITIES": "Availabilities",
+    "Day": "Day",
+    "START_TIME": "Start Time",
+    "END_TIME": "End Time",
+    "SLOT_TIME": "Visit duration",
+    "ADD_AVAILABILITY": "Add Availability",
+    "REMOVE_AVAILABILITY": "Remove Availability"
   },
   "AVAILABILITY": {
     "TITLE": "Working Hours",
@@ -263,7 +274,8 @@
   },
   "COMMON": {
     "CANCEL": "Cancel",
-    "UPDATE": "Update"
+    "UPDATE": "Update",
+    "SAVE": "Save"
   },
   "VALIDATION": {
     "MIN_VALUE": "Value must not be less than {0}",
@@ -304,7 +316,8 @@
       "EMPTY_PRICE": "—",
       "CATEGORY": {
         "CONSULTATION": "Consultation",
-        "FOLLOW_UP": "Follow Up",
+        "EXAMINATION": "Examination",
+
         "OPERATION": "Operation",
         "UNKNOWN": "Unknown"
       }

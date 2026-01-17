@@ -83,7 +83,7 @@ export class DoctorService {
 
   // Create a new address
   createAddress(request: AddressRequest): Observable<AddressResponse> {
-    return this.apiService.post<AddressResponse>('Accounts/CreateAddress', request);
+    return this.apiService.post<AddressResponse>('DoctorAdresses/Create', request);
   }
 
 

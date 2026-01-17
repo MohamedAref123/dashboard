@@ -56,6 +56,18 @@ export class GenericTable<T> implements OnChanges {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   }
 
+
+  getCategoryKey(category: number): string {
+    switch (category) {
+      case 0: return 'PAYROLL.TABLE.CATEGORY.EXAMINATION';
+      case 1: return 'PAYROLL.TABLE.CATEGORY.CONSULTATION';
+      case 2: return 'PAYROLL.TABLE.CATEGORY.OPERATION';
+      default: return 'PAYROLL.TABLE.CATEGORY.UNKNOWN';
+    }
+  }
+
+
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['_items']) {
       this.dataSource.data = this._items; // <-- refresh datasource

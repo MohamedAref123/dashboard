@@ -1,0 +1,136 @@
+<div class="card p-4">
+  <h2 class="mb-3">{{'ADDRESS.CREATE_TITLE'|translate}}</h2>
+
+  <form [formGroup]="addressForm" class="row g-3">
+
+    <div class="col-md-6">
+      <label class="form-label">{{'ADDRESS.NAME'|translate}}</label>
+      <input class="form-control" formControlName="addressName">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">{{'ADDRESS.COUNTRY'|translate}}</label>
+      <input class="form-control" formControlName="country">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">{{'ADDRESS.CITY'|translate}}</label>
+      <select class="form-select" formControlName="cityId" (change)="onCityChange(addressForm.get('cityId')?.value)">
+        <option value="" selected disabled>{{'ADDRESS.SELECT_CITY'|translate}}</option>
+        <option *ngFor="let c of city" [value]="c.value">
+          {{ c.text }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">{{'ADDRESS.REGION'|translate}}</label>
+      <select class="form-select" formControlName="regionId">
+        <option value="" selected disabled>{{'ADDRESS.SELECT_REGION'|translate}}</option>
+        <option *ngFor="let r of regions" [value]="r.value">
+          {{ r.text }}
+        </option>
+      </select>
+    </div>
+
+
+
+    <div class="col-md-6">
+      <label class="form-label">{{'ADDRESS.STREET'|translate}}</label>
+      <input class="form-control" formControlName="street">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">{{'ADDRESS.BUILDING_NUMBER'|translate}}</label>
+      <input class="form-control" formControlName="buildingNumber">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">{{'ADDRESS.PHONE'|translate}}</label>
+      <input class="form-control" formControlName="phoneNumber">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">{{'ADDRESS.POSTAL_CODE'|translate}}</label>
+      <input class="form-control" formControlName="postalCode">
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">{{'ADDRESS.GOOGLE_LOCATION'|translate}}</label>
+      <input class="form-control" formControlName="googleLocation">
+    </div>
+
+    <div class="col-12 mt-4">
+      <h4>{{'ADDRESS.AVAILABILITIES'|translate}}</h4>
+
+      <div formArrayName="availabilities">
+        <div *ngFor="let a of availabilities.controls; let i = index" [formGroupName]="i"
+          class="border rounded p-3 mb-3">
+
+          <div class="row g-2">
+
+            <div class="col-md-2">
+              <label class="form-label">{{ 'ADDRESS.DAY' | translate }}</label>
+              <select class="form-select" formControlName="dayOfWeek">
+                <option *ngFor="let d of daysOfWeek" [ngValue]="d.value">
+                  {{ d.text }}
+                </option>
+              </select>
+
+            </div>
+
+            <div class="col-12 col-md-2">
+              <label class="form-label">{{ 'AVAILABILITY.CATEGORY_TYPE' | translate }}</label>
+              <select class="form-select" formControlName="category">
+                <option *ngFor="let c of appointmentCategories" [ngValue]="c.value">
+                  {{ 'AVAILABILITY.' + (c.value === 0 ? 'EXAMINATION' : 'CONSULTATION') | translate }}
+                </option>
+              </select>
+
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">{{ 'ADDRESS.START_TIME' | translate }}</label>
+              <input type="time" class="form-control" formControlName="startTime">
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">{{ 'ADDRESS.END_TIME' | translate }}</label>
+              <input type="time" class="form-control" formControlName="endTime">
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">{{ 'ADDRESS.SLOT_TIME' | translate }}</label>
+              <input type="number" class="form-control" formControlName="slotTime">
+            </div>
+
+            <div class="col-md-1 d-flex align-items-end justify-content-center">
+              <button type="button"
+                class="btn btn-outline-danger btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                style="width:32px; height:32px; padding:0;" (click)="removeAvailability(i)">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-outline-primary" (click)="addAvailability()">
+        {{ 'ADDRESS.ADD_AVAILABILITY'| translate }}
+      </button>
+    </div>
+
+    <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+      <button type="button" class="btn btn-light" (click)="dialogRef.close()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+      <button type="submit" class="btn btn-secondary">
+        {{ 'COMMON.SAVE' | translate }}
+      </button>
+    </div>
+
+  </form>
+
+</div>

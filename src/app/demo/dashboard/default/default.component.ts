@@ -2,9 +2,12 @@
 import { NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { TranslateModule } from '@ngx-translate/core';
+
 import { PayrollItem } from 'src/app/Models/Responses/PayrollResponse';
 import { DoctorClaims } from 'src/app/Models/shared/system-claims';
+import { GenericTable } from 'src/app/shared/generic-table/generic-table';
 
 
 
@@ -15,7 +18,7 @@ import { PayrollService } from 'src/services/payroll.service';
 
 @Component({
   selector: 'app-default',
-  imports: [SharedModule, TranslateModule, NgIf],
+  imports: [SharedModule, TranslateModule, NgIf, GenericTable],
   templateUrl: './default.component.html',
   styleUrls: ['./default.component.scss']
 })
@@ -29,11 +32,38 @@ export class DefaultComponent implements OnInit {
   totalRecords: number = 0;
   authService = inject(AuthService)
   DoctorClaims = DoctorClaims;
+
+
+  pagenation = {
+    pageSize: 10,
+    pageIndex: 0,
+    totalRecords: 0
+  };
+
+  headers = [
+    { key: 'patientName', label: 'APPOINTMENT.PATIENT' },
+    { key: 'category', label: 'PAYROLL.TABLE.CATEGORY_HEADER' },
+    { key: 'price', label: 'PAYROLL.TABLE.PRICE' },
+    { key: 'appointmentDate', label: 'PAYROLL.TABLE.APPOINTMENT_DATE' },
+  ];
+
+  onPageChange(event: { pageIndex: number; pageSize: number }) {
+    // Update form values
+    this.payrolForm.patchValue({
+      pageIndex: event.pageIndex,
+      pageSize: event.pageSize
+    });
+
+    this.search(); // fetch new data
+  }
+
+
+
   ngOnInit(): void {
     const today = new Date();
 
     this.payrolForm = this.fb.group({ // ✅ الاسم الجديد
-      pageSize: [20, [Validators.required, Validators.min(1)]],
+      pageSize: [10, [Validators.required, Validators.min(1)]],
       pageIndex: [0, [Validators.required, Validators.min(0)]],
       fromDate: [today.toISOString().split('T')[0], Validators.required], // اليوم فقط
       toDate: [today.toISOString().split('T')[0], Validators.required]
@@ -60,19 +90,25 @@ export class DefaultComponent implements OnInit {
         this.payrollItems = res.items;
         this.totalPayroll = res.totalPayroll;
         this.totalRecords = res.totalRecords;
+
+        // Update pagination object so GenericTable can read it
+        this.pagenation.pageSize = formValue.pageSize;
+        this.pagenation.pageIndex = formValue.pageIndex;
+        this.pagenation.totalRecords = res.totalRecords;
       },
       error: err => console.error(err)
     });
   }
 
-  getCategoryKey(category: number): string {
-    switch (category) {
-      case 0: return 'CONSULTATION';
-      case 1: return 'FOLLOW_UP';
-      case 2: return 'OPERATION';
-      default: return 'UNKNOWN';
-    }
-  }
+
+  // getCategoryKey(category: number): string {
+  //   switch (category) {
+  //     case 0: return 'EXAMINATION';
+  //     case 1: return 'CONSULTATION';
+  //     case 2: return 'OPERATION';
+  //     default: return 'UNKNOWN';
+  //   }
+  // }
 
 
 

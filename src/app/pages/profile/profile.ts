@@ -20,6 +20,7 @@ import { imageResponse } from 'src/app/Models/Responses/ImageResponse';
 import { environment } from 'src/environments/environment';
 import { DoctorClaims } from 'src/app/Models/shared/system-claims';
 import { AuthService } from 'src/services/auth.service';
+import { CreateAddressComponent } from '../create-address.component/create-address.component';
 
 @Component({
   selector: 'app-profile',
@@ -68,7 +69,7 @@ export class Profile implements OnInit {
 
   DoctorClaims = DoctorClaims;
   authService = inject(AuthService);
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
@@ -266,6 +267,41 @@ export class Profile implements OnInit {
         return '';
     }
   }
+
+  addAddress() {
+    const newAddress: DoctorAddress = {
+      googleLocation: '',
+      country: '',
+      city: '',
+      cityId: '',
+      regionId: '',
+      region: '',
+      postalCode: '',
+      street: '',
+      buildingNumber: '',
+      phoneNumber: '',
+      addressName: '',
+      addressId: '',
+      doctorId: this.profileForm.get('doctorId')?.value,
+      isDeleted: false,
+      availabilities: []
+    };
+    const dialogRef = this.dialog.open(CreateAddressComponent, {
+      width: '1000px',
+      maxWidth: '100vw',
+      data: {
+        ...newAddress
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // ✅ تم الحفظ بنجاح داخل EditAddressComponent
+        this.reloadAddresses(); // 🔹 سنضيف هذه الدالة الآن
+      }
+    });
+  }
+
+
 
   onUpdateAddress(addr: DoctorAddress) {
     console.log('Address data:', addr);

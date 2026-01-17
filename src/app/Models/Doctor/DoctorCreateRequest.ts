@@ -8,16 +8,22 @@ export interface AvailabilityRequest {
 export interface AddressRequest {
   addressName: string;
   country: string;
-  city: string;
-  region: string;
+
+  cityId: string;
+  regionId: string;
+
   postalCode: string;
   street: string;
-  longitude: number;
-  latitude: number;
+  googleLocation: string;
+
   buildingNumber: string;
   phoneNumber: string;
+
   availabilities: AvailabilityRequest[];
+
+  doctorId: string;
 }
+
 
 export interface DoctorCreateRequest {
 

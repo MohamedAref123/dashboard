@@ -232,7 +232,11 @@
   },
   "ADDRESS": {
     "UPDATE_TITLE": "تحديث عنوان الطبيب",
+    "CREATE_TITLE": "إنشاء عنوان طبيب",
     "NAME": "اسم العنوان",
+    "COUNTRY": "الدولة",
+    "CITY": "المدينة",
+    "REGION": "المنطقة",
     "SELECT_CITY": "اختر المدينة",
     "SELECT_REGION": "اختر المنطقة",
     "POSTAL_CODE": "الرمز البريدي",
@@ -240,7 +244,14 @@
     "BUILDING_NUMBER": "رقم المبنى",
     "PHONE": "رقم الهاتف",
     "GOOGLE_LOCATION": "الموقع على خرائط Google",
-    "IS_DELETED": "محذوف؟"
+    "IS_DELETED": "محذوف؟",
+    "AVAILABILITIES": "مواعيد التوافر",
+    "DAY": "اليوم",
+    "START_TIME": "وقت البدء",
+    "END_TIME": "وقت الانتهاء",
+    "SLOT_TIME": "وقت الكشف (بالدقائق)",
+    "ADD_AVAILABILITY": "إضافة موعد توافر",
+    "REMOVE_AVAILABILITY": "إزالة موعد التوافر"
   },
   "AVAILABILITY": {
     "TITLE": "مواعيد العمل",
@@ -262,7 +273,8 @@
   },
   "COMMON": {
     "CANCEL": "إلغاء",
-    "UPDATE": "تحديث"
+    "UPDATE": "تحديث",
+    "SAVE": "حفظ"
   },
   "VALIDATION": {
     "MIN_VALUE": "يجب ألا يقل عن {0}",
@@ -303,7 +315,8 @@
       "EMPTY_PRICE": "—",
       "CATEGORY": {
         "CONSULTATION": "استشارة",
-        "FOLLOW_UP": "متابعة",
+        "EXAMINATION": "فحص",
+
         "OPERATION": "عملية",
         "UNKNOWN": "غير معروف"
       }
