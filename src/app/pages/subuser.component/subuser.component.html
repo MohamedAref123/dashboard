@@ -1,7 +1,18 @@
 <div class="card w-100 card-body mt-4">
-  <h2 class="mb-4" style="color: #673ab7">
-    {{ 'SUBUSER.TITLE' | translate }} ({{ 'SUBUSER.DOCTOR' | translate }}: {{ doctorname }})
-  </h2>
+
+  <div class="doctor-header d-flex justify-content-between align-items-center m-2">
+    <div class="d-flex flex-column">
+      <div class="d-flex  header-title">
+        <i class="ti ti-users icon-animate me-2" style="font-size: 25px;"></i>
+        <h2 class="mb-4 d-flex align-items-center" style="color: #673ab7">
+          {{ 'SUBUSER.TITLE' | translate }}
+          ({{ 'SUBUSER.DOCTOR' | translate }}: {{ doctorname }})
+        </h2>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <app-generic-table [_headers]="headers" [_items]="subuserlist" [totalRecords]="pagination.totalRecords"

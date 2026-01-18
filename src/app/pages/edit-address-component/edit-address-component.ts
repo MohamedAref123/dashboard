@@ -115,7 +115,7 @@ export class EditAddressComponent implements OnInit {
       postalCode: [this.addressData?.postalCode, Validators.required],
       street: [this.addressData?.street, Validators.required],
       buildingNumber: [this.addressData?.buildingNumber, Validators.required],
-      phoneNumber: [this.addressData?.phoneNumber, Validators.required],
+      phoneNumber: [this.addressData?.phoneNumber, [Validators.required, Validators.pattern(/^01[0-2,5]\d{8}$/)]],
       country: [this.addressData?.country || 'EGYPT'],
       availabilities: this.fb.array(
         (this.addressData?.availabilities || []).map(a => this.fb.group({

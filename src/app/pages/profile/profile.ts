@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { DoctorAddress, userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { DoctorService } from 'src/services/doctor.service';
 import { ShardEnums, DaysOfWeek, Genders, AppointmentCategory } from 'src/app/Models/shared/SharedClasses';
@@ -34,7 +34,8 @@ import { CreateAddressComponent } from '../create-address.component/create-addre
     MatIcon,
     MatDialogModule,
     ValidationError,
-    MatOption
+    MatOption,
+    NgIf
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'

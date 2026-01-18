@@ -20,6 +20,8 @@
     <form [formGroup]="profileForm" class="pt-4 pb-4">
       <!-- Basic Information -->
       <div class="container">
+
+        <!--image card-->
         <div class="sidebar">
           <div class="text-center mb-3">
             <h5>{{ 'PROFILE.PROFILE_IMAGE' | translate }}</h5>
@@ -27,9 +29,9 @@
               width="150" height="150" />
             <div class="mt-2">
               <div class="mt-2">
-                <label for="fileInput" class="form-label">{{ 'PROFILE.CHOOSE_IMAGE' | translate }}</label>
+                <label for="fileInput" class="form-label mt-2">{{ 'PROFILE.CHOOSE_IMAGE' | translate }}</label>
                 <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="image/*"
-                  class="form-control mb-2" />
+                  class="form-control my-2" />
                 <button class="btn btn-primary" (click)="onUploadImage()">{{ 'BUTTONS.UPLOAD_BUTTON' | translate
                   }}</button>
               </div>
@@ -37,7 +39,8 @@
           </div>
         </div>
 
-        <div class="card p-3 m-0">
+        <!-- Basic Info Card -->
+        <div class="card p-3 ">
           <h3>{{'PROFILE.BASIC_INFO'|translate}}</h3>
           <div class="row g-3">
             <div class="col-md-4">
@@ -93,14 +96,14 @@
               <input type="number" formControlName="consultationPrice" class="form-control" />
             </div>
 
-            <div class="col-md-6">
-              <mat-label>{{'PROFILE.INSURANCE'|translate}}</mat-label>
+            <div class="col-md-4">
+              <mat-label class="form-label">{{'PROFILE.INSURANCE'|translate}}</mat-label>
               <mat-select formControlName="insuranceId" class="form-control mt-2"
                 (selectionChange)="onInsuranceChange($event.value)">
                 <!-- ✅ Custom trigger shows selected insurance with icon -->
                 <mat-select-trigger *ngIf="selectedInsurance">
                   <img [src]="'data:image/png;base64,' + selectedInsurance.icon"
-                    class="img-thumbnail rounded-circle me-2" width="40" height="40" alt="Selected Insurance Icon" />
+                    class="img-thumbnail rounded-circle me-2" width="25" height="25" alt="Selected Insurance Icon" />
                   {{ selectedInsurance.text }}
                 </mat-select-trigger>
 

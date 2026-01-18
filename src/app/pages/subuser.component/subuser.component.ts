@@ -15,6 +15,7 @@ import { DoctorService } from 'src/services/doctor.service';
 import { SubuserService } from 'src/services/subuser.service';
 import { ToastService } from 'src/services/ToastService';
 
+
 @Component({
   selector: 'app-subuser.component',
   imports: [ReactiveFormsModule, GenericTable, TranslateModule],

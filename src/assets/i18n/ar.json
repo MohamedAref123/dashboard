@@ -70,7 +70,7 @@
     "CATEGORY": "الفئة"
   },
   "APPOINTMENT": {
-    "SEARCH_TITLE": "البحث عن المواعيد حسب التاريخ",
+    "SEARCH_TITLE": "البحث عن المواعيد",
     "FROM_DATE": "من تاريخ",
     "TO_DATE": "إلى تاريخ",
     "STATUS": "الحالة",

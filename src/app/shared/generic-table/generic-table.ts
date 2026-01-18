@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
@@ -43,8 +43,16 @@ export class GenericTable<T> implements OnChanges {
     this.translate.addLangs(['en', 'ar']);
 
     const lang = localStorage.getItem('lang') || 'en';
-    this.changeLang(lang);
+    this.translate.use(lang);
+    this.updatePaginatorLabels(lang);
+
+    // 👈 يسمع أي تغيير لغة
+    this.translate.onLangChange.subscribe(event => {
+      this.updatePaginatorLabels(event.lang);
+    });
   }
+
+
   changeLang(lang: string) {
     this.translate.use(lang);
     document.documentElement.lang = lang;
@@ -103,6 +111,47 @@ export class GenericTable<T> implements OnChanges {
   }
 
   @Output() actionClicked = new EventEmitter<{ row: T; action: string }>();
+
+  paginatorIntl = inject(MatPaginatorIntl);
+
+  updatePaginatorLabels(lang: string) {
+    if (lang === 'ar') {
+      this.paginatorIntl.itemsPerPageLabel = 'عدد العناصر في الصفحة';
+      this.paginatorIntl.nextPageLabel = 'الصفحة التالية';
+      this.paginatorIntl.previousPageLabel = 'الصفحة السابقة';
+      this.paginatorIntl.firstPageLabel = 'الصفحة الأولى';
+      this.paginatorIntl.lastPageLabel = 'الصفحة الأخيرة';
+
+      this.paginatorIntl.getRangeLabel = (page, pageSize, length) => {
+        if (length === 0 || pageSize === 0) {
+          return `0 من ${length}`;
+        }
+        const startIndex = page * pageSize;
+        const endIndex = Math.min(startIndex + pageSize, length);
+        return `${startIndex + 1} – ${endIndex} من ${length}`;
+      };
+
+    } else {
+      this.paginatorIntl.itemsPerPageLabel = 'Items per page';
+      this.paginatorIntl.nextPageLabel = 'Next page';
+      this.paginatorIntl.previousPageLabel = 'Previous page';
+      this.paginatorIntl.firstPageLabel = 'First page';
+      this.paginatorIntl.lastPageLabel = 'Last page';
+
+      this.paginatorIntl.getRangeLabel = (page, pageSize, length) => {
+        if (length === 0 || pageSize === 0) {
+          return `0 of ${length}`;
+        }
+        const startIndex = page * pageSize;
+        const endIndex = Math.min(startIndex + pageSize, length);
+        return `${startIndex + 1} – ${endIndex} of ${length}`;
+      };
+    }
+
+    // 👈 مهم جدًا
+    this.paginatorIntl.changes.next();
+  }
+
 }
 
 export interface TableAction {

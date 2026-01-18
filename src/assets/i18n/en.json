@@ -71,7 +71,7 @@
     "CATEGORY": "Category"
   },
   "APPOINTMENT": {
-    "SEARCH_TITLE": "Search Appointments by Date",
+    "SEARCH_TITLE": "Search Appointments",
     "FROM_DATE": "From Date",
     "TO_DATE": "To Date",
     "STATUS": "Status",

@@ -23,6 +23,7 @@
                     <label class="form-label">{{'PROFILE.ADDRESS'|translate}}</label>
                     <input class="form-control" [placeholder]="'ADDRESS.NAME' | translate"
                       formControlName="addressName" />
+                    <app-validation-error [form]="form" controlName="addressName"></app-validation-error>
                   </div>
 
                   <div class="col-md-6">
@@ -36,6 +37,7 @@
                         {{ c.text }}
                       </option>
                     </select>
+                    <app-validation-error [form]="form" controlName="cityId"></app-validation-error>
                   </div>
 
                   <div class="col-md-6">
@@ -48,35 +50,41 @@
                         {{ r.text }}
                       </option>
                     </select>
+                    <app-validation-error [form]="form" controlName="regionId"></app-validation-error>
                   </div>
 
                   <div class="col-md-6">
                     <label class="form-label">{{'PROFILE.POSTAL_CODE'|translate}}</label>
                     <input class="form-control" [placeholder]="'ADDRESS.POSTAL_CODE' | translate"
                       formControlName="postalCode" />
+                    <app-validation-error [form]="form" controlName="postalCode"></app-validation-error>
                   </div>
 
                   <div class="col-md-6">
                     <label class="form-label">{{'PROFILE.STREET'|translate}}</label>
                     <input class="form-control" [placeholder]="'ADDRESS.STREET' | translate" formControlName="street" />
+                    <app-validation-error [form]="form" controlName="street"></app-validation-error>
                   </div>
 
                   <div class="col-md-6">
                     <label class="form-label">{{'PROFILE.BUILDING_NUMBER'|translate}}</label>
                     <input class="form-control" [placeholder]="'ADDRESS.BUILDING_NUMBER' | translate"
                       formControlName="buildingNumber" />
+                    <app-validation-error [form]="form" controlName="buildingNumber"></app-validation-error>
                   </div>
 
                   <div class="col-md-6">
                     <label class="form-label">{{'PROFILE.PHONE'|translate}}</label>
                     <input class="form-control" [placeholder]="'ADDRESS.PHONE' | translate"
                       formControlName="phoneNumber" />
+                    <app-validation-error [form]="form" controlName="phoneNumber"></app-validation-error>
                   </div>
 
                   <div class="col-md-6">
                     <label class="form-label">{{'ADDRESS.GOOGLE_LOCATION'|translate}}</label>
                     <input class="form-control" [placeholder]="'ADDRESS.GOOGLE_LOCATION' | translate"
                       formControlName="googleLocation" />
+                    <app-validation-error [form]="form" controlName="googleLocation"></app-validation-error>
                   </div>
 
                   <div class="col-md-6">
@@ -163,7 +171,7 @@
             <button type="button" class="btn btn-light" (click)="dialogRef.close()">
               {{ 'COMMON.CANCEL' | translate }}
             </button>
-            <button type="submit" class="btn btn-secondary">
+            <button type="submit" class="btn btn-secondary" [disabled]="form.invalid">
               {{ 'COMMON.UPDATE' | translate }}
             </button>
           </div>
