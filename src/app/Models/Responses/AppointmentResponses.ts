@@ -6,6 +6,7 @@ export class AppointmentDetailsResponse {
   patientName: string;
   appointmentDate: Date;
   appointmentId: string;
+  category: number;
   fromTime: string;
   toTime: string;
   notes: string;

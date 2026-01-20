@@ -46,6 +46,15 @@ export class AppointmentViewComponent implements OnInit {
     });
   }
 
+  getCategoryKey(category: number): string {
+    switch (category) {
+      case 0: return 'examination';
+      case 1: return 'consultation';
+      case 2: return 'operation';
+      default: return 'unknown';
+    }
+  }
+
   changeStatus(statusKey: 'Cancelled' | 'Completed' | 'Confirmed') {
     if (!this.model) return;
 

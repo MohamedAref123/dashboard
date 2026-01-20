@@ -12,37 +12,41 @@
 
           <div class="appointment-body">
             <div class="appointment-item">
-              <span class="label">{{ 'APPOINTMENT.PATIENT' | translate }}:</span>
+              <span class="label">{{ 'APPOINTMENT.PATIENT' | translate }} :</span>
               <span class="value">{{ model.patientName }}</span>
             </div>
 
             <div class="appointment-item">
-              <span class="label">{{ 'APPOINTMENT.PHONE' | translate }}:</span>
+              <span class="label">{{ 'APPOINTMENT.CATEGORY' | translate }} :</span>
+              <span class="value">{{ getCategoryKey(model.category) }}</span>
+            </div>
+            <div class="appointment-item">
+              <span class="label">{{ 'APPOINTMENT.PHONE' | translate }} :</span>
               <span class="value">{{ model.patientPhoneNumber }}</span>
             </div>
 
             <div class="appointment-item">
-              <span class="label">{{ 'APPOINTMENT.TIME' | translate }}:</span>
+              <span class="label">{{ 'APPOINTMENT.TIME' | translate }} :</span>
               <span class="value">{{ model.fromTime | slice:0:5 }} - {{ model.toTime | slice:0:5 }}</span>
             </div>
 
             <div class="appointment-item">
-              <span class="label">{{ 'APPOINTMENT.DATE' | translate }}:</span>
+              <span class="label">{{ 'APPOINTMENT.DATE' | translate }} :</span>
               <span class="value">{{ model.appointmentDate | date: 'dd-MM-yyyy' }}</span>
             </div>
 
             <div class="appointment-item">
-              <span class="label">{{ 'APPOINTMENT.ADDRESS' | translate }}:</span>
+              <span class="label">{{ 'APPOINTMENT.ADDRESS' | translate }} :</span>
               <span class="value">{{ model.addressName }}</span>
             </div>
 
             <div class="appointment-item" *ngIf="model.notes">
-              <span class="label">{{ 'APPOINTMENT.NOTES' | translate }}:</span>
+              <span class="label">{{ 'APPOINTMENT.NOTES' | translate }} :</span>
               <p class="note-text">{{ model.notes }}</p>
             </div>
 
             <div class="appointment-item-last">
-              <label class="label">{{ 'APPOINTMENT.STATUS' | translate }}:</label>
+              <label class="label">{{ 'APPOINTMENT.STATUS' | translate }} :</label>
               <p class="note-text">{{ 'STATUS.' + selectedStatus.toUpperCase() | translate }}</p>
             </div>
           </div>
@@ -66,7 +70,7 @@
             </div>
 
             <div class="appointment-footer mt-4">
-              <button class="btn btn-back btn-primary" (click)="back()">
+              <button class="btn btn-back btn-light" (click)="back()">
                 <span class="material-icons">arrow_back</span>
                 {{ 'BUTTONS.BACK' | translate }}
               </button>

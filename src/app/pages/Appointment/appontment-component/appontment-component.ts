@@ -39,10 +39,11 @@ export class AppontmentComponent implements OnInit {
 
   headers = [
     { key: 'patientName', label: 'APPOINTMENT.PATIENT' },
-    { key: 'formattedDate', label: 'APPOINTMENT.DATE' },
+    { key: 'appointmentDate', label: 'APPOINTMENT.DATE' },
     { key: 'time', label: 'APPOINTMENT.TIME' },
     { key: 'dayOfWeek', label: 'APPOINTMENT.DAY' },
     { key: 'addressName', label: 'APPOINTMENT.ADDRESS' },
+    { key: 'category', label: 'APPOINTMENT.CATEGORY' },
     { key: 'statusText', label: 'APPOINTMENT.STATUS' }
   ];
 
@@ -121,8 +122,8 @@ export class AppontmentComponent implements OnInit {
           statusText: 'STATUS.' + AppointmentStatus[item.status].toUpperCase()
 
           ,
-          formattedDate: this.dateHelper.formatDateString(item.appointmentDate, 'dd-MM-yyyy'),
-          dayOfWeek: 'DAYS.' + item.dayOfWeek.toUpperCase()
+          // formattedDate: this.dateHelper.formatDateString(item.appointmentDate, 'dd-MM-yyyy'),
+          // dayOfWeek: 'DAYS.' + item.dayOfWeek.toUpperCase()
         }));
 
         this.pagenation.totalRecords = response.totalRecords || 0;
