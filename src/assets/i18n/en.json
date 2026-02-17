@@ -17,8 +17,9 @@
     "DOCTORS": "Doctors",
     "PATIENTS": "Patients",
 
-    "CURRENT_AVAILABILITIES": "Current Availabilities",
+    "CURRENT_AVAILABILITIES": "Availabilities",
     "CANCEL_DAY": "Cancel Day",
+    "APPOINTMENT_MANAGEMENT": "Appointments",
     "SUBUSER": {
       "GROUP": "Sub Users",
       "COLLAPSE": "Sub Users",

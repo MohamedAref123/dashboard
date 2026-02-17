@@ -5,9 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatOption, MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { UpdateAddressRequest } from 'src/app/Models/Doctor/AddressUpdateRequest';
+import { Availability, UpdateAddressRequest } from 'src/app/Models/Doctor/AddressUpdateRequest';
 import { cityResponse } from 'src/app/Models/Responses/CityResponse';
-
 import { AddressResponse } from 'src/app/Models/Responses/DoctorResponses';
 import { RegionResponse } from 'src/app/Models/Responses/RegionResponse';
 import { ShardEnums, DaysOfWeek } from 'src/app/Models/shared/SharedClasses';
@@ -195,23 +194,64 @@ export class EditAddressComponent implements OnInit {
   }
 
 
+  private hasTimeOverlap(availabilities: Availability[]): boolean {
+
+    // نحول الوقت لدقايق عشان المقارنة تبقى سهلة
+    const toMinutes = (time: string) => {
+      const [h, m] = time.split(':').map(Number);
+      return h * 60 + m;
+    };
+
+    // نجمع حسب التاريخ (لأن كل يوم لوحده)
+    const groupedByDate = availabilities.reduce((acc, curr) => {
+      acc[curr.dayOfWeek] = acc[curr.dayOfWeek] || [];
+      acc[curr.dayOfWeek].push(curr);
+      return acc;
+    }, {} as Record<string, Availability[]>);
+
+    for (const date in groupedByDate) {
+      const daySlots = groupedByDate[date];
+
+      // نرتب حسب startTime
+      daySlots.sort((a, b) => toMinutes(a.startTime) - toMinutes(b.startTime));
+
+      for (let i = 0; i < daySlots.length - 1; i++) {
+        const current = daySlots[i];
+        const next = daySlots[i + 1];
+
+        const start1 = toMinutes(current.startTime);
+        const end1 = toMinutes(current.endTime);
+        const start2 = toMinutes(next.startTime);
+        const end2 = toMinutes(next.endTime);
+
+        // شرط التداخل
+        if (start1 < end2 && start2 < end1) {
+          return true; // فيه تداخل
+        }
+      }
+    }
+
+    return false;
+  }
+
+
 
   save() {
     const payload: UpdateAddressRequest = this.form.value;
 
-    // تحويل categoryType إلى category
     payload.availabilities = payload.availabilities.map(a => ({
       ...a,
       addressId: a.addressId || payload.addressId,
       startTime: a.startTime.length <= 5 ? a.startTime + ':00' : a.startTime,
       endTime: a.endTime.length <= 5 ? a.endTime + ':00' : a.endTime,
-      category: a.category  // ✅ تحويل categoryType إلى category
+      category: a.category
     }));
 
-    console.log('📦 Final payload for update:', payload);
-
-
-    console.log('📦 Final payload:', payload);
+    // ❌ منع التداخل
+    if (this.hasTimeOverlap(payload.availabilities)) {
+      this.toast.error('Time periods overlap on the same date');
+      return;
+    }
 
     this.doctorService.updateAddress(payload).subscribe({
       next: () => {
@@ -219,11 +259,13 @@ export class EditAddressComponent implements OnInit {
         this.dialogRef.close(true);
       },
       error: (err) => {
-        console.error('❌ Update failed:', err);
+        console.error(err);
         this.toast.error('Failed to update address');
       }
     });
   }
+
+
 
 
 

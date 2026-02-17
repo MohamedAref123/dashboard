@@ -6,6 +6,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { jwtDecode } from 'jwt-decode';
 import { userResponse } from 'src/app/Models/Doctor/userResponse/userResponse';
 import { NotificationItem, NotificationPagedResponse } from 'src/app/Models/Responses/NotificationResponse';
+import { AppointmentSignalRService } from 'src/services/Hubs/AppointmentListenerService';
+import { ToastService } from 'src/services/ToastService';
 
 // third party import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -25,6 +27,8 @@ import { formatDate } from '@angular/common';
 })
 export class NavRightComponent implements OnInit {
 
+  private signalR = inject(AppointmentSignalRService);
+  private toaster = inject(ToastService);
   profileImageUrl: string | null = null;
   doctorService = inject(DoctorService);
   loginService = inject(LoginService);
@@ -50,6 +54,27 @@ export class NavRightComponent implements OnInit {
 
   ngOnInit(): void {
 
+    const savedLang = localStorage.getItem('lang') || 'en';
+    this.setLang(savedLang);
+
+    this.translate.onLangChange.subscribe(event => {
+      document.documentElement.dir = event.lang === 'ar' ? 'rtl' : 'ltr';
+      localStorage.setItem('lang', event.lang);
+    });
+
+    const doctorId = this.getDoctorId(); // or get from AuthService / token
+    if (doctorId === null) return;
+    this.signalR.startConnection(doctorId);
+
+    // Global listener
+    this.signalR.onAppointmentReceived((msg) => {
+      this.toaster.showNavigation(`${msg.message}`, `/appointments/view/${msg.appointmentId}`, msg.type);
+      this.loadNotifications();
+    });
+
+
+
+
     const lang: "EN" | "AR" =
       (this.translate.currentLang?.toUpperCase() === 'AR' ? 'AR' : 'EN');
 
@@ -67,10 +92,38 @@ export class NavRightComponent implements OnInit {
     });
 
     this.setDoctorIdFromToken();
-    this.loadNotifications();
+    //this.loadNotifications();
 
 
   }
+
+
+  getDoctorId(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      // assuming your claim is 'doctorId' or maybe 'sub', 'id', etc.
+      return decoded.LoggedId || null;
+    } catch (e) {
+      console.error('Error decoding JWT:', e);
+      return null;
+    }
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('access_token');
+  }
+
+  private setLang(lang: string) {
+    this.translate.use(lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    localStorage.setItem('lang', lang);
+  }
+
+
 
   private setDoctorIdFromToken() {
     const token = localStorage.getItem('access_token');

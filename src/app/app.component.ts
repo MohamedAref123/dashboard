@@ -1,5 +1,5 @@
 // Angular import
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Loader } from './shared/loader/loader';
 import { AppointmentSignalRService } from 'src/services/Hubs/AppointmentListenerService';
@@ -15,7 +15,7 @@ import { JwtPayload } from './Models/shared/SharedClasses';
   styleUrls: ['./app.component.scss'],
   imports: [RouterOutlet, Loader]
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'Doctor Hero Management';
   private signalR = inject(AppointmentSignalRService);
   private toaster = inject(ToastService);
@@ -44,31 +44,9 @@ export class AppComponent implements OnInit {
 
 
 
-  ngOnInit() {
-    const savedLang = localStorage.getItem('lang') || 'en';
-    this.setLang(savedLang);
 
-    this.translate.onLangChange.subscribe(event => {
-      document.documentElement.dir = event.lang === 'ar' ? 'rtl' : 'ltr';
-      localStorage.setItem('lang', event.lang);
-    });
 
-    const doctorId = this.getDoctorId(); // or get from AuthService / token
-    if (doctorId === null) return;
-    this.signalR.startConnection(doctorId);
 
-    // Global listener
-    this.signalR.onAppointmentReceived((msg) => {
-      this.toaster.showNavigation(`${msg.message}`, `/appointments/view/${msg.appointmentId}`, msg.type);
-    });
-  }
-
-  private setLang(lang: string) {
-    this.translate.use(lang);
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    localStorage.setItem('lang', lang);
-  }
 
   getToken(): string | null {
     return localStorage.getItem('access_token');

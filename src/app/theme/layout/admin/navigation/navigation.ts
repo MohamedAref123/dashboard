@@ -2,7 +2,7 @@ import { DoctorClaims } from "src/app/Models/shared/system-claims";
 
 export interface NavigationItem {
   id: string;
-  title: string;
+  title: string | null;
   type: 'item' | 'collapse' | 'group';
   translate?: string;
   icon?: string;
@@ -43,35 +43,9 @@ export const NavigationItems: NavigationItem[] = [
         icon: 'ti ti-user',
         breadcrumbs: false
       },
-      {
-        id: 'appointment',
-        title: 'MENU.APPOINTMENT',
-        type: 'item',
-        classes: 'nav-item',
-        url: '/appointments',
-        icon: 'ti ti-calendar',
-        breadcrumbs: false,
-        role: [DoctorClaims.Appointments]
-      },
-      {
-        id: 'CurrentAvailabilities',
-        title: 'MENU.CURRENT_AVAILABILITIES',
-        type: 'item',
-        classes: 'nav-item',
-        url: '/current-availabilities',
-        icon: 'ti ti-calendar-time',
-        breadcrumbs: false
-      },
-      {
-        id: 'Cancel-Day',
-        title: 'MENU.CANCEL_DAY',
-        type: 'item',
-        classes: 'nav-item',
-        url: '/Cancel-Day',
-        icon: 'ti ti-calendar-x',
-        breadcrumbs: false,
-        role: [DoctorClaims.CancelDayAppointments]
-      },
+
+
+
       {
         id: 'Reviews',
         title: 'MENU.REVIEWS',
@@ -85,6 +59,57 @@ export const NavigationItems: NavigationItem[] = [
 
     ]
   },
+
+
+  {
+    id: 'AppointmentManagement',
+    title: null,
+    type: 'group',
+    icon: 'ti ti-calendar',
+    //role: [DoctorClaims.SubUsers],
+    children: [
+      {
+        id: 'SubuserCollapse',
+        title: 'MENU.APPOINTMENT_MANAGEMENT',
+        type: 'collapse',
+        classes: 'nav-item',
+        icon: 'ti ti-calendar-time',
+        breadcrumbs: false,
+        children: [
+          {
+            id: 'appointment',
+            title: 'MENU.APPOINTMENT',
+            type: 'item',
+            //classes: 'nav-item',
+            url: '/appointments',
+            icon: 'ti ti-calendar',
+            breadcrumbs: false,
+            role: [DoctorClaims.Appointments]
+          },
+          {
+            id: 'CurrentAvailabilities',
+            title: 'MENU.CURRENT_AVAILABILITIES',
+            type: 'item',
+            //classes: 'nav-item',
+            url: '/current-availabilities',
+            icon: 'ti ti-calendar-time',
+            breadcrumbs: false
+          },
+          {
+            id: 'Cancel-Day',
+            title: 'MENU.CANCEL_DAY',
+            type: 'item',
+            //classes: 'nav-item',
+            url: '/Cancel-Day',
+            icon: 'ti ti-calendar-x',
+            breadcrumbs: false,
+            role: [DoctorClaims.CancelDayAppointments]
+          },
+        ]
+      }
+    ]
+  },
+
 
   // {
   //   id: 'Subuser',
@@ -114,24 +139,56 @@ export const NavigationItems: NavigationItem[] = [
   // }
 
 
+  // {
+  //   id: 'Subuser',
+  //   title: 'MENU.SUBUSER.GROUP',
+  //   type: 'group',
+  //   icon: 'ti ti-users',
+  //   role: [DoctorClaims.SubUsers],
+  //   children: [
+  //     {
+  //       id: 'sub-user',
+  //       title: 'MENU.SUBUSER.USERS',
+  //       type: 'item',
+  //       classes: 'nav-item',
+  //       url: '/Subuser',
+  //       icon: 'ti ti-user',
+  //       breadcrumbs: false
+  //     }
+  //   ],
+
+  // }
+
+
+
+  //subusers
   {
-    id: 'Subuser',
-    title: 'MENU.SUBUSER.GROUP',
+    id: 'SubuserGroup',
+    title: null,
     type: 'group',
     icon: 'ti ti-users',
+    role: [DoctorClaims.SubUsers],
     children: [
       {
-        id: 'sub-user',
-        title: 'MENU.SUBUSER.USERS',
-        type: 'item',
+        id: 'SubuserCollapse',
+        title: 'MENU.SUBUSER.COLLAPSE',
+        type: 'collapse',
         classes: 'nav-item',
-        url: '/Subuser',
-        icon: 'ti ti-user',
-        breadcrumbs: false
+        icon: 'ti ti-user-cog',
+        breadcrumbs: false,
+        children: [
+          {
+            id: 'sub-user',
+            title: 'MENU.SUBUSER.USERS',
+            type: 'item',
+            url: '/Subuser',
+            icon: 'ti ti-user',
+            breadcrumbs: false
+          }
+        ]
       }
-    ],
-    role: [DoctorClaims.SubUsers]
-  }
+    ]
+  },
 
 
 

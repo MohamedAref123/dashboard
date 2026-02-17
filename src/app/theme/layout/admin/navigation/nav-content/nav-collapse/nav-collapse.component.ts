@@ -7,10 +7,11 @@ import { RouterModule } from '@angular/router';
 import { NavigationItem } from '../../navigation';
 
 import { NavItemComponent } from '../nav-item/nav-item.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-nav-collapse',
-  imports: [CommonModule, RouterModule, NavItemComponent],
+  imports: [CommonModule, RouterModule, NavItemComponent, TranslateModule],
   templateUrl: './nav-collapse.component.html',
   styleUrl: './nav-collapse.component.scss'
 })

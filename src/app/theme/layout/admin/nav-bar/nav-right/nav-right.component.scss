@@ -7,6 +7,35 @@
   color: gray; /* لون النص */
   font-weight: 600;
 }
+.pc-head-link {
+  position: relative;
+}
+
+/* badge الإشعارات */
+.pc-head-link .badge {
+  position: absolute;
+  top: -6px; /* يطلع لفوق */
+  right: -10px; /* من برّه */
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  font-size: 11px;
+  font-weight: 600;
+  background-color: #673ab7; /* أحمر فيسبوك */
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border: 2px solid #fff; /* خط أبيض حوالين الرقم */
+}
+
+/* RTL (عربي) */
+[dir='rtl'] .pc-head-link .badge {
+  right: auto;
+  left: -10px;
+}
 
 .notification-tooltip {
   display: none;
@@ -25,7 +54,8 @@
 }
 
 .pc-head-link:hover .notification-tooltip {
-  display: block;
+  //display: block;
+  display: flex;
 }
 
 .github-tooltip {

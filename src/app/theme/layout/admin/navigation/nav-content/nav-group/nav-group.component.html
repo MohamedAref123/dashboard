@@ -1,5 +1,5 @@
 @if (!item.hidden) {
-<li class="nav-item coded-menu-caption" [ngClass]="item.classes">
+<li class="nav-item coded-menu-caption" *ngIf="item.title" [ngClass]="item.classes">
   <label class="mx-3" for="{{ item.id }}">{{ item.title|translate }}</label>
 </li>
 @for (items of item.children; track items) {
