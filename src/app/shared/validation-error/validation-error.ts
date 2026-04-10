@@ -71,6 +71,39 @@ export const timeRangeValidator: ValidatorFn = (group: AbstractControl): Validat
 
 
 
+export const dateRangeValidator: ValidatorFn = (
+  group: AbstractControl
+): ValidationErrors | null => {
+
+  const fromControl = group.get('fromDate');
+  const toControl = group.get('toDate');
+
+  if (!fromControl || !toControl) return null;
+
+  const from = fromControl.value;
+  const to = toControl.value;
+
+  if (!from || !to) return null;
+
+  const fromDate = new Date(from);
+  const toDate = new Date(to);
+
+  if (toDate < fromDate) {
+    toControl.setErrors({ dateRangeInvalid: true });
+    return { dateRangeInvalid: true };
+  }
+
+  // امسح الخطأ بس من غير ما تمسح required مثلاً
+  if (toControl.hasError('dateRangeInvalid')) {
+    const errors = { ...toControl.errors };
+    delete errors['dateRangeInvalid'];
+    toControl.setErrors(Object.keys(errors).length ? errors : null);
+  }
+
+  return null;
+};
+
+
 @Component({
   selector: 'app-validation-error',
   imports: [NgIf, NgFor, TranslateModule],

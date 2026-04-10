@@ -1,0 +1,55 @@
+<div class="card p-3">
+
+  <div class="d-flex justify-content-end mt-3">
+    <button class="btn btn-save" (click)="createTicket()">
+      {{ 'TICKETS.CREATE' | translate }}
+    </button>
+  </div>
+
+
+  <form [formGroup]="filterForm" (ngSubmit)="onFilter()" class="row g-2 mb-3">
+
+    <div class="col-auto">
+      <label class="mb-2">{{ 'TICKETS.STATUS.LABEL' | translate }}</label>
+      <select formControlName="status" class="form-select">
+        <option value="null">{{ 'TICKETS.ALL' | translate }}</option>
+        <option *ngFor="let s of ticketStatuses" [value]="s">
+          {{ getStatusName(s) }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-auto">
+      <label class="mb-2">{{ 'TICKETS.FROM_DATE' | translate }}</label>
+      <input type="date" formControlName="fromDate" class="form-control">
+    </div>
+
+    <div class="col-auto">
+      <label class="mb-2">{{ 'TICKETS.TO_DATE' | translate }}</label>
+      <input type="date" formControlName="toDate" class="form-control">
+    </div>
+
+    <div class="col-auto align-self-end">
+      <button type="submit" class="btn btn-primary">{{ 'TICKETS.FILTER' | translate }}</button>
+    </div>
+
+  </form>
+
+
+
+
+  <div *ngIf="tickets.length===0">
+    <div class="alert alert-info text-center mt-3">
+      {{ 'TICKETS.NO_TICKETS' | translate }}
+    </div>
+  </div>
+
+
+  <app-generic-table [_headers]="headers" [_items]="tickets" (pageChange)="onPageChange($event)"
+    [pageSize]="pagenation.pageSize" [totalRecords]="pagenation.totalRecords" [pageIndex]="pagenation.pageIndex"
+    class="mt-4" *ngIf="tickets.length>0"></app-generic-table>
+
+
+
+
+</div>

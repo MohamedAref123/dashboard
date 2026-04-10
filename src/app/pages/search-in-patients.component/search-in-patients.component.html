@@ -1,0 +1,180 @@
+<div class="card total-income-card  overflow-hidden p-4 m-1 my-4 p-3 shadow-sm">
+
+
+  <div class="container mt-4">
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <i class="ti ti-clipboard-list icon-animate"></i>
+      <h2 style="color: #673ab7">{{ 'PATIENT_HISTORY.TITLE' | translate }}</h2>
+
+      <button class="btn btn-save" (click)="gotocreatehistory()" *ngIf="patientId"><i class="ti ti-plus"></i></button>
+    </div>
+
+    <div class="col-md-6 my-4">
+      <label class="form-label fw-semibold">
+        {{ 'PATIENT_HISTORY.SAERCH_IN_PATIENTS' | translate }}
+      </label>
+
+      <form [formGroup]="searchForm" (ngSubmit)="searchByPhone()">
+        <div class="input-group shadow-sm d-flex" [ngClass]="currentLang === 'ar' ? 'flex-row-reverse' : 'flex-row'">
+
+          <span class="input-group-text bg-white">
+            <i class="ti ti-phone"></i>
+          </span>
+
+          <input type="text" class="form-control custom-border" formControlName="phone"
+            [ngClass]="currentLang === 'ar' ? 'border-end-0 border-start' : 'border-start-0 border-end'"
+            placeholder="{{ 'PATIENT_HISTORY.SEARCH_BY_PHONE' | translate }}" />
+
+          <button class="btn btn-save px-4" type="submit">
+            <i class="ti ti-search me-1"></i>
+            {{ 'PATIENT_HISTORY.SEARCH' | translate }}
+          </button>
+
+        </div>
+
+        <!-- Validation -->
+        <div *ngIf="phone?.touched && phone?.invalid" class="invalid-feedback d-block">
+          <div *ngIf="phone?.errors?.['required']">
+            {{ 'PATIENT_HISTORY.ENTER_PHONE' | translate }}
+          </div>
+          <div *ngIf="phone?.errors?.['pattern']">
+            {{ 'PATIENT_HISTORY.INVALID_PHONE' | translate }}
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- معلومات المريض الأساسية -->
+
+    <div *ngIf="patientHistory" class="patient-info-card mb-4 p-4 rounded shadow-sm ">
+      <h2 class="mb-3">{{ 'PATIENT_HISTORY.DETAILS' | translate }}</h2>
+      <div class="row g-3 gap-2 justify-content-around">
+        <div class="col-md-3 info-item">
+          <i class="bi bi-person-fill info-icon ms-2"></i>
+          <span class="info-label">{{ 'PATIENT_HISTORY.PATIENT_NAME' | translate }}:</span>
+          <span class="info-value">{{ patientHistory.patientName }}</span>
+        </div>
+
+        <div class="col-md-3 info-item">
+          <i class="bi bi-droplet-fill info-icon ms-2"></i>
+          <span class="info-label">{{ 'PATIENT_HISTORY.BLOOD_TYPE' | translate }}:</span>
+          <span class="info-value">{{ patientHistory.bloodType }}</span>
+        </div>
+
+        <div class="col-md-3 info-item">
+          <i class="bi bi-heart-pulse-fill info-icon ms-2"></i>
+          <span class="info-label">{{ 'PATIENT_HISTORY.CHRONIC_DISEASES' | translate }}:</span>
+          <span class="info-value">{{ patientHistory.chronicDiseases }}</span>
+        </div>
+
+        <div class="col-md-3 info-item">
+          <i class="bi bi-capsule-pill info-icon ms-2"></i>
+          <span class="info-label">{{ 'PATIENT_HISTORY.MEDICINES' | translate }}:</span>
+          <span class="info-value">{{ patientHistory.medicines }}</span>
+        </div>
+
+        <div class="col-md-3 info-item">
+          <i class="bi bi-activity info-icon ms-2"></i>
+          <span class="info-label">{{ 'PATIENT_HISTORY.SURGERIES' | translate }}:</span>
+          <span class="info-value">{{ patientHistory.surgeries }}</span>
+        </div>
+
+        <div class="col-md-3 info-item">
+          <i class="bi bi-calendar-event-fill info-icon ms-2"></i>
+          <span class="info-label">{{ 'PATIENT_HISTORY.AGE' | translate }}:</span>
+          <span class="info-value">{{ patientAge !== null ? patientAge + ' yrs' : '-' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- عرض السجلات السابقة -->
+
+    <div *ngIf="patientHistory?.items?.length" class="patient-info-card p-4 rounded shadow-sm">
+      <h2 class="mb-3">{{ 'PATIENT_HISTORY.RECORDS' | translate }}</h2>
+
+      <div *ngFor="let item of patientHistory.items" class="card mb-3 shadow-sm border-0 rounded-3">
+        <div class="card-body">
+          <div class="row g-3 justify-content-between">
+            <!-- Date -->
+            <div class="col-md-3 info-block">
+              <i class="bi bi-calendar-date icon-animate"></i>
+              <div>
+                <h6 class="text-secondary">{{ 'PATIENT_HISTORY.DATE' | translate }}</h6>
+                <p>{{ item.createdAt | date:'dd/MM/yyyy' }}</p>
+              </div>
+            </div>
+
+            <!-- Specialist + Doctor -->
+            <div class="col-md-4 info-block">
+              <i class="bi bi-person-vcard icon-animate"></i>
+              <div>
+                <h6 class="text-secondary">{{ 'PATIENT_HISTORY.SPECIALIST_DOCTOR' | translate }}</h6>
+                <p class="fw-bold">{{ item.specialistName }} - {{ item.doctorName }}</p>
+              </div>
+            </div>
+
+            <!-- Diagnosis -->
+            <div class="col-md-4 info-block">
+              <i class="bi bi-clipboard2-pulse icon-animate"></i>
+              <div>
+                <h6 class="text-secondary">{{ 'PATIENT_HISTORY.DIAGNOSIS' | translate }}</h6>
+                <p>{{ item.diagnosis }}</p>
+              </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="col-md-12 info-block">
+              <i class="bi bi-journal-text icon-animate"></i>
+              <div>
+                <h6 class="text-secondary">{{ 'PATIENT_HISTORY.NOTES' | translate }}</h6>
+                <p>{{ item.notes }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- زر فتح الصور -->
+          <!-- زر فتح الصور يظهر فقط لو في صور -->
+          <div class="col-md-3 mt-4" *ngIf="item.paths && normalizePaths(item.paths).length > 0">
+            <button class="btn btn-outline-primary btn-sm" (click)="openPreview(null, item)">
+              {{ 'PATIENT_HISTORY.SHOW_IMAGES' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div #scrollAnchor style="height: 1px"></div>
+    </div>
+
+    <!-- Image Viewer -->
+    <div class="image-viewer-backdrop" *ngIf="isViewerOpen">
+      <div class="image-viewer-container">
+        <!-- Header -->
+        <div class="viewer-header">
+          <button class="header-btn" (click)="minimize()">—</button>
+          <div class="viewer-title">Image Preview</div>
+          <button class="header-btn close" (click)="closeViewer()">✕</button>
+        </div>
+
+        <!-- Image Content -->
+        <div class="viewer-content" (mousedown)="startDrag($event)" (mouseup)="endDrag()" (mousemove)="onDrag($event)"
+          (wheel)="onWheel($event)">
+          <button class="nav-btn left" (click)="prevImage()">❮</button>
+
+          <img [src]="currentImage" class="viewer-img"
+            [style.transform]="'translate(' + posX + 'px,' + posY + 'px) scale(' + scale + ')'"
+            (touchstart)="startTouch($event)" (touchmove)="onTouchMove($event)" (touchend)="endTouch()" />
+
+          <button class="nav-btn right" (click)="nextImage()">❯</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Minimized Bar -->
+    <div class="viewer-minimized" *ngIf="isMinimized" (click)="restore()">🔍 Image Viewer – Click to Restore</div>
+
+    <!-- رسالة لو ما فيش سجلات -->
+    <div *ngIf="patientHistory && patientHistory.items.length === 0" class="alert alert-primary mt-3">
+      {{ 'PATIENT_HISTORY.NO_HISTORY' | translate }}
+    </div>
+  </div>
+</div>

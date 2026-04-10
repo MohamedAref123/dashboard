@@ -51,7 +51,8 @@ export class AppontmentComponent implements OnInit {
   tableActions: TableAction[] = [
     { icon: 'visibility', label: 'BUTTONS.VIEW', color: 'primary', action: 'view' },
     { icon: 'visibility', label: 'BUTTONS.HISTORY', color: 'primary', action: 'history' },
-    { icon: 'visibility', label: 'BUTTONS.VIEW_HISTORY', color: 'primary', action: 'view-histort' }
+    { icon: 'visibility', label: 'BUTTONS.VIEW_HISTORY', color: 'primary', action: 'view-histort' },
+    { icon: 'visibility', label: 'BUTTONS.TICKET', color: 'primary', action: 'ticket' }
   ];
 
   pagenation = {
@@ -123,7 +124,7 @@ export class AppontmentComponent implements OnInit {
 
           ,
           // formattedDate: this.dateHelper.formatDateString(item.appointmentDate, 'dd-MM-yyyy'),
-          // dayOfWeek: 'DAYS.' + item.dayOfWeek.toUpperCase()
+          dayOfWeek: 'DAYS.' + item.dayOfWeek.toUpperCase()
         }));
 
         this.pagenation.totalRecords = response.totalRecords || 0;
@@ -150,6 +151,10 @@ export class AppontmentComponent implements OnInit {
 
     if (event.action === 'view-histort') {
       this.router.navigate(['/view-patient-History/', event.row.patientId]);
+    }
+
+    if (event.action === 'ticket') {
+      this.router.navigate(['/list-ticket/', event.row.patientId]);
     }
 
   }

@@ -111,6 +111,36 @@ export const NavigationItems: NavigationItem[] = [
   },
 
 
+  {
+    id: 'searchInPatients',
+    title: null,
+    type: 'group',
+    icon: 'ti ti-users',
+    //role: [DoctorClaims.SubUsers],
+    children: [
+      {
+        id: 'searchInPatientsCollapse',
+        title: 'MENU.PATIENTS',
+        type: 'collapse',
+        classes: 'nav-item',
+        icon: 'ti ti-user-search',
+        breadcrumbs: false,
+        children: [
+          {
+            id: 'search-in-patients',
+            title: 'MENU.HISTORY',
+            type: 'item',
+            url: '/search-in-patients',
+            icon: 'ti ti-clipboard-list',
+            breadcrumbs: false
+          }
+        ]
+      }
+    ]
+  },
+
+
+
   // {
   //   id: 'Subuser',
   //   title: 'MENU.SUBUSER.GROUP',
@@ -183,6 +213,37 @@ export const NavigationItems: NavigationItem[] = [
             type: 'item',
             url: '/Subuser',
             icon: 'ti ti-user',
+            breadcrumbs: false
+          }
+        ]
+      }
+    ]
+  },
+
+
+
+
+  {
+    id: 'tiecketGroup',
+    title: null,
+    type: 'group',
+    icon: 'ti ti-ticket-star',  // تذكرة مميزة
+    //role: [DoctorClaims.Tickets],
+    children: [
+      {
+        id: 'ticketCollapse',
+        title: 'MENU.TICKET.COLLAPSE',
+        type: 'collapse',
+        classes: 'nav-item',
+        icon: 'ti ti-ticket',
+        breadcrumbs: false,
+        children: [
+          {
+            id: 'sub-user',
+            title: 'MENU.TICKET.ADMIN_TICKET',
+            type: 'item',
+            url: '/list-ticket',
+            icon: 'ti ti-file-text',
             breadcrumbs: false
           }
         ]

@@ -1,0 +1,7 @@
+import { TicketType } from '../shared/ticket.model';
+export interface Ticket {
+  title: string;
+  description: string;
+  type: TicketType;
+  targetUserId?: string | null;
+}

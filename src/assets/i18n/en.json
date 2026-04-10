@@ -16,7 +16,7 @@
     "REPORTS": "Reports",
     "DOCTORS": "Doctors",
     "PATIENTS": "Patients",
-
+    "HISTORY": "History",
     "CURRENT_AVAILABILITIES": "Availabilities",
     "CANCEL_DAY": "Cancel Day",
     "APPOINTMENT_MANAGEMENT": "Appointments",
@@ -24,6 +24,13 @@
       "GROUP": "Sub Users",
       "COLLAPSE": "Sub Users",
       "USERS": "Users"
+    },
+
+    "TICKET": {
+      "GROUP": "Tickets",
+      "COLLAPSE": "Tickets",
+      "PATIENT_TICKET": "Patient Ticket",
+      "ADMIN_TICKET": "Admin Ticket"
     }
   },
   "PROFILE": {
@@ -138,6 +145,12 @@
     "CREATE_TITLE": "Patient History",
     "DIAGNOSIS": "Diagnosis",
     "AGE": "Age",
+    "SAERCH_IN_PATIENTS": "Search in Patients",
+    "SEARCH_BY_PHONE": "phone number",
+    "SEARCH": "Search",
+    "INVALID_PHONE": "Invalid phone number",
+    "ENTER_PHONE": "Please enter a phone number",
+    "SEARCH_FAILED": "Failed to search patient history. Please try again later.",
     "RECORDS": "Records",
     "DETAILS": "Patient Details",
     "NOTES": "Notes",
@@ -159,12 +172,39 @@
     "HIDE_IMAGES": "Hide attachment",
     "NO_ATTACHEMENT": "No attachment to display"
   },
+
+  "TICKETS": {
+    "CREATE": "Create Ticket",
+    "STATUS": {
+      "LABEL": "Status",
+      "OPEN": "Open",
+      "CLOSED": "Closed",
+      "RESOLVED": "Resolved"
+    },
+    "TYPE": {
+      "LABEL": "Type",
+      "TOADMIN": "To Admin",
+      "TODOCTOR": "To Doctor"
+    },
+    "FROM_DATE": "From Date",
+    "TO_DATE": "To Date",
+    "FILTER": "Search",
+    "NO_TICKETS": "No tickets found.",
+    "TITLE": "Title",
+    "DESCRIPTION": "Description",
+    "ALL": "All",
+    "CREATED_AT": "Created At",
+    "CREATED_ERROR": "An error occurred while creating the ticket. Please try again.",
+    "CREATED_SUCCESS": "Ticket created successfully."
+  },
   "BUTTONS": {
     "ACTIONS": "Actions",
     "SEARCH": "Search",
     "SAVE": "Save",
     "VIEW": "view",
     "VIEW_HISTORY": "View History",
+    "TICKETS": "Tickets",
+    "TICKET": "Ticket",
     "HISTORY": "history",
     "ACTIVATE": "Activate",
     "DEACTIVATE": "Deactivate",

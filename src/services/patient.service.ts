@@ -48,7 +48,21 @@ export class PatientService {
     );
   }
 
+  getpatientHistoryByphone(phoneNumber: string, pageIndex = 0, pageSize = 10): Observable<GetPatientHistoryResponse> {
 
+    const token = localStorage.getItem('access_token') || '';
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+
+    });
+
+    return this.http.post<GetPatientHistoryResponse>(
+      `${environment.attachmentURL}PatientHistory/GetPatientHistoryByPhoneNumber`,
+      { phoneNumber, pageIndex, pageSize },
+      { headers }
+    );
+  }
 
   createPatientHistoryWithImages(
     patientId: string,

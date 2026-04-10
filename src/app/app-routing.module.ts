@@ -93,7 +93,36 @@ const routes: Routes = [
       {
         path: 'update-Sub-user/:subuserId',
         loadComponent: () => import('./pages/update-subuser.component/update-subuser.component').then((c) => c.UpdateSubuserComponent)
-      }
+      },
+      {
+        path: 'create-ticket/:patientId',
+        loadComponent: () => import('./pages/tickets/create-tickets.component/create-tickets.component').then((c) => c.CreateTicketsComponent)
+      },
+      {
+        path: 'create-ticket',
+        loadComponent: () =>
+          import('./pages/tickets/create-tickets.component/create-tickets.component')
+            .then(c => c.CreateTicketsComponent)
+      },
+
+      {
+        path: 'list-ticket',
+        loadComponent: () =>
+          import('./pages/tickets/list-tickets.component/list-tickets.component')
+            .then(c => c.ListTicketsComponent)
+      },
+      {
+        path: 'list-ticket/:patientId',
+        loadComponent: () =>
+          import('./pages/tickets/list-tickets.component/list-tickets.component')
+            .then(c => c.ListTicketsComponent)
+      },
+      {
+        path: 'search-in-patients',
+        loadComponent: () =>
+          import('./pages/search-in-patients.component/search-in-patients.component')
+            .then(c => c.SearchInPatientsComponent)
+      },
     ]
   },
   {

@@ -8,7 +8,7 @@
     "REVIEWS": "التعليقات",
     "DASHBOARD": "لوحة التحكم",
     "PROFILE": "الملف الشخصي",
-    "APPOINTMENT": "المواعيد",
+    "APPOINTMENT": "بحث المواعيد",
     "GROUP": "إدارة الرعاية الصحية",
     "SETTINGS": "الإعدادات",
     "LOGOUT": "تسجيل الخروج",
@@ -17,11 +17,19 @@
     "DOCTORS": "الأطباء",
     "PATIENTS": "المرضى",
     "CURRENT_AVAILABILITIES": "المواعيد الحالية",
+    "APPOINTMENT_MANAGEMENT": "إدارة المواعيد",
     "CANCEL_DAY": "إلغاء يوم الطبيب",
+    "HISTORY": "سجل المرضى",
     "SUBUSER": {
       "GROUP": "المستخدمون الفرعيون",
       "COLLAPSE": "إدارة المستخدمين الفرعيين",
       "USERS": "المستخدمون"
+    },
+    "TICKET": {
+      "GROUP": "الشكاوي",
+      "COLLAPSE": "إدارة الشكاوي",
+      "PATIENT_TICKET": "شكوي المريض",
+      "ADMIN_TICKET": "شكوي الإدارة"
     }
   },
   "PROFILE": {
@@ -135,6 +143,12 @@
     "PATIENT_NAME": "اسم المريض",
     "CREATE_TITLE": " سجل المريض",
     "AGE": "العمر",
+    "SAERCH_IN_PATIENTS": "البحث في المرضى",
+    "SEARCH_BY_PHONE": " رقم الهاتف",
+    "SEARCH": "بحث",
+    "ENTER_PHONE": "من فضلك أدخل رقم الهاتف",
+    "INVALID_PHONE": "رقم الهاتف غير صالح",
+    "SEARCH_FAILED": "فشل البحث. حاول مرة أخرى لاحقًا.",
     "DIAGNOSIS": "التشخيص",
     "NOTES": "ملاحظات",
     "RECORDS": "السجلات",
@@ -157,11 +171,39 @@
     "HIDE_IMAGES": "إخفاء مرفقات",
     "NO_ATTACHEMENT": "لا توجد مرفقات"
   },
+
+  "TICKETS": {
+    "CREATE": "إنشاء تذكرة",
+    "STATUS": {
+      "LABEL": "الحالة",
+      "OPEN": "مفتوح",
+      "CLOSED": "مغلق",
+      "RESOLVED": "تم الحل"
+    },
+    "TYPE": {
+      "LABEL": "النوع",
+      "TOADMIN": "إلى الإدارة",
+      "TODOCTOR": "إلى الطبيب"
+    },
+    "FROM_DATE": "من تاريخ",
+    "TO_DATE": "إلى تاريخ",
+    "FILTER": "بحث",
+    "NO_TICKETS": "لا توجد شكاوي.",
+    "TITLE": "العنوان",
+    "DESCRIPTION": "الوصف",
+    "ALL": "الكل",
+    "CREATED_AT": "تاريخ الإنشاء",
+    "CREATED_ERROR": "حدث خطأ أثناء إنشاء الشكوى. يرجى المحاولة مرة أخرى.",
+    "CREATED_SUCCESS": "تم إنشاء الشكوى بنجاح"
+  },
+
   "BUTTONS": {
     "ACTIONS": "الإجراءات",
     "VIEW": "عرض",
     "HISTORY": "تاريخ",
     "VIEW_HISTORY": "عرض التاريخ",
+    "TICKETS": "شكاوي",
+    "TICKET": "شكوي",
     "RESTORE": "استرجاع",
     "ACTIVATE": "تفعيل",
     "DEACTIVATE": "تعطيل",

@@ -34,8 +34,8 @@
 
                 <ng-template #checkDate>
                   <!-- إذا كان العمود تاريخ -->
-                  <ng-container *ngIf="column.key.toLowerCase().includes('date'); else normalTranslate">
-                    {{ row[column.key] | date:'yyyy-MM-dd' }}
+                  <ng-container *ngIf="column.key.toLowerCase().includes('date')else normalTranslate">
+                    {{ row[column.key] | date:'dd/MM/yyyy' }}
                   </ng-container>
 
                   <ng-template #normalTranslate>
