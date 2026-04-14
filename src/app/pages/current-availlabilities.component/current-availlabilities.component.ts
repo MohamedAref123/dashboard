@@ -2,7 +2,7 @@ import { CommonModule, Location } from '@angular/common';
 import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { jwtDecode } from 'jwt-decode';
 import { CreateOfflineAppointmentRequest } from 'src/app/Models/Requests/CreateOfflineAppointmentRequest';
 import { DoctorAvailableTime, DoctorAvialabilitiesModel } from 'src/app/Models/Responses/Current-AvailabilitiesResponse';
@@ -35,11 +35,30 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
   selectedSlotId: string | null = null;
   selectedDate?: string;
   selectedTime?: string;
-
+  translate = inject(TranslateService);
   collapseInstances: bootstrap.Collapse[] = [];
   openedOuterIndex: number | null = null;
   openedInnerIndex: { [outerIndex: number]: number | null } = {};
 
+  constructor() {
+    this.doctorId = '';
+    this.patient = this.fb.group({
+      fullName: ['', [Validators.required, Validators.minLength(3)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,15}$')]],
+      chronicDiseases: [null],
+      medicines: [null],
+      surgeries: [null],
+      status: ['Pending', Validators.required],
+      notes: [''],
+      bloodType: [''],
+      birthday: [null, Validators.required],
+      doctorId: [this.doctorId],
+      doctorAvailabilityId: [''],
+      appointmentDate: ['', Validators.required],
+      fromTime: ['']
+    });
+    this.isLoading = false;
+  }
   ngOnInit(): void {
     // ✅ إنشاء الفورم
     this.patient = this.fb.group({
@@ -51,10 +70,10 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
       status: ['Pending', Validators.required],
       notes: [''],
       bloodType: [''],
-      birthday: [null],
+      birthday: [null, Validators.required],
       doctorId: [this.doctorId],
       doctorAvailabilityId: [''],
-      appointmentDate: [''],
+      appointmentDate: ['', Validators.required],
       fromTime: ['']
     });
 
@@ -237,7 +256,7 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
 
       this.doctorService.createOfflineAppointment(payload).subscribe({
         next: (res) => {
-          this.toast.success('✅ Appointment created successfully:');
+          this.toast.success(this.translate.instant('APPOINTMENT.CREATED_SUCCESS'));
           const currentStatus = this.patient.get('status')?.value;
           this.patient.reset({ status: currentStatus });
           this.initiateAvailabilities();
@@ -246,7 +265,7 @@ export class CurrentAvaillabilitiesComponent implements OnInit, AfterViewInit {
         },
         error: (err) => {
           console.error('❌ Error creating appointment:', err);
-          this.toast.error('❌ Error creating appointment');
+          this.toast.error(this.translate.instant('APPOINTMENT.CREATE_ERROR'));
         }
       });
     } else {

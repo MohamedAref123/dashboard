@@ -101,7 +101,9 @@
     "ALL": "All",
     "STATUS_ALL": "All Statuses",
     "DOCTOR": "Doctor",
-    "NOTES": "Notes"
+    "NOTES": "Notes",
+    "CREATED_SUCCESS": "✅ Appointment created successfully",
+    "CREATE_ERROR": "❌ Error creating appointment"
   },
   "REVIEWS": {
     "TITLE": "Reviews",
@@ -326,8 +328,8 @@
     "ARABIC_ONLY": "Only Arabic letters are allowed",
     "ENGLISH_ONLY": "Only English letters are allowed",
     "EMAIL_INVALID": "Invalid email format",
-    "MIN_LENGTH": "Must contain at least {min} characters",
-    "MAX_LENGTH": "Must not exceed {max} characters",
+    "MIN_LENGTH": "Must contain at least {{min}} characters",
+    "MAX_LENGTH": "Must not exceed {{max}} characters",
     "PHONE_INVALID": "Invalid phone number format"
   },
   "CONFIRM": {
