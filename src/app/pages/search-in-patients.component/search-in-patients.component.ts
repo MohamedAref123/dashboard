@@ -29,7 +29,7 @@ export class SearchInPatientsComponent implements OnInit, AfterViewInit {
   patientservice = inject(PatientService);
   toast = inject(ToastService);
   specialists: DoctorSpecialistResponse[] = [];
-  patientId: string;
+  patientId: string | null = null;
   fb = inject(FormBuilder);
   searchForm!: FormGroup;
   previewImage: string = '';
@@ -97,12 +97,13 @@ export class SearchInPatientsComponent implements OnInit, AfterViewInit {
     this.loadingMore = true;
 
     this.patientservice
-      .getpatientHistoryByphone(this.currentPhone, this.pageIndex, this.pageSize)
+      .getpatientHistoryByphone(this.currentPhone, this.pageIndex, this.pageSize, this.patientId)
       .subscribe({
         next: (res) => {
           console.log('LOAD MORE');
 
           this.patientHistory.items.push(...res.items);
+          this.patientId = res.items[0]?.patientId || this.patientId; // تحديث patientId لو كان null
 
           this.pageIndex++;
           this.loadingMore = false;
@@ -140,14 +141,13 @@ export class SearchInPatientsComponent implements OnInit, AfterViewInit {
 
     const phoneValue = this.phone?.value;
 
-    // ✅ حفظ الرقم
     this.currentPhone = phoneValue;
     this.hasSearched = true;
 
-    // ✅ reset pagination
-    this.pageIndex = 0;
 
-    // ✅ reset data
+    this.pageIndex = 0;
+    this.patientId = null;
+
     this.patientHistory = {
       pageSize: this.pageSize,
       pageIndex: 0,
@@ -164,7 +164,7 @@ export class SearchInPatientsComponent implements OnInit, AfterViewInit {
     console.log('SEARCH START');
 
     this.patientservice
-      .getpatientHistoryByphone(this.currentPhone, this.pageIndex, this.pageSize)
+      .getpatientHistoryByphone(this.currentPhone, this.pageIndex, this.pageSize, this.patientId)
       .subscribe({
         next: (res) => {
           console.log('FIRST PAGE:', res);
@@ -177,7 +177,7 @@ export class SearchInPatientsComponent implements OnInit, AfterViewInit {
           this.patientHistory.medicines = res.medicines;
           this.patientHistory.surgeries = res.surgeries;
           this.patientHistory.birthday = res.birthday;
-
+          this.patientId = res.items[0]?.patientId || null; // تحديث patientId لو كان null
           this.pageIndex++; // 🔥 مهم
 
           // ✅ تشغيل observer بعد ما الداتا تظهر
@@ -187,9 +187,7 @@ export class SearchInPatientsComponent implements OnInit, AfterViewInit {
             }
           }, 300);
 
-          if (!res.items?.length) {
-            alert(this.translate.instant('PATIENT_HISTORY.NO_HISTORY'));
-          }
+
         },
         error: (err) => {
           console.error(err);

@@ -48,7 +48,7 @@ export class PatientService {
     );
   }
 
-  getpatientHistoryByphone(phoneNumber: string, pageIndex = 0, pageSize = 10): Observable<GetPatientHistoryResponse> {
+  getpatientHistoryByphone(phoneNumber: string, pageIndex = 0, pageSize = 10, patientId: string | null): Observable<GetPatientHistoryResponse> {
 
     const token = localStorage.getItem('access_token') || '';
 
@@ -59,7 +59,7 @@ export class PatientService {
 
     return this.http.post<GetPatientHistoryResponse>(
       `${environment.attachmentURL}PatientHistory/GetPatientHistoryByPhoneNumber`,
-      { phoneNumber, pageIndex, pageSize },
+      { phoneNumber, pageIndex, pageSize, patientId },
       { headers }
     );
   }
