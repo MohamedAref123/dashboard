@@ -191,7 +191,7 @@ export class SearchInPatientsComponent implements OnInit, AfterViewInit {
         },
         error: (err) => {
           console.error(err);
-          alert(this.translate.instant('PATIENT_HISTORY.SEARCH_FAILED'));
+
         }
       });
   }
