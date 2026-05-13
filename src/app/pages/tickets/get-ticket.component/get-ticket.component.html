@@ -1,0 +1,183 @@
+<div class="ticket-container">
+
+
+  <div class="card border-0 shadow-lg rounded-4 p-4 mb-4">
+
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+
+      <div class="d-flex align-items-center gap-3">
+
+        <i class="bi bi-journal-text ticket-icon"></i>
+
+        <div>
+          <h2 class="mb-1 fw-bold">
+            {{ 'TICKET.TITLE' | translate }}
+          </h2>
+
+          <p class="text-muted mb-0">
+            {{ 'TICKET.SUBTITLE' | translate }}
+          </p>
+        </div>
+      </div>
+
+      <span class="badge rounded-pill px-4 py-2 fs-6" [ngClass]="{
+          'bg-success': model?.status === 'Open',
+          'bg-danger': model?.status === 'Closed'
+        }">
+
+        {{ model?.status }}
+
+      </span>
+
+    </div>
+
+  </div>
+
+
+
+
+  <!-- Ticket Details -->
+  <div class="card border-0 shadow-sm rounded-4 mb-4 details-card">
+
+    <div class="card-body p-4">
+
+      <div class="mb-4">
+        <h3 class="fw-bold mb-2">
+          {{ model?.title }}
+        </h3>
+
+        <p class="text-muted mb-0 description">
+          {{ model?.description }}
+        </p>
+      </div>
+
+      <div class="row g-4">
+
+        <!-- <div class="col-md-4">
+          <div class="info-card h-100">
+            <div class="info-icon bg-primary-subtle text-primary">
+              <i class="bi bi-tag"></i>
+            </div>
+
+            <div>
+              <small class="text-muted d-block">
+                {{ 'TICKET.TYPE' | translate }}
+              </small>
+
+              <h6 class="mb-0 fw-semibold mt-1">
+                {{ model?.type }}
+              </h6>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="col-md-6">
+          <div class="info-card h-100">
+            <div class="info-icon bg-success-subtle text-success">
+              <i class="bi bi-check-circle"></i>
+            </div>
+
+            <div>
+              <small class="text-muted d-block">
+                {{ 'TICKET.STATUS' | translate }}
+              </small>
+
+              <h6 class="mb-0 fw-semibold mt-1">
+                {{ model?.status }}
+              </h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="info-card h-100">
+            <div class="info-icon bg-warning-subtle text-warning">
+              <i class="bi bi-calendar-event"></i>
+            </div>
+
+            <div>
+              <small class="text-muted d-block">
+                {{ 'TICKET.CREATION_DATE' | translate }}
+              </small>
+
+              <h6 class="mb-0 fw-semibold mt-1">
+                {{ model?.createdAt | date:'medium' }}
+              </h6>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Chat Section -->
+  <div class="card border-0 shadow-lg rounded-4 overflow-hidden chat-card">
+
+    <!-- Chat Header -->
+    <div class="chat-header d-flex align-items-center justify-content-between p-4">
+
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-chat-dots-fill"></i>
+
+        <h5 class="mb-0 fw-bold">
+          {{ 'TICKET.MESSAGES' | translate }}
+        </h5>
+      </div>
+
+      <span class="message-count">
+        {{ messages?.length }} Messages
+      </span>
+
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-body p-4">
+
+      <div *ngFor="let msg of messages" class="message-wrapper d-flex mb-3" [ngClass]="{
+          'justify-content-end': msg.isMine,
+          'justify-content-start': !msg.isMine
+        }">
+
+        <div class="message-bubble" [ngClass]="{
+            'mine': msg.isMine,
+            'other': !msg.isMine
+          }">
+
+          <div class="message-text">
+            {{ msg.message }}
+          </div>
+
+          <div class="message-time">
+            {{ msg.createdAt | date:'medium' }}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-footer p-3">
+
+      <div class="chat-input-wrapper">
+
+        <input type="text" class="form-control border-0 shadow-none" [placeholder]="'TICKET.PLACEHOLDER' | translate"
+          [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
+
+        <button class="send-btn" (click)="sendMessage()">
+
+          <i class="bi bi-send-fill"></i>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

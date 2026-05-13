@@ -7,10 +7,14 @@ import { TicketStatus } from 'src/app/Models/shared/ticket.model';
 import { ticketsRequest } from 'src/app/Models/tickets/tickets-request';
 import { TicketItem, Ticketresponse } from 'src/app/Models/tickets/tickets-response';
 import { TicketsService } from 'src/services/tickets.service';
-import { GenericTable } from 'src/app/shared/generic-table/generic-table';
+import { GenericTable, TableAction } from 'src/app/shared/generic-table/generic-table';
 import { TranslateModule } from '@ngx-translate/core';
 import { dateRangeValidator } from 'src/app/shared/validation-error/validation-error';
 import { DateHelper } from 'src/app/shared/Helpers/DatesHelper';
+
+
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-list-tickets.component',
@@ -27,8 +31,9 @@ export class ListTicketsComponent implements OnInit {
   router = inject(Router);
   route = inject(ActivatedRoute);
   ticketsService = inject(TicketsService);
-
+  dialog = inject(MatDialog);
   patientId: string | null = null;
+
 
   fb = inject(FormBuilder);
 
@@ -40,7 +45,14 @@ export class ListTicketsComponent implements OnInit {
     { key: 'description', label: 'TICKETS.DESCRIPTION' },
     { key: 'statusText', label: 'TICKETS.STATUS.LABEL' },
     { key: 'typeText', label: 'TICKETS.TYPE.LABEL' },
-    { key: 'formattedDate', label: 'TICKETS.CREATED_AT', type: 'date' },
+    { key: 'createdAt', label: 'TICKETS.CREATED_AT', type: 'date' },
+
+
+  ];
+
+
+  tableActions: TableAction[] = [
+    { icon: 'visibility', label: 'BUTTONS.VIEW', color: 'primary', action: 'view' }
   ];
 
   pagenation = {
@@ -73,6 +85,11 @@ export class ListTicketsComponent implements OnInit {
     this.loadTickets();
   }
 
+  handleAction(event: { row: TicketItem; action: string }) {
+    if (event.action === 'view' && event.row.status.toLowerCase() === 'open') {
+      this.router.navigate(['/Get-ticket/', event.row.id]);
+    }
+  }
 
   private formatDate(date: Date): string {
     return date.toISOString().substring(0, 10);
@@ -100,7 +117,7 @@ export class ListTicketsComponent implements OnInit {
           statusText: 'TICKETS.STATUS.' + item.status.toUpperCase(),
           typeText: 'TICKETS.TYPE.' + item.type.toUpperCase(),
 
-          formattedDate: this.dateHelper.formatDateString(item.createdAt, 'dd/MM/yyyy')
+          createdAt: this.dateHelper.formatDateString(item.createdAt, 'dd/MM/yyyy')
 
         }));
 

@@ -175,6 +175,14 @@
   },
 
   "TICKETS": {
+    "CREATE_TITLE": "إنشاء تذكرة",
+
+    "SUBMIT": "إرسال التذكرة",
+    "PLACEHOLDERS": {
+      "TITLE": "أدخل عنوان التذكرة",
+      "DESCRIPTION": "أدخل وصف التذكرة"
+    },
+
     "CREATE": "إنشاء تذكرة",
     "STATUS": {
       "LABEL": "الحالة",
@@ -197,6 +205,16 @@
     "CREATED_AT": "تاريخ الإنشاء",
     "CREATED_ERROR": "حدث خطأ أثناء إنشاء الشكوى. يرجى المحاولة مرة أخرى.",
     "CREATED_SUCCESS": "تم إنشاء الشكوى بنجاح"
+  },
+  "TICKET": {
+    "TITLE": "التذاكر",
+    "TYPE": "النوع",
+    "STATUS": "الحالة",
+    "CREATION_DATE": "تاريخ الإنشاء",
+    "MESSAGES": "الرسائل",
+    "PLACEHOLDER": "اكتب رسالة...",
+    "SEND": "إرسال",
+    "SUBTITLE": "تفاصيل التذكرة والمحادثة"
   },
 
   "BUTTONS": {

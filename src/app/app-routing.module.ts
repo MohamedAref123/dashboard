@@ -123,6 +123,12 @@ const routes: Routes = [
           import('./pages/search-in-patients.component/search-in-patients.component')
             .then(c => c.SearchInPatientsComponent)
       },
+      {
+        path: 'Get-ticket/:ticketId',
+        loadComponent: () =>
+          import('./pages/tickets/get-ticket.component/get-ticket.component')
+            .then(c => c.GetTicketComponent)
+      },
     ]
   },
   {

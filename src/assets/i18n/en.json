@@ -176,6 +176,14 @@
   },
 
   "TICKETS": {
+    "CREATE_TITLE": "Create Ticket",
+
+    "SUBMIT": "Submit Ticket",
+    "PLACEHOLDERS": {
+      "TITLE": "Enter ticket title",
+      "DESCRIPTION": "Enter ticket description"
+    },
+
     "CREATE": "Create Ticket",
     "STATUS": {
       "LABEL": "Status",
@@ -198,6 +206,16 @@
     "CREATED_AT": "Created At",
     "CREATED_ERROR": "An error occurred while creating the ticket. Please try again.",
     "CREATED_SUCCESS": "Ticket created successfully."
+  },
+  "TICKET": {
+    "TITLE": "Tickets",
+    "TYPE": "Type",
+    "STATUS": "Status",
+    "CREATION_DATE": "Creation Date",
+    "MESSAGES": "Messages",
+    "PLACEHOLDER": "Write a message...",
+    "SEND": "Send",
+    "SUBTITLE": "Ticket Details & Conversation"
   },
   "BUTTONS": {
     "ACTIONS": "Actions",

@@ -3,7 +3,7 @@ import { NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TicketType } from 'src/app/Models/shared/ticket.model';
 import { CreateTicketRequest } from 'src/app/Models/tickets/create-tickets-request';
 import { ValidationError } from "src/app/shared/validation-error/validation-error";
@@ -11,7 +11,7 @@ import { TicketsService } from 'src/services/tickets.service';
 import { ToastService } from 'src/services/ToastService';
 @Component({
   selector: 'app-create-tickets.component',
-  imports: [ReactiveFormsModule, NgIf, ValidationError],
+  imports: [ReactiveFormsModule, NgIf, ValidationError, TranslateModule],
   templateUrl: './create-tickets.component.html',
   styleUrl: './create-tickets.component.scss'
 })

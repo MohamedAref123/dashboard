@@ -5,3 +5,9 @@ export interface ticketsRequest {
   pageSize: number;
   pageIndex: number;
 }
+
+export interface SendMessageRequest {
+  ticketId: string;
+  senderUserId: string;
+  message: string;
+}
