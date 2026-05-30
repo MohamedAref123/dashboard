@@ -1,9 +1,8 @@
-import { InsurancesResponse } from "../../Responses/insurancesResponse";
-import { AppointmentCategory } from "../../shared/SharedClasses";
+import { InsurancesResponse } from '../../Responses/insurancesResponse';
+import { AppointmentCategory } from '../../shared/SharedClasses';
 
 export interface userResponse {
-
-  insurance: InsurancesResponse;
+  insurances: InsurancesResponse[];
   doctorId: string;
   doctorSpecialistId: string;
   doctorSpecialist: string;
@@ -13,7 +12,7 @@ export interface userResponse {
   descriptionAR: string;
   descriptionEN: string;
   profileImagePath: string;
-  image: string,
+  image: string;
   licenseNumber: string;
   education: string;
   yearsOfExperience: number;
@@ -38,10 +37,7 @@ export interface PagePermissionsResponse {
   permissions: PagePermission[];
 }
 
-
-
 export interface DoctorAddress {
-
   googleLocation: string;
   country: string;
   city: string;

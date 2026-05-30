@@ -54,7 +54,6 @@ export class Profile implements OnInit {
   insurances: InsurancesResponse[] = [];
 
   insuranceService = inject(InsuransesService);
-  selectedInsurance: InsurancesResponse = null;
 
   doctorSpecialistService = inject(DoctorSpecialistService);
   specialists: DoctorSpecialistResponse[] = [];
@@ -70,7 +69,7 @@ export class Profile implements OnInit {
 
   DoctorClaims = DoctorClaims;
   authService = inject(AuthService);
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.doctorService.getuser('EN').subscribe((res: userResponse) => {
@@ -88,7 +87,14 @@ export class Profile implements OnInit {
   hasPermission(claim: DoctorClaims): boolean {
     return this.authService.has(claim);
   }
+  getSelectedInsuranceNames(): string {
+    const selectedIds = (this.profileForm.get('insurances')?.value as string[]) || [];
 
+    return this.insurances
+      .filter((x) => selectedIds.includes(x.value))
+      .map((x) => x.text)
+      .join(', ');
+  }
   toggleAccordion(i: number) {
     this.openedIndex = this.openedIndex === i ? null : i;
   }
@@ -106,21 +112,9 @@ export class Profile implements OnInit {
     this.insuranceService.getInsurances('en').subscribe({
       next: (data) => {
         this.insurances = data;
-
-        // ✅ بعد تحميل التأمينات، نحدث التأمين الحالي من الـ form
-        const currentId = this.profileForm?.get('insuranceId')?.value;
-        if (currentId) {
-          this.selectedInsurance = this.insurances.find((i) => i.value === currentId);
-        }
       },
       error: (err) => console.error('Failed to load insurances:', err)
     });
-  }
-  onInsuranceChange(selectedValue: string): void {
-    const selected = this.insurances.find((i) => i.value === selectedValue);
-    if (selected) {
-      this.selectedInsurance = selected;
-    }
   }
 
   onFileSelected(event: Event) {
@@ -223,7 +217,7 @@ export class Profile implements OnInit {
   private patchForm(user: userResponse) {
     this.profileForm = this.fb.group({
       doctorId: user.doctorId,
-      insuranceId: user.insurance?.value || '', // ✅ استخدم value فقط
+      insurances: [user.insurances?.map((a) => a.value) ?? []], // ✅ استخدم value فقط
       doctorSpecialistId: user.doctorSpecialistId,
       doctorNameAR: user.doctorNameAR,
       doctorNameEN: user.doctorNameEN,
@@ -301,8 +295,6 @@ export class Profile implements OnInit {
       }
     });
   }
-
-
 
   onUpdateAddress(addr: DoctorAddress) {
     console.log('Address data:', addr);
