@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { DoctorSubUsersResponse, SubuserResponse } from 'src/app/Models/Responses/SubuserResponse';
+import { DoctorClaims } from 'src/app/Models/shared/system-claims';
 import { TableAction, GenericTable } from 'src/app/shared/generic-table/generic-table';
 import { AuthService } from 'src/services/auth.service';
 
@@ -34,9 +35,9 @@ export class SubuserComponent implements OnInit {
   showPassword = false;
   showConfirmPassword = false;
   doctorname: string = '';
-  doctorId: string = '';
+  doctorId: string | null = '';
   subuserlist: SubuserResponse[] = [];
-
+  authService = inject(AuthService);
   authservice = inject(AuthService)
 
   headers = [
@@ -48,11 +49,14 @@ export class SubuserComponent implements OnInit {
 
 
   actions: TableAction[] = [
-    { icon: 'edit', label: 'SUBUSER.ACTIONS.EDIT', color: 'primary', action: 'edit' },
-    { icon: 'permission', label: 'SUBUSER.ACTIONS.PERMISSION', color: 'primary', action: 'permission' }
-    // { icon: 'delete', label: 'Delete', color: 'warn', action: 'delete' },
+
+
+
   ];
 
+  hasPermission(claim: DoctorClaims): boolean {
+    return this.authService.has(claim);
+  }
 
 
   pagination = {
@@ -62,15 +66,38 @@ export class SubuserComponent implements OnInit {
   };
 
 
+  createactions() {
+    if (this.hasPermission(DoctorClaims.UserClaims)) {
+      this.actions.push({
+        icon: 'admin_panel_settings',
+        label: 'SUBUSER.ACTIONS.PERMISSION',
+        color: 'primary',
+        action: 'permission'
+      });
+    }
+
+    if (this.hasPermission(DoctorClaims.UpdateSubUser)) {
+      this.actions.push({
+        icon: 'edit',
+        label: 'SUBUSER.ACTIONS.EDIT',
+        color: 'primary',
+        action: 'edit'
+      });
+    }
+  }
 
 
   ngOnInit(): void {
 
-    this.doctorId = this.authservice.getDoctorId()
+    this.createactions();
+
+    this.doctorId = this.authservice.getDoctorId();
 
     if (this.doctorId) {
       this.loadsubuserlist();
     }
+
+
   }
 
   loadsubuserlist() {

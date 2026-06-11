@@ -433,14 +433,22 @@
   },
 
   "CLAIMS": {
-    "CANCEL.DAYS": " Cancel by Days ",
+    "CANCEL.DAYS": "Cancel by Days",
     "CANCEL": "Cancel",
 
+    "CLAIMS.TICKETS": "Tickets",
+    "TICKETS": "Tickets",
+
     "PROFILE": "Profile",
+
     "UPDATE": {
       "DOCTOR": "Update Doctor",
-      "ADDRESS": "Update Address"
+      "ADDRESS": "Update Address",
+      "SUB": {
+        "USER": "Update Sub User"
+      }
     },
+
     "CREATE": {
       "ADDRESS": "Create Address"
     },
@@ -448,9 +456,27 @@
     "PAYROLL": "Payroll",
     "EARNING": "Earnings",
     "APPOINTMENTS": "Appointments",
+
     "ALL": {
       "APPOINTMENTS": "Appointments"
+    },
+
+    "SUB": {
+      "USERS": "Sub Users",
+      "USER": {
+        "LIST": "Sub User List",
+        "DETAILS": "Sub User Details"
+      }
+    },
+
+    "USER": {
+      "PERMISSIONS": "User Permissions"
     }
+  },
+
+  "PERMISSION": {
+    "UPDATE_SUCCESS": "Permissions updated successfully ✅",
+    "UPDATE_ERROR": "Failed to update permissions ❌"
   },
   "BOOLEAN": {
     "TRUE": "Yes",

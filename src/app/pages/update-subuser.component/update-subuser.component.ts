@@ -5,7 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { updateusbuserRequest } from 'src/app/Models/Requests/update-subuserRequest';
 import { SubuserResponse } from 'src/app/Models/Responses/SubuserResponse';
+import { DoctorClaims } from 'src/app/Models/shared/system-claims';
 import { passwordMatchValidator } from 'src/app/shared/validation-error/validation-error';
+import { AuthService } from 'src/services/auth.service';
 import { SubuserService } from 'src/services/subuser.service';
 import { ToastService } from 'src/services/ToastService';
 
@@ -25,7 +27,8 @@ export class UpdateSubuserComponent implements OnInit {
   subuser: SubuserResponse
   subUserForm!: FormGroup;
   fb = inject(FormBuilder)
-
+  authService = inject(AuthService);
+  DoctorClaims = DoctorClaims;
   showPassword = false;
   showConfirmPassword = false;
 
@@ -45,7 +48,9 @@ export class UpdateSubuserComponent implements OnInit {
     this.getsubuser()
   }
 
-
+  hasPermission(claim: DoctorClaims): boolean {
+    return this.authService.has(claim);
+  }
 
 
   getsubuser() {

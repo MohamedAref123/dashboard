@@ -227,8 +227,8 @@ export const NavigationItems: NavigationItem[] = [
     id: 'tiecketGroup',
     title: null,
     type: 'group',
-    icon: 'ti ti-ticket-star',  // تذكرة مميزة
-    //role: [DoctorClaims.Tickets],
+    icon: 'ti ti-ticket-star',
+    role: [DoctorClaims.Tickets],
     children: [
       {
         id: 'ticketCollapse',
@@ -247,6 +247,7 @@ export const NavigationItems: NavigationItem[] = [
             breadcrumbs: false
           }
         ]
+
       }
     ]
   },

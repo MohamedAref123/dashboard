@@ -220,8 +220,8 @@
   "BUTTONS": {
     "ACTIONS": "الإجراءات",
     "VIEW": "عرض",
-    "HISTORY": "تاريخ",
-    "VIEW_HISTORY": "عرض التاريخ",
+    "HISTORY": " انشاء سجل",
+    "VIEW_HISTORY": " عرض السجل",
     "TICKETS": "شكاوي",
     "TICKET": "شكوي",
     "RESTORE": "استرجاع",
@@ -427,25 +427,50 @@
     }
   },
 
+  "PERMISSION": {
+    "UPDATE_SUCCESS": "تم تحديث الصلاحيات بنجاح ✅",
+    "UPDATE_ERROR": "فشل تحديث الصلاحيات ❌"
+  },
+
   "CLAIMS": {
     "CANCEL.DAYS": "الإلغاء حسب الأيام",
     "CANCEL": "إلغاء",
 
+    "CLAIMS.TICKETS": "التذاكر",
+    "TICKETS": "التذاكر",
+
     "PROFILE": "الملف الشخصي",
+
     "UPDATE": {
-      "DOCTOR": "تعديل الطبيب",
-      "ADDRESS": "تعديل العنوان"
+      "DOCTOR": "تحديث الطبيب",
+      "ADDRESS": "تحديث العنوان",
+      "SUB": {
+        "USER": "تحديث المستخدم الفرعي"
+      }
     },
+
     "CREATE": {
       "ADDRESS": "إضافة عنوان"
     },
 
-    "PAYROLL": "كشف الأرباح",
+    "PAYROLL": "كشف الرواتب",
     "EARNING": "الأرباح",
-
     "APPOINTMENTS": "المواعيد",
+
     "ALL": {
-      "APPOINTMENTS": "المواعيد"
+      "APPOINTMENTS": "جميع المواعيد"
+    },
+
+    "SUB": {
+      "USERS": "المستخدمون الفرعيون",
+      "USER": {
+        "LIST": "قائمة المستخدمين الفرعيين",
+        "DETAILS": "تفاصيل المستخدم الفرعي"
+      }
+    },
+
+    "USER": {
+      "PERMISSIONS": "صلاحيات المستخدم"
     }
   },
 

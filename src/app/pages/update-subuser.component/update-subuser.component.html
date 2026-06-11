@@ -76,7 +76,7 @@
       <button type="button" class="btn btn-light" (click)="goback()">
         {{ 'SUBUSER.BACK' | translate }}
       </button>
-      <button type="submit" class="btn-save">
+      <button type="submit" class="btn-save" *ngIf="hasPermission(DoctorClaims.UpdateSubUser)">
         {{ 'SUBUSER.UPDATE' | translate }}
       </button>
     </div>

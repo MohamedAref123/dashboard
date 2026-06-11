@@ -2,7 +2,7 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PermissionRequest } from 'src/app/Models/Requests/assignpermissionRequest';
 import { UserClaims } from 'src/app/Models/Responses/permissionResponse';
 import { PermissionService } from 'src/services/permission.service';
@@ -22,7 +22,7 @@ export class UserPermissionComponent implements OnInit {
   permissionService = inject(PermissionService);
   toast = inject(ToastService)
   permission!: UserClaims;
-
+  translate = inject(TranslateService)
 
 
   ngOnInit(): void {
@@ -65,12 +65,12 @@ export class UserPermissionComponent implements OnInit {
     this.permissionService.updatepermission(request).subscribe({
       next: (res) => {
         console.log('Permissions updated successfully', res);
-        this.toast.success('Permissions updated successfully ');
+        this.toast.success(this.translate.instant('PERMISSION.UPDATE_SUCCESS'));
 
       },
       error: (err) => {
         console.error('Error updating permissions', err);
-        this.toast.error('Failed to update permissions ❌');
+        this.toast.error(this.translate.instant('PERMISSION.UPDATE_ERROR'));
 
       }
     });

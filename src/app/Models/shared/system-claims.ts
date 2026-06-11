@@ -10,5 +10,7 @@ export enum DoctorClaims {
   UpdateSubUser = '19',
   PayrolEarning = '21',
   Appointments = '22',
-  UserClaims = '23'
+  UserClaims = '23',
+  Tickets = '24'
+
 }

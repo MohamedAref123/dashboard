@@ -60,7 +60,7 @@ const routes: Routes = [
       },
       {
         path: 'reviews',
-        loadComponent: () => import('./pages/reviews.component/reviews.component').then((c) => c.ReviewsComponent)
+        loadComponent: () => import('./pages/reviews.component/reviews.component').then((c) => c.ReviewsComponent),
       },
       {
         path: 'current-availabilities',
@@ -102,14 +102,16 @@ const routes: Routes = [
         path: 'create-ticket',
         loadComponent: () =>
           import('./pages/tickets/create-tickets.component/create-tickets.component')
-            .then(c => c.CreateTicketsComponent)
+            .then(c => c.CreateTicketsComponent),
       },
 
       {
         path: 'list-ticket',
         loadComponent: () =>
           import('./pages/tickets/list-tickets.component/list-tickets.component')
-            .then(c => c.ListTicketsComponent)
+            .then(c => c.ListTicketsComponent),
+
+        canActivate: [permissionGuard(DoctorClaims.Tickets)]
       },
       {
         path: 'list-ticket/:patientId',

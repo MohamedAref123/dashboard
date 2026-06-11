@@ -159,4 +159,5 @@ export interface TableAction {
   label: string; // اسم الزر
   color?: string; // لون الزر
   action: string; // key يميز الزر (delete / edit .. إلخ)
+  visible?: boolean;
 }
